@@ -1,0 +1,103 @@
+<!-- PSFree 9.00 UI wrapper; exploit logic remains in alert.mjs/psfree.mjs -->
+<html manifest="psfree_lapse.cache">
+<head>
+<script src="../smart-retry.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Jailbreak Amine PS4 — PS4 9.00</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{
+  overflow:hidden;color:#eaf4ff;
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:#020711 url("../background.png") center center/cover no-repeat fixed !important;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(0,116,255,.18),transparent 34%),
+    linear-gradient(180deg,rgba(0,3,10,.16),rgba(0,3,10,.78));
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(0,126,255,.07) 50%,transparent 62%);
+}
+.page{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;padding:5vh 18px 3vh}
+.title{text-align:center;margin:0 0 7px;font-size:clamp(21px,3vw,32px);font-weight:700;letter-spacing:.08em;text-shadow:0 0 24px rgba(0,130,255,.35)}
+.title span{color:#168cff}
+.exploit{font-size:10px;letter-spacing:.42em;color:#7fa9d0;text-align:center;margin-bottom:10px}
+.fw{font-size:12px;color:#dbe9f7;text-align:center;margin-bottom:12px}.fw b{color:#168cff}
+.url{
+ width:min(530px,90vw);height:38px;display:flex;align-items:center;justify-content:center;
+ border:1px solid rgba(70,155,255,.32);border-radius:9px;
+ background:rgba(2,9,19,.78);color:#9eb4ca;font:11px "Courier New",monospace;
+ box-shadow:0 8px 28px rgba(0,0,0,.28);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.action{
+ width:260px;height:152px;margin:20px 0 12px;padding:14px;
+ border:1px solid rgba(20,137,255,.72);border-radius:14px;
+ background:linear-gradient(160deg,rgba(4,17,34,.96),rgba(1,8,18,.92));
+ box-shadow:0 0 28px rgba(0,104,255,.18),inset 0 0 25px rgba(0,110,255,.07);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.bolt{font-size:25px;color:#168cff;text-shadow:0 0 16px #168cff;margin-bottom:6px}
+button{
+ width:196px;height:54px;border:1px solid rgba(30,145,255,.85);border-radius:9px;
+ background:linear-gradient(180deg,#123d78,#08234b);color:#f3f8ff;
+ font-size:14px;font-weight:700;letter-spacing:.05em;
+ box-shadow:0 0 20px rgba(0,105,255,.24);cursor:pointer
+}
+button:active{transform:scale(.98)}
+.small{font-size:9px;color:#7792ad;margin-top:7px}
+.status{font-size:11px;color:#94a9bd;margin:0 0 14px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#168cff;box-shadow:0 0 12px #168cff;margin-right:6px}
+.status b{color:#168cff}
+.logbox{
+ width:min(560px,92vw);height:min(230px,28vh);
+ border:1px solid rgba(70,150,235,.28);border-radius:11px;
+ background:rgba(1,6,13,.70);overflow:auto;box-shadow:0 14px 38px rgba(0,0,0,.4);
+}
+.loghead{height:31px;padding:9px 12px;border-bottom:1px solid rgba(70,150,235,.16);font-size:10px;color:#168cff;letter-spacing:.08em;position:sticky;top:0;background:rgba(2,8,16,.96)}
+#console{margin:0;padding:10px 12px;min-height:calc(100% - 31px);white-space:pre-wrap;word-break:break-word;color:#b8c9d8;font:10px/1.42 "Courier New",Consolas,monospace}
+.logbox::-webkit-scrollbar{width:6px}.logbox::-webkit-scrollbar-thumb{background:#174d80;border-radius:8px}
+.footer{margin-top:auto;font-size:9px;color:#657f98;letter-spacing:.08em;text-align:center}
+@media(max-height:650px){
+ .page{padding-top:2.5vh}.action{height:125px;margin:12px 0 8px}.logbox{height:180px}.url{height:34px}
+}
+</style>
+<link rel="stylesheet" href="../unified-theme.css">
+</head>
+<body>
+<div class="page">
+  <div class="title">JAILBREAK <span>AMINE</span> PS4</div>
+  <div class="exploit">PSFREE-LAPSE EXPLOIT</div>
+  <div class="fw">FIRMWARE <b>9.00</b></div>
+  <div class="url">https://amine2-a11y.github.io/11/900/index.html</div>
+
+  <div class="action">
+    <div class="bolt">ϟ</div>
+    <button type="button" onclick="location.reload()">JAILBREAK AMINE PS4</button>
+    <div class="small">FW 9.00 · AUTO START</div>
+  </div>
+
+  <div class="status"><span class="dot"></span>STATUS: <b>READY</b></div>
+
+  <div class="logbox">
+    <div class="loghead">CONSOLE LOG</div>
+    <pre id="console"></pre>
+  </div>
+
+  <div class="footer">PSFree-Lapse · PS4 9.00 · JAILBREAK AMINE PS4</div>
+</div>
+<script>
+// Auto-start: importing the existing PSFree module starts the jailbreak flow.
+// No exploit logic is changed here; this only makes the auto-start state explicit.
+window.addEventListener("load", function(){
+  var st=document.querySelector(".status b");
+  if(st) st.textContent="AUTO START";
+});
+</script>
+<script type="module" src="./alert.mjs"></script>
+</body>
+</html>
