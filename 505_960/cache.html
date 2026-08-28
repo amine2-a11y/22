@@ -1,0 +1,121 @@
+<html manifest="ps4jb.cache">
+  <head>
+    <meta charset="utf-8">
+    <title>Jailbreak Amine PS4</title>
+    <style>
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        text-align: center;
+      }
+      .container {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+        }
+      .header-section {
+		text-align: center;
+      }
+      .main-title {
+		background: linear-gradient(45deg, #ff00aa, #00ffff, #ff00ff, #00ff9d);
+		background-size: 300% 300%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		animation: gradientFlow 8s ease infinite;
+		text-shadow: 0 0 30px rgba(255, 0, 170, 0.7);
+      }
+      @keyframes gradientFlow {
+		0% {background-position: 0% 50%;}
+		50% {background-position: 100% 50%;}
+		100% {background-position: 0% 50%;}
+      }
+      #console {
+        font-family: monospace;
+        color: #ffffff;
+        padding: 12px;
+        font-size: 18px;
+        text-align: left;
+      }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+</head>
+  <body>
+    <div class="container">
+        <div class="header-section">
+            <h1 class="main-title">Jailbreak Amine PS4 • 5.05 - 9.60</h1>
+        </div>
+    </div>
+
+	<pre id="console"></pre>
+  <script>
+
+/* Firmware Auto Start dispatcher */
+(function () {
+  "use strict";
+  function fw() {
+    var t = (document.body && document.body.innerText) || "";
+    var m = t.match(/(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)/);
+    return m ? m[1] : null;
+  }
+  function start() {
+    var selectors = [
+      "#startJailbreak","#start-jailbreak",
+      "[data-action='jailbreak']",
+      "button[id*='start' i][id*='jailbreak' i]",
+      "a[id*='start' i][id*='jailbreak' i]"
+    ];
+    for (var i=0;i<selectors.length;i++) {
+      var e=document.querySelector(selectors[i]);
+      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
+    }
+    return false;
+  }
+  window.FirmwareAutoStart = { firmware: fw(), start: start };
+  if(document.readyState==="loading")
+    document.addEventListener("DOMContentLoaded",function(){setTimeout(start,300);});
+  else setTimeout(start,300);
+})();
+
+</script>
+</body>
+  <script>
+    // Clear history and prevent back navigation
+    history.replaceState(null, null, 'index.html');
+    var histlength = history.length;
+    history.go(-histlength);
+    // Logging utility
+    var outputConsole = document.getElementById("console");
+    window.log = function (msg) {
+      outputConsole.textContent += msg + "\n";
+    };
+    // Download progress (% display)
+    function DLProgress(e) {
+      if (!e || !e.total) return;
+      var percent = (Math.round((e.loaded / e.total) * 100));
+      window.log("[CACHE] Downloading... " + percent + "% complete.");
+    }
+    // On cache complete
+    function DisplayCacheProgress() {
+      window.log(" ");
+      window.log("[SUCCESS] Cache berhasil diinstall");
+      // setTimeout(function() { window.log("Reloading..."); }, 2000);
+      // setTimeout(function() { location.reload(); }, 3000);
+      window.log("Tahan tombol PS > Power > Restart PS4.");
+    }
+    // On error
+    function DLError(e) {
+      window.log(" ");
+      window.log("[CACHE ERROR] An error occured during Cache...");
+    }
+    // Event listeners
+    window.applicationCache.addEventListener("progress", DLProgress, false);
+    window.applicationCache.addEventListener("error", DLError, false);
+    window.applicationCache.oncached = function(e) { DisplayCacheProgress(); };
+    window.applicationCache.onupdateready = function(e) { DisplayCacheProgress(); };
+  </script>
+</html>
