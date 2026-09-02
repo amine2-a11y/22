@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id" manifest="cache.appcache">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jailbreak Amine PS4</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            /* قراءة الصورة من نفس المجلد */
+            background-image: url('background.png'); 
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            overflow: hidden;
+            background-color: #121212;
+        }
+        #result, #user-agent {
+            display: none;
+        }
+    </style>
+  <link rel="preload" as="image" href="background.png">
+  <link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="unified-theme.css">
+</head>
+<body>
+
+    <audio id="bg-music" preload="auto" loop playsinline><source src="music_background.mp3" type="audio/mpeg"></audio>
+
+    <div id="cache-status" style="position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:50;width:min(680px,86vw);padding:24px 28px;border-radius:18px;background:rgba(0,0,0,.78);backdrop-filter:blur(8px);box-shadow:0 12px 40px rgba(0,0,0,.45);color:#fff;text-align:center;font-family:system-ui,sans-serif;box-sizing:border-box;">
+      <div style="font-size:22px;font-weight:800;margin-bottom:10px;">Jailbreak Amine PS4</div>
+      <div id="cache-text" style="font-size:16px;opacity:.92;margin-bottom:14px;">جارٍ تحميل الكاش… 0%</div>
+      <div style="height:9px;border-radius:99px;background:rgba(255,255,255,.18);overflow:hidden;"><div id="cache-bar" style="height:100%;width:0%;border-radius:99px;background:#fff;transition:width .15s ease;"></div></div>
+    </div>
+
+    <div id="result"></div>
+    <div id="user-agent"></div>
+
+    <script>
+        (function () {
+            const status = document.getElementById('cache-status');
+            const text = document.getElementById('cache-text');
+            const bar = document.getElementById('cache-bar');
+            const audio = document.getElementById('bg-music');
+            const userAgent = navigator.userAgent;
+            const isPS4 = /PlayStation 4|PS4/i.test(userAgent);
+
+            function setCache(message, percent) {
+                if (text) text.textContent = message;
+                if (bar) bar.style.width = Math.max(0, Math.min(100, percent || 0)) + '%';
+            }
+
+            function targetForFirmware() {
+                const m = userAgent.match(/(?:PlayStation 4|PS4)[\s\/]+([\d.]+)/i);
+                if (!m || !m[1]) return null;
+                const firmware = parseFloat(m[1]);
+                if (Math.abs(firmware - 9.00) < 0.001) return '900/index.html';
+                if (firmware >= 5.00 && firmware <= 9.60) return '505_960/index.html';
+                if (firmware >= 10.00 && firmware <= 11.02) return '1000_1102/index.html';
+                // Only route to firmware keys that actually exist in 1150-1300/ps4_offsets.js.
+                // Unknown/intermediate versions must not be guessed into a nearby kernel profile.
+                if ([11.50, 12.00, 12.02, 12.50, 12.52, 13.00].some(function (v) { return Math.abs(firmware - v) < 0.001; })) return '1150-1300/index.html';
+                return null;
+            }
+
+            function go() {
+                const target = targetForFirmware();
+                if (target) {
+                    setCache('الكاش جاهز — جاري فتح الجيلبريك…', 100);
+                    setTimeout(function () { window.location.replace(target); }, 80);
+                } else {
+                    setCache('الكاش جاهز — الجهاز/النظام غير مدعوم.', 100);
+                }
+            }
+
+            function startMusic() {
+                if (!audio) return;
+                try {
+                    audio.volume = 0.35;
+                    var p = audio.play();
+                    if (p && typeof p.catch === 'function') p.catch(function () {});
+                } catch (e) {}
+            }
+
+            // Start as soon as the cached MP3 is available, and retry while
+            // ApplicationCache is downloading. This is important on PS4 where
+            // the first autoplay attempt can happen before the MP3 is cached.
+            if (audio) {
+                try { audio.load(); } catch (e) {}
+                audio.addEventListener('loadeddata', startMusic, false);
+                audio.addEventListener('canplay', startMusic, false);
+                audio.addEventListener('canplaythrough', startMusic, false);
+                audio.addEventListener('error', function () {
+                    setTimeout(function () { try { audio.load(); } catch (e) {} startMusic(); }, 800);
+                }, false);
+                // PS4 WebKit may reject the first autoplay attempt. Retry on
+                // controller/keyboard input without changing the UI.
+                document.addEventListener('keydown', startMusic, false);
+                document.addEventListener('click', startMusic, false);
+                document.addEventListener('touchstart', startMusic, false);
+                window.addEventListener('focus', startMusic, false);
+                startMusic();
+            }
+
+            if (!isPS4) {
+                if (status) status.style.display = 'none';
+                return;
+            }
+
+            const ac = window.applicationCache;
+            if (!ac) {
+                setCache('الكاش غير متاح — جاري المتابعة…', 100);
+                setTimeout(go, 250);
+                return;
+            }
+
+            ac.addEventListener('checking', function () { setCache('جاري فحص الكاش…', 5); }, false);
+            ac.addEventListener('downloading', function () { setCache('جاري تحميل الكاش… 0%', 8); startMusic(); }, false);
+            ac.addEventListener('progress', function (e) {
+                const pct = e.lengthComputable && e.total ? Math.round((e.loaded / e.total) * 100) : 0;
+                setCache('جاري تحميل الكاش… ' + pct + '%', Math.max(8, pct));
+                if (pct > 0) startMusic();
+            }, false);
+            ac.addEventListener('cached', function () { startMusic(); go(); }, false);
+            ac.addEventListener('noupdate', function () { startMusic(); go(); }, false);
+            ac.addEventListener('updateready', function () {
+                try { ac.swapCache(); } catch (e) {}
+                go();
+            }, false);
+            ac.addEventListener('error', function () {
+                setCache('تعذر تحديث الكاش — جاري المتابعة…', 100);
+                setTimeout(go, 250);
+            }, false);
+
+            // If this page is already cached, don't wait indefinitely for an event.
+            setTimeout(function () {
+                if (ac.status === ac.UPDATEREADY) {
+                    try { ac.swapCache(); } catch (e) {}
+                    go();
+                } else if (ac.status === ac.CACHED) {
+                    go();
+                }
+            }, 1200);
+        })();
+    </script>
+
+<style>
+#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:5px 9px;border-radius:7px;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.14);color:#fff;font:10px/1.25 system-ui,sans-serif;box-shadow:0 2px 10px rgba(0,0,0,.25);pointer-events:none}
+#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
+</style>
+<div id="real-device-stability"><span class="rds-label">استقرار الجهاز</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
+<script>
+(function(){
+'use strict';
+var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
+function firmware(){
+ var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
+ return x?x[1]:'unknown';
+}
+var fw=firmware(), key='device-stability-'+fw;
+var samples=[], last=performance.now(), shown=false, active=false;
+function clamp(n,a,b){return Math.max(a,Math.min(b,n))}
+function sample(){
+ var now=performance.now(), gap=now-last-100; last=now;
+ if(gap>=0) samples.push(gap);
+ if(samples.length>30)samples.shift();
+}
+function score(){
+ if(samples.length<5)return null;
+ var sum=0, worst=0;
+ for(var i=0;i<samples.length;i++){sum+=samples[i];if(samples[i]>worst)worst=samples[i]}
+ var avg=sum/samples.length;
+ /* Browser-visible proxy only: event-loop stalls. PS4 WebKit does not expose CPU % directly. */
+ var s=100-(avg*1.15)-(worst*.22);
+ return Math.round(clamp(s,0,100));
+}
+function render(){
+ var s=score();
+ if(s===null)return;
+ val.textContent=s+'%';
+ if(active)box.style.display='block';
+ try{localStorage.setItem(key,JSON.stringify({score:s,updated:Date.now()}))}catch(e){}
+}
+function activate(){active=true;render()}
+function successText(){
+ var t=((document.body&&document.body.innerText)||'').toLowerCase();
+ return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
+}
+var old=window.jailbreakSuccess;
+window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}activate()};
+setInterval(function(){sample();if(successText())activate();render()},100);
+})();
+</script>
+</body>
+</html>
