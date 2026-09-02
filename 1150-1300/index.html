@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Jailbreak Amine PS4</title>
+<style>
+  html, body { margin:0; padding:0; background:#0b0d10; color:#c8ced8;
+               font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
+  #wrap { padding:16px 18px; }
+  #state { font-size:44px; font-weight:700; margin:0 0 6px; }
+  #det { font-size:26px; color:#8b95a3; margin:0 0 4px; }
+  #det b { color:#c8ced8; font-weight:600; }
+  #cache { font-size:24px; color:#5c6672; margin:0 0 10px; min-height:14px; }
+  #cache.cacheok { color:#7fd0a0; }
+  .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
+  #brand { text-align:center; padding:8px 10px; background:#0e1116;
+           border-bottom:1px solid #1e2732; }
+  #brand img { width:28px; height:28px; margin-right:8px; border-radius:50%;
+               vertical-align:middle; }
+  #brand b { font-size:30px; font-weight:700; letter-spacing:.14em;
+             color:#e6ebf2; vertical-align:middle; }
+</style>
+  <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+</head>
+<body>
+<div id="wrap">
+  <div id="state">detecting firmware...</div>
+  <div id="det"></div>
+  <div id="cache"></div>
+</div>
+
+<script>
+(function () {
+    var stateEl = document.getElementById("state");
+    var detEl = document.getElementById("det");
+    var cacheEl = document.getElementById("cache");
+    function setState(t, c) { stateEl.textContent = t; stateEl.className = c || ""; }
+    function setCache(t, ok) { cacheEl.textContent = t; cacheEl.className = ok ? "cacheok" : ""; }
+    var params = new URLSearchParams(location.search);
+
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        var major = parseInt(m[1], 10);
+        var minor = parseInt(m[2], 10);
+        if (!Number.isFinite(major) || !Number.isFinite(minor)) {
+            key = null;
+        } else {
+            var ms = String(minor).padStart(2, "0");
+            key = major + "." + ms;
+            fwnum = major * 100 + minor;
+        }
+    }
+    var bug = null, why = "";
+    var profiles = {
+        "11.50": { bug: "lapse", patch: "patches/1150.bin" },
+        "12.00": { bug: "lapse", patch: "patches/1200.bin" },
+        "12.02": { bug: "lapse", patch: "patches/1200.bin" },
+        "12.50": { bug: "poops", patch: "patches/1250.bin" },
+        "12.52": { bug: "poops", patch: "patches/1250.bin" },
+        "13.00": { bug: "poops", patch: "patches/1300.bin" }
+    };
+    var profile = key ? profiles[key] : null;
+    if (!key) {
+        why = "user-agent is not a PlayStation 4";
+    } else if (!profile) {
+        why = key + " -- no exact firmware profile; refusing to guess";
+    } else {
+        bug = profile.bug;
+        why = key + " -- exact profile";
+    }
+    detEl.innerHTML = "firmware <b>" + (key || "unknown") + "</b>"
+        + " &middot; bug <b>" + (bug || "none") + "</b> &middot; " + why;
+
+    if (!bug) { setState("UNSUPPORTED FIRMWARE", "bad"); return; }
+
+    var target = (bug === "lapse" ? "run_lapse.html" : "run_poops.html")
+        + location.search;
+    var started = false;
+    function go() {
+        if (started) return;
+        started = true;
+        setState("preflight passed — loading " + bug + " chain...", "warn");
+        location.replace(target);
+    }
+    function failPreflight(msg) {
+        started = true;
+        setState("PRE-FLIGHT STOPPED", "bad");
+        setCache(msg, false);
+    }
+    function checkLocal(path, cb) {
+        var x = new XMLHttpRequest();
+        x.open("GET", path, true);
+        x.onreadystatechange = function () {
+            if (x.readyState !== 4) return;
+            cb(x.status === 0 || (x.status >= 200 && x.status < 400));
+        };
+        try { x.send(null); } catch (e) { cb(false); }
+    }
+    function preflight(cb) {
+        if (!profile || !key) return cb(false, "No exact firmware profile");
+        // Verify that the local metadata and the exact patch asset exist before dispatch.
+        checkLocal("ps4_offsets.js", function (a) {
+            if (!a) return cb(false, "ps4_offsets.js unavailable in cache");
+            checkLocal(profile.patch, function (b) {
+                if (!b) return cb(false, profile.patch + " unavailable in cache");
+                checkLocal(bug === "lapse" ? "run_lapse.html" : "run_poops.html", function (c) {
+                    if (!c) return cb(false, "chain entry unavailable in cache");
+                    cb(true, "preflight passed");
+                });
+            });
+        });
+    }
+
+    function safeGo() {
+        if (started) return;
+        setState("checking local assets...", "warn");
+        preflight(function (ok, msg) {
+            if (ok) go();
+            else failPreflight(msg);
+        });
+    }
+
+    function waitForTap(msg, action) {
+        setState(msg, "warn");
+        function fire() {
+            window.removeEventListener("click", fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click", fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    var ac = window.applicationCache;
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        safeGo();
+    } else if (!navigator.onLine) {
+        setCache("offline -- from cache", true);
+        go();
+    } else if (ac.status === ac.IDLE) {
+        setCache("cached", true);
+        safeGo();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        setCache("update downloaded", true);
+        waitForTap("UPDATE READY -- Tekan tombol Enter  X/O",
+                   function () { location.reload(); });
+    } else {
+        setCache("checking cache...");
+        ac.addEventListener("downloading",
+            function () { setCache("caching for offline (first run)..."); }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total)
+                setCache("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+        }, false);
+
+        ac.addEventListener("cached", function () {
+            setCache("cached for offline use", true);
+            waitForTap("CACHED (first run) -- Tekan tombol Enter  X/O", safeGo);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            setCache("update downloaded", true);
+            waitForTap("UPDATE READY -- Tekan tombol Enter  X/O",
+                       function () { location.reload(); });
+        }, false);
+
+        ac.addEventListener("noupdate", function () {
+            setCache("cached -- offline ready", true);
+            safeGo();
+        }, false);
+        ac.addEventListener("error", function () {
+            setCache("cache unavailable");
+            waitForTap("CACHE FAILED -- Tekan tombol Enter  X/O", safeGo);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            setCache("cache obsolete");
+            waitForTap("CACHE OBSOLETE -- Tekan tombol Enter  X/O", safeGo);
+        }, false);
+    }
+})();
+</script>
+<script>
+
+/* Firmware Auto Start dispatcher — lightweight, one-shot */
+(function () {
+  "use strict";
+  function fw() {
+    var t = (document.body && document.body.innerText) || "";
+    var m = t.match(/\b(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)\b/);
+    return m ? m[1] : null;
+  }
+  function start() {
+    var selectors = [
+      "#startJailbreak", "#start-jailbreak", "#start", "#jeilbrek",
+      "[data-action='jailbreak']",
+      "button[id*='start' i][id*='jailbreak' i]",
+      "a[id*='start' i][id*='jailbreak' i]"
+    ];
+    for (var i=0;i<selectors.length;i++) {
+      var e=document.querySelector(selectors[i]);
+      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
+    }
+    return false;
+  }
+  window.FirmwareAutoStart = { firmware: fw(), start: start };
+  function boot(){
+    if (start()) return;
+    setTimeout(start, 120);
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot, false);
+  else boot();
+})();
+
+</script>
+
+<style>
+#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}
+#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
+</style>
+<div id="real-device-stability"><span class="rds-label">نسبة استقرار جهاز هي</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
+<script>
+(function(){
+'use strict';
+var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
+function firmware(){
+ var u=navigator.userAgent||'', m=u.match(/PlayStation\s*4[\s\/]+(\d+)\.(\d+)/i);
+ if(m) return m[1]+'.'+m[2];
+ var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
+ return x?x[1]:null;
+}
+var fw=firmware(); if(!fw) return;
+var key='rds-stats-'+fw, stats;
+try{stats=JSON.parse(localStorage.getItem(key)||'null')}catch(e){stats=null}
+if(!stats||typeof stats.attempts!=='number'||typeof stats.successes!=='number') stats={attempts:0,successes:0};
+function pct(){return stats.attempts>0?Math.round(stats.successes*100/stats.attempts):null}
+function save(){try{localStorage.setItem(key,JSON.stringify(stats))}catch(e){}}
+function show(){var p=pct();if(p===null)return;val.textContent=p+'%';box.style.display='block'}
+function successText(){
+ var t=((document.body&&document.body.innerText)||'').toLowerCase();
+ return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
+}
+var successSeen=false;
+function markSuccess(){if(successSeen)return;successSeen=true;stats.successes++;save();show()}
+function markAttempt(){stats.attempts++;save()}
+var old=window.jailbreakSuccess;
+window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}markSuccess()};
+var lastClick=0;
+function hook(){
+ var selectors=['#start','#jeilbrek','#startJailbreak','#start-jailbreak','button[data-action="jailbreak"]','button[id*="jailbreak" i]'];
+ for(var i=0;i<selectors.length;i++){var e=document.querySelector(selectors[i]);if(e&&!e.__rds){e.__rds=true;e.addEventListener('click',function(){var now=Date.now();if(now-lastClick<1000)return;lastClick=now;successSeen=false;markAttempt()},true)}}
+}
+show();hook();
+setInterval(function(){hook();if(successText())markSuccess()},250);
+try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
+})();
+</script>
+</body>
+</html>
