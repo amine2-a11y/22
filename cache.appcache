@@ -20,7 +20,6 @@ CACHE MANIFEST
 1000_1102/src/ps4/userland.js
 1000_1102/src/worker.js
 1000_1102/src/workers.js
-1150-1300/cache.appcache
 1150-1300/EXTRACTION_MANIFEST.json
 1150-1300/chain_lapse.js
 1150-1300/chain_poops.js
@@ -98,3 +97,5 @@ music_background.mp3
 theme.css
 unified-theme.css
 
+NETWORK:
+*
