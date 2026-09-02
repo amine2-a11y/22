@@ -1,0 +1,19 @@
+CACHE MANIFEST
+
+# 5.05-9.60 offline cache
+505exploit.js
+672entrypoint.js
+672kexploit.js
+cache.html
+index.html
+kpatches.js
+lapse.js
+main.js
+payload.bin
+psfree.js
+psfree_lapse_helpers.js
+../unified-theme.css
+../theme.css
+
+NETWORK:
+*
