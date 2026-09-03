@@ -1,134 +1,100 @@
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Jailbreak Amine PS4</title>
-    <style>
-      body {
-        background-color: #000000;
-        color: #ffffff;
-        font-family: "Segoe UI", Tahoma, sans-serif;
-        text-align: center;
-      }
-      .container {
-		position: relative;
-		z-index: 2;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-        }
-      .header-section {
-		text-align: center;
-      }
-      .main-title {
-		background: linear-gradient(45deg, #ff00aa, #00ffff, #ff00ff, #00ff9d);
-		background-size: 300% 300%;
-		-webkit-background-clip: text;
-		-webkit-text-fill-color: transparent;
-		animation: gradientFlow 8s ease infinite;
-		text-shadow: 0 0 30px rgba(255, 0, 170, 0.7);
-      }
-      @keyframes gradientFlow {
-		0% {background-position: 0% 50%;}
-		50% {background-position: 100% 50%;}
-		100% {background-position: 0% 50%;}
-      }
-      #console {
-        font-family: monospace;
-        color: #ffffff;
-        padding: 12px;
-        font-size: 18px;
-        text-align: left;
-      }
-    </style>
-    <script>
-      if (window.applicationCache.status === 0) { // 0: UNCACHED
-        window.location.replace("cache.html");
-      }
-    </script>
-    <link rel="stylesheet" href="../theme.css">
+<!-- PSFree 9.00 UI wrapper; exploit logic remains in alert.mjs/psfree.mjs -->
+<html manifest="psfree_lapse.cache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Jailbreak Amine PS4 — PS4 9.00</title>
+<style>
+*{box-sizing:border-box}
+html,body{width:100%;height:100%;margin:0}
+body{
+  overflow:hidden;color:#eaf4ff;
+  font-family:"Segoe UI",Arial,sans-serif;
+  background:#020711 url("../background.png") center center/cover no-repeat fixed !important;
+}
+body:before{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(0,116,255,.18),transparent 34%),
+    linear-gradient(180deg,rgba(0,3,10,.16),rgba(0,3,10,.78));
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(0,126,255,.07) 50%,transparent 62%);
+}
+.page{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;padding:5vh 18px 3vh}
+.title{text-align:center;margin:0 0 7px;font-size:clamp(21px,3vw,32px);font-weight:700;letter-spacing:.08em;text-shadow:0 0 24px rgba(0,130,255,.35)}
+.title span{color:#168cff}
+.exploit{font-size:10px;letter-spacing:.42em;color:#7fa9d0;text-align:center;margin-bottom:10px}
+.fw{font-size:12px;color:#dbe9f7;text-align:center;margin-bottom:12px}.fw b{color:#168cff}
+.url{
+ width:min(530px,90vw);height:38px;display:flex;align-items:center;justify-content:center;
+ border:1px solid rgba(70,155,255,.32);border-radius:9px;
+ background:rgba(2,9,19,.78);color:#9eb4ca;font:11px "Courier New",monospace;
+ box-shadow:0 8px 28px rgba(0,0,0,.28);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.action{
+ width:260px;height:152px;margin:20px 0 12px;padding:14px;
+ border:1px solid rgba(20,137,255,.72);border-radius:14px;
+ background:linear-gradient(160deg,rgba(4,17,34,.96),rgba(1,8,18,.92));
+ box-shadow:0 0 28px rgba(0,104,255,.18),inset 0 0 25px rgba(0,110,255,.07);
+ display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.bolt{font-size:25px;color:#168cff;text-shadow:0 0 16px #168cff;margin-bottom:6px}
+button{
+ width:196px;height:54px;border:1px solid rgba(30,145,255,.85);border-radius:9px;
+ background:linear-gradient(180deg,#123d78,#08234b);color:#f3f8ff;
+ font-size:14px;font-weight:700;letter-spacing:.05em;
+ box-shadow:0 0 20px rgba(0,105,255,.24);cursor:pointer
+}
+button:active{transform:scale(.98)}
+.small{font-size:9px;color:#7792ad;margin-top:7px}
+.status{font-size:11px;color:#94a9bd;margin:0 0 14px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#168cff;box-shadow:0 0 12px #168cff;margin-right:6px}
+.status b{color:#168cff}
+.logbox{
+ width:min(560px,92vw);height:min(230px,28vh);
+ border:1px solid rgba(70,150,235,.28);border-radius:11px;
+ background:rgba(1,6,13,.70);overflow:auto;box-shadow:0 14px 38px rgba(0,0,0,.4);
+}
+.loghead{height:31px;padding:9px 12px;border-bottom:1px solid rgba(70,150,235,.16);font-size:10px;color:#168cff;letter-spacing:.08em;position:sticky;top:0;background:rgba(2,8,16,.96)}
+#console{margin:0;padding:10px 12px;min-height:calc(100% - 31px);white-space:pre-wrap;word-break:break-word;color:#b8c9d8;font:10px/1.42 "Courier New",Consolas,monospace}
+.logbox::-webkit-scrollbar{width:6px}.logbox::-webkit-scrollbar-thumb{background:#174d80;border-radius:8px}
+.footer{margin-top:auto;font-size:9px;color:#657f98;letter-spacing:.08em;text-align:center}
+@media(max-height:650px){
+ .page{padding-top:2.5vh}.action{height:125px;margin:12px 0 8px}.logbox{height:180px}.url{height:34px}
+}
+</style>
+<script>
+if (window.applicationCache && window.applicationCache.status=='0') {
+  window.location.replace('cache.html');
+}
+</script>
 <link rel="stylesheet" href="../unified-theme.css">
 </head>
-  <body>
-    <div class="container">
-        <div class="header-section">
-            <h1 class="main-title">Jailbreak Amine PS4 • 5.05 - 9.60</h1>
-        </div>
-    </div>
+<body>
+<div class="page">
+  <div class="title">JAILBREAK <span>AMINE</span> PS4</div>
+  <div class="exploit">PSFREE-LAPSE EXPLOIT</div>
+  <div class="fw">FIRMWARE <b>9.00</b></div>
+  <div class="url">https://amine2-a11y.github.io/11/900/index.html</div>
 
-	<pre id="console"></pre>
-  <script>
+  <div class="action">
+    <div class="bolt">ϟ</div>
+    <button type="button" onclick="location.reload()">JAILBREAK AMINE PS4</button>
+    <div class="small">FW 9.00 · AUTO START</div>
+  </div>
 
-/* Firmware Auto Start dispatcher */
-(function () {
-  "use strict";
-  function fw() {
-    var t = (document.body && document.body.innerText) || "";
-    var m = t.match(/\b(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)\b/);
-    return m ? m[1] : null;
-  }
-  function start() {
-    var selectors = [
-      "#startJailbreak","#start-jailbreak","#start","#jeilbrek",
-      "[data-action='jailbreak']",
-      "button[id*='start' i][id*='jailbreak' i]",
-      "a[id*='start' i][id*='jailbreak' i]"
-    ];
-    for (var i=0;i<selectors.length;i++) {
-      var e=document.querySelector(selectors[i]);
-      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
-    }
-    return false;
-  }
-  window.FirmwareAutoStart = { firmware: fw(), start: start };
-  if(document.readyState==="loading")
-    document.addEventListener("DOMContentLoaded",function(){setTimeout(start,300);});
-  else setTimeout(start,300);
-})();
+  <div class="status"><span class="dot"></span>STATUS: <b>READY</b></div>
 
-</script>
+  <div class="logbox">
+    <div class="loghead">CONSOLE LOG</div>
+    <pre id="console"></pre>
+  </div>
 
-<style>
-#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}
-#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
-</style>
-<div id="real-device-stability"><span class="rds-label">نسبة استقرار جهاز هي</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
-<script>
-(function(){
-'use strict';
-var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
-function firmware(){
- var u=navigator.userAgent||'', m=u.match(/PlayStation\s*4[\s\/]+(\d+)\.(\d+)/i);
- if(m) return m[1]+'.'+m[2];
- var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
- return x?x[1]:null;
-}
-var fw=firmware(); if(!fw) return;
-var key='rds-stats-'+fw, stats;
-try{stats=JSON.parse(localStorage.getItem(key)||'null')}catch(e){stats=null}
-if(!stats||typeof stats.attempts!=='number'||typeof stats.successes!=='number') stats={attempts:0,successes:0};
-function pct(){return stats.attempts>0?Math.round(stats.successes*100/stats.attempts):null}
-function save(){try{localStorage.setItem(key,JSON.stringify(stats))}catch(e){}}
-function show(){var p=pct();if(p===null)return;val.textContent=p+'%';box.style.display='block'}
-function successText(){
- var t=((document.body&&document.body.innerText)||'').toLowerCase();
- return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
-}
-var successSeen=false;
-function markSuccess(){if(successSeen)return;successSeen=true;stats.successes++;save();show()}
-function markAttempt(){stats.attempts++;save()}
-var old=window.jailbreakSuccess;
-window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}markSuccess()};
-var lastClick=0;
-function hook(){
- var selectors=['#start','#jeilbrek','#startJailbreak','#start-jailbreak','button[data-action="jailbreak"]','button[id*="jailbreak" i]'];
- for(var i=0;i<selectors.length;i++){var e=document.querySelector(selectors[i]);if(e&&!e.__rds){e.__rds=true;e.addEventListener('click',function(){var now=Date.now();if(now-lastClick<1000)return;lastClick=now;successSeen=false;markAttempt()},true)}}
-}
-show();hook();
-setInterval(function(){hook();if(successText())markSuccess()},250);
-try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
-})();
-</script>
+  <div class="footer">PSFree-Lapse · PS4 9.00 · JAILBREAK AMINE PS4</div>
+</div>
+<script type="module" src="./alert.mjs"></script>
 
 <!-- Background music only: added without changing exploit logic. -->
 <audio id="bg-music-local" preload="auto" loop autoplay playsinline style="display:none"><source src="../music_background.mp3" type="audio/mpeg"></audio>
@@ -149,102 +115,4 @@ try{new MutationObserver(function(){hook();if(successText())markSuccess()}).obse
 })();
 </script>
 </body>
-  <script>
-    // 6.72 JB globals
-    window.entrypoint672_result = 0;
-    window.exploitsetup672_result = 0;
-    // Device FW version holder
-    var config_target = 0x0000;
-    // Logging utility
-    var outputConsole = document.getElementById("console");
-    window.log = function (msg, color) {
-      if (color === undefined) color = "#cccccc";
-      outputConsole.innerHTML += '<span style="color:' + color + '">' + msg + '</span><br>';
-    };
-    // Get Script for ES5 JavaScript
-    window.getScriptES5 = function (source, callback) {
-      var gs = document.createElement('script');
-      gs.src = source;
-      gs.onload = callback;
-      gs.async = false;
-      document.body.appendChild(gs);
-    }
-    // Event definitions
-    window.addEventListener('error', function (event) {
-      var reason = event.error;
-      var msg = 'Unhandled error\n';
-      if (reason) {
-        msg += reason + '\n';
-        if (reason.sourceURL)
-          msg += reason.sourceURL;
-        if (reason.line)
-          msg += ':' + reason.line;
-        if (reason.column)
-          msg += ':' + reason.column;
-        if (reason.stack)
-          msg += '\n' + reason.stack;
-      } else {
-        msg += 'No error object';
-      }
-      alert(msg);
-      return true;
-    });
-    // Dynamic 6.72 entrypoint loader
-    window.addEventListener('load', function () {
-      var ua = navigator.userAgent;
-      var isPS4 = ua.indexOf("PlayStation 4") !== -1;
-      var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));
-      if (isPS4 && is67x && (window.applicationCache.status !== 0)) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', '672entrypoint.js', false);
-        xhr.send('');
-        if (xhr.status === 200)
-          eval.call(top.window, xhr.responseText);
-      }
-    });
-    window.checkPlatformIsSupported = function () {
-      var userAgent = navigator.userAgent;
-      var psRegex = /PlayStation (4|5)[ \/]([0-9]{1,2}\.[0-9]{2})/;
-      var match = userAgent.match(psRegex);
-      if (!match) return false;
-      var device = match[1];    // "4" or "5"
-      var fwVersion = match[2]; // "9.00", "9.03", etc.
-      // Convert "9.00" to 0x900
-      config_target = parseInt(fwVersion.replace('.', ''), 16);
-      window.log("Firmware PS" + device + " ini: " + fwVersion + "\n");
-      // Supported FW lists
-      var supportedFW = {
-        "4": ["5.05", "6.70", "6.71", "6.72",
-              "7.00", "7.01", "7.02", "7.50", "7.51", "7.55",
-              "8.00", "8.01", "8.03", "8.50", "8.52",
-              "9.00", "9.03", "9.04", "9.50", "9.51", "9.60"],
-        "5": ["0.00"]
-      };
-      // Check device exists
-      if (!supportedFW[device]) return false;
-      // FW control
-      return supportedFW[device].indexOf(fwVersion) !== -1;
-    }
-
-    window.addEventListener('load', function () {
-      outputConsole.textContent = ""; // Clear console log
-      // window.log("Initializing Exploit Chain...");
-
-      try {
-        if (!window.checkPlatformIsSupported()) {
-          window.log("Mohon maaf, hanya untuk PS4 5.05, 6.70 - 9.60", "red");
-        } else {
-          if (config_target === 0x505) { // 5.05
-            window.log("Starting 5.05 Exploit...");
-            window.getScriptES5('505exploit.js', function () { setTimeout(exploit505, 3000); });
-          } else {
-            window.log("Starting main exploit...");
-            window.getScriptES5('main.js', function () { setTimeout(doJailBreak, 1500); });
-          }
-        }
-      } catch (error) {
-        window.log("An error occured during exploit: " + error, "red");
-      }
-    });
-  </script>
 </html>
