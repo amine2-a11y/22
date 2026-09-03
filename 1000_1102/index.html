@@ -169,5 +169,24 @@ setInterval(function(){hook();if(successText())markSuccess()},250);
 try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
 })();
 </script>
+
+<!-- Background music only: added without changing exploit logic. -->
+<audio id="bg-music-local" preload="auto" loop autoplay playsinline style="display:none"><source src="../music_background.mp3" type="audio/mpeg"></audio>
+<script>
+(function(){
+  var a=document.getElementById('bg-music-local');
+  if(!a)return;
+  a.volume=0.35;
+  function play(){try{var p=a.play();if(p&&p.catch)p.catch(function(){});}catch(e){}}
+  a.addEventListener('loadeddata',play,false);
+  a.addEventListener('canplay',play,false);
+  a.addEventListener('canplaythrough',play,false);
+  document.addEventListener('keydown',play,false);
+  document.addEventListener('click',play,false);
+  document.addEventListener('touchstart',play,false);
+  try{a.load();}catch(e){}
+  play();
+})();
+</script>
 </body>
 </html>
