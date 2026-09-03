@@ -40,7 +40,5 @@ send.mjs
 ../unified-theme.css
 ../background.png
 
-modular-lapse.js
-payload.bin
 NETWORK:
 *
