@@ -46,7 +46,7 @@ if(f!==null){
  else if(f>=5.00 && f<=9.60){target="505_960/index.html";profileLabel="5.05–9.60";}
  else if(f>=10.00 && f<=11.02){target="1000_1102/index.html";profileLabel="10.00–11.02";}
  else if([11.50,12.00,12.02,12.50,12.52,13.00].some(function(v){return Math.abs(f-v)<.001;})){target="1150-1300/index.html";profileLabel="11.50–13.00";}
- else if([13.02,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
+ else if([13.02,13.04,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
 }
 set(f===null?"PS4 firmware not detected":"Firmware "+f.toFixed(2)+(profileLabel?" · Cache "+profileLabel:""),35);
 setTimeout(function(){
