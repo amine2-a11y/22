@@ -1,18 +1,22 @@
 CACHE MANIFEST
+# Amine PS4 offline cache 13.02-13.52 v20260922.3-AIO-FIX
+
 CACHE:
-# Amine PS4 PS4 offline cache 13.02-13.52 v20260922.1
 cache.appcache
-core.js
 index.html
-int64.js
 jb.js
+core.js
 mem.js
+int64.js
+ps4_offsets.js
+rpc_worker.js
 patches/1302.bin
 patches/1350.bin
 patches/1352.bin
 payload2.bin
-ps4_offsets.js
-rpc_worker.js
 ../theme.css
 ../unified-theme.css
 background.jpg
+
+NETWORK:
+*

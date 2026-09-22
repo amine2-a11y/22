@@ -147,6 +147,9 @@ let allDone = false,
     const { key, off } = offsetsFor(navigator.userAgent);
     mark("FW", key || "(not a PS4 UA)");
     if (!off) {
+      mark("UA", navigator.userAgent || "(empty)");
+    }
+    if (!off) {
       state("no offsets for this firmware", "bad");
       return;
     }
