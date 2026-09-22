@@ -1,5 +1,6 @@
 CACHE MANIFEST
-# Amine PS4 PS4 offline cache 9.00 v20260921
+
+# PSFree-Lapse 9.00 offline cache
 AIO_Fix_Temp/patch_aio.c
 AIO_Fix_Temp/vfs_aio2_pdtor.c
 COPYING
@@ -34,11 +35,10 @@ module/rw.mjs
 module/utils.mjs
 module/view.mjs
 psfree.mjs
-psfree_lapse.cache
 rop/900.mjs
 send.mjs
-../theme.css
 ../unified-theme.css
-../background.jpg
+../background.png
+
 NETWORK:
 *
