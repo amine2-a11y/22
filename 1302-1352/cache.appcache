@@ -1,5 +1,6 @@
 CACHE MANIFEST
-# Amine PS4 PS4 offline cache 13.02-13.52 v20260921.2
+CACHE:
+# Amine PS4 PS4 offline cache 13.02-13.52 v20260922.1
 cache.appcache
 core.js
 index.html
@@ -15,5 +16,3 @@ rpc_worker.js
 ../theme.css
 ../unified-theme.css
 background.jpg
-NETWORK:
-*
