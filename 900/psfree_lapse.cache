@@ -1,5 +1,4 @@
 CACHE MANIFEST
-# AMINE PS4 unified offline fix v20260925-offline-all
 
 # PSFree-Lapse 9.00 offline cache
 AIO_Fix_Temp/patch_aio.c
@@ -41,5 +40,6 @@ send.mjs
 ../unified-theme.css
 ../background.png
 
+../theme.css
 NETWORK:
 *
