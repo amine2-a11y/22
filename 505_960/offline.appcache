@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# AMINE PS4 PS4 offline cache 5.05-9.60 v20260925-offline-all
+# AMINE PS4 PS4 offline cache 5.05-9.60 v20260921.2
 505exploit.js
 672entrypoint.js
 672kexploit.js
@@ -13,5 +13,7 @@ ps4jb.cache
 psfree.js
 psfree_lapse_helpers.js
 background.jpg
+../theme.css
+../unified-theme.css
 NETWORK:
 *
