@@ -140,17 +140,15 @@
     var ac = window.applicationCache;
     if (!ac || !document.documentElement.hasAttribute("manifest")) {
         safeGo();
-    } else if (!navigator.onLine) {
-        setCache("offline -- from cache", true);
-        go();
     } else if (ac.status === ac.IDLE) {
-        setCache("cached", true);
+        // IDLE means the complete application cache is available.
+        // Do not trust navigator.onLine on PS4: it can report a stale state.
+        setCache(navigator.onLine ? "cache ready -- checking local files" : "offline cache ready", true);
         safeGo();
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
-        setCache("update downloaded", true);
-        waitForTap("UPDATE READY -- Tekan tombol Enter  X/O",
-                   function () { location.reload(); });
+        setCache("cache update ready -- verifying local files", true);
+        safeGo();
     } else {
         setCache("checking cache...");
         ac.addEventListener("downloading",
@@ -176,9 +174,21 @@
             safeGo();
         }, false);
         ac.addEventListener("error", function () {
-            setCache("cache unavailable");
-            waitForTap("CACHE FAILED -- Tekan tombol Enter  X/O", safeGo);
+            // If local assets are already present, an ApplicationCache network
+            // error must not block an offline run. Verify the assets directly.
+            setCache("cache event error -- checking local assets", false);
+            preflight(function (ok, msg) {
+                if (ok) { setCache("offline cache verified", true); safeGo(); }
+                else waitForTap("CACHE FAILED: " + msg, safeGo);
+            });
         }, false);
+        setTimeout(function () {
+            if (!started && !navigator.onLine) {
+                preflight(function (ok, msg) {
+                    if (ok) { setCache("offline cache verified", true); safeGo(); }
+                });
+            }
+        }, 3500);
         ac.addEventListener("obsolete", function () {
             setCache("cache obsolete");
             waitForTap("CACHE OBSOLETE -- Tekan tombol Enter  X/O", safeGo);
