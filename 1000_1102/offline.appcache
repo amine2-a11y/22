@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# AMINE PS4 PS4 offline cache 10.00-11.02 v20260921.2
+# AMINE PS4 PS4 offline cache 10.00-11.02 v20260925-offline-all
 includes/script.js
 includes/style.css
 index.html
@@ -19,5 +19,7 @@ src/ps4/userland.js
 src/worker.js
 src/workers.js
 background.jpg
+../theme.css
+../unified-theme.css
 NETWORK:
 *
