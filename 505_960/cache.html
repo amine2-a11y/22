@@ -153,6 +153,8 @@ function scan(){var sels=["#startJailbreak","#start-jailbreak","#start","#jailbr
 scan();setInterval(scan,500);try{new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true})}catch(e){}
 setInterval(function(){if(!active)return;var t=((document.body&&document.body.innerText)||"").toLowerCase();if(/goldhen.*(ready|loaded|success)|jailbreak.*(success|complete|completed)|payload.*(loaded|running|success)|kpatched/.test(t))finish(true);else if(/activation failed|jailbreak failed|fatal error|kernel panic|cache failed|failed to exploit/.test(t))finish(false)},350);
 window.OfflineLion={start:start,success:function(){finish(true)},fail:function(){finish(false)}};
+// Keep the lion synchronized with the existing activation progress UI.
+setInterval(function(){try{var ap=document.getElementById("activation-progress");if(ap){if(ap.classList.contains("running"))start();if(ap.classList.contains("done"))finish(true);if(ap.classList.contains("error"))finish(false)}}catch(e){}},120);
 })();</script></body>
   <script>
     // Clear history and prevent back navigation
