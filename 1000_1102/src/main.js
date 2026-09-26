@@ -120,10 +120,12 @@ async function doJb() {
       const bin_u8 = new Uint8Array(bin_buf);
 
       load_bin(bin_u8);
+      if (window.showGoldHENStatus) window.showGoldHENStatus(true);
     }
 
     logger.info("Tekan tombol PS untuk keluar");
   } catch (e) {
+    if (window.showGoldHENStatus) window.showGoldHENStatus(false);
     logger.error(e.message);
     logger.error(e.stack);
     //mem.free_all();

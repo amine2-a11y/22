@@ -220,76 +220,13 @@
 
 </script>
 
-<style>
-#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}
-#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
-</style>
-<div id="real-device-stability"><span class="rds-label">نسبة استقرار جهاز هي</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
-<script>
-(function(){
-'use strict';
-var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
-function firmware(){
- var u=navigator.userAgent||'', m=u.match(/PlayStation\s*4[\s\/]+(\d+)\.(\d+)/i);
- if(m) return m[1]+'.'+m[2];
- var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
- return x?x[1]:null;
-}
-var fw=firmware(); if(!fw) return;
-var key='rds-stats-'+fw, stats;
-try{stats=JSON.parse(localStorage.getItem(key)||'null')}catch(e){stats=null}
-if(!stats||typeof stats.attempts!=='number'||typeof stats.successes!=='number') stats={attempts:0,successes:0};
-function pct(){return stats.attempts>0?Math.round(stats.successes*100/stats.attempts):null}
-function save(){try{localStorage.setItem(key,JSON.stringify(stats))}catch(e){}}
-function show(){var p=pct();if(p===null)return;val.textContent=p+'%';box.style.display='block'}
-function successText(){
- var t=((document.body&&document.body.innerText)||'').toLowerCase();
- return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
-}
-var successSeen=false;
-function markSuccess(){if(successSeen)return;successSeen=true;stats.successes++;save();show()}
-function markAttempt(){stats.attempts++;save()}
-var old=window.jailbreakSuccess;
-window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}markSuccess()};
-var lastClick=0;
-function hook(){
- var selectors=['#start','#jeilbrek','#startJailbreak','#start-jailbreak','button[data-action="jailbreak"]','button[id*="jailbreak" i]'];
- for(var i=0;i<selectors.length;i++){var e=document.querySelector(selectors[i]);if(e&&!e.__rds){e.__rds=true;e.addEventListener('click',function(){var now=Date.now();if(now-lastClick<1000)return;lastClick=now;successSeen=false;markAttempt()},true)}}
-}
-show();hook();
-setInterval(function(){hook();if(successText())markSuccess()},250);
-try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
-})();
-</script>
 
-<style id="goldhen-status-style">
-#goldhen-status{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;display:none;min-width:280px;max-width:88vw;padding:16px 22px;border-radius:14px;background:rgba(2,8,17,.95);border:1px solid rgba(143,200,255,.35);box-shadow:0 8px 28px rgba(0,0,0,.45);color:#eaf4ff;font:700 20px/1.3 Arial,sans-serif;text-align:center;direction:rtl;pointer-events:none}
-#goldhen-status.ok{display:block;border-color:rgba(80,210,140,.6)}#goldhen-status.bad{display:block;border-color:rgba(255,100,100,.6)}
-</style>
-<div id="goldhen-status" aria-live="polite"></div>
+<style>
+#goldhen-status{display:none;position:fixed;inset:0;z-index:2147483647;align-items:center;justify-content:center;pointer-events:none;font-family:Arial,sans-serif}
+#goldhen-status span{padding:18px 34px;border-radius:14px;background:rgba(0,0,0,.86);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:clamp(22px,4vw,42px);font-weight:700;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.45)}
+</style><div id="goldhen-status"><span></span></div>
 <script>
-(function(){
-  'use strict';
-  var box=document.getElementById('goldhen-status');
-  if(!box)return;
-  function show(ok){box.textContent=ok?'تم التفعيل بنجاح':'فشل التفعيل';box.className=ok?'ok':'bad';}
-  function watch(node, successRe, failRe){
-    if(!node)return;
-    function check(){var t=(node.textContent||'');if(failRe&&failRe.test(t))show(false);else if(successRe.test(t))show(true);}
-    check();
-    try{new MutationObserver(check).observe(node,{childList:true,subtree:true,characterData:true});}catch(e){}
-  }
-  var path=location.pathname;
-  if(/\/900\//.test(path)) watch(document.getElementById('console'),/GoldHEN\s+Loaded|GoldHEN.*!/i,/Unhandled (?:error|rejection)|failed/i);
-  else if(/\/505_960\//.test(path)) watch(document.getElementById('console'),/Tekan tombol PS untuk keluar|Sudah terjailbreak|BERHASIL!/i,/Gagal load HEN|Error di Kernel Exploit|restart PS4/i);
-  else if(/\/1000_1102\//.test(path)) watch(document.getElementById('console'),/Tekan tombol PS untuk keluar|Achieved jailbreak/i,/Error|Unsupported console/i);
-  else if(/\/1150-1300\//.test(path)) watch(document.getElementById('state'),/^BERHASIL\b/i,/^FAILED|^REBOOT THE CONSOLE|^see log/i);
-  else if(/\/1302-1352\//.test(path)){
-    function check(){var c=document.body.className||'';if(/\bdone\b/.test(c))show(true);else if(/\bfail\b/.test(c))show(false);}
-    check();
-    try{new MutationObserver(check).observe(document.body,{attributes:true,attributeFilter:['class']});}catch(e){}
-  }
-})();
+window.showGoldHENStatus=function(ok){try{var e=document.getElementById('goldhen-status');if(!e)return;e.firstElementChild.textContent=ok?'تم التفعيل بنجاح':'فشل التفعيل';e.style.display='flex';}catch(_){} };
 </script>
 </body>
 </html>
