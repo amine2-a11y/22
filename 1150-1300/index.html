@@ -95,13 +95,25 @@
         setCache(msg, false);
     }
     function checkLocal(path, cb) {
+        var done = false;
         var x = new XMLHttpRequest();
+        function finish(ok) {
+            if (done) return;
+            done = true;
+            try { x.abort(); } catch (e) {}
+            cb(!!ok);
+        }
         x.open("GET", path, true);
+        x.timeout = 1800;
         x.onreadystatechange = function () {
             if (x.readyState !== 4) return;
-            cb(x.status === 0 || (x.status >= 200 && x.status < 400));
+            // In PS4 Application Cache, a cached local resource may report
+            // status 0. Treat that as available; never wait indefinitely.
+            finish(x.status === 0 || (x.status >= 200 && x.status < 400));
         };
-        try { x.send(null); } catch (e) { cb(false); }
+        x.ontimeout = function () { finish(false); };
+        x.onerror = function () { finish(false); };
+        try { x.send(null); } catch (e) { finish(false); }
     }
     function preflight(cb) {
         if (!profile || !key) return cb(false, "No exact firmware profile");
@@ -120,6 +132,11 @@
 
     function safeGo() {
         if (started) return;
+        if (!navigator.onLine) {
+            setState("offline — starting " + bug + "...", "warn");
+            setTimeout(go, 60);
+            return;
+        }
         setState("checking local assets...", "warn");
         preflight(function (ok, msg) {
             if (ok) go();
@@ -129,29 +146,48 @@
 
     function waitForTap(msg, action) {
         setState(msg, "warn");
+        var fired = false;
+        var timer = null;
         function fire() {
+            if (fired) return;
+            fired = true;
+            if (timer) clearTimeout(timer);
             window.removeEventListener("click", fire);
             window.removeEventListener("keydown", fire);
             action();
         }
         window.addEventListener("click", fire);
         window.addEventListener("keydown", fire);
+        // Offline must never depend on user input. Continue automatically.
+        timer = setTimeout(fire, 900);
     }
 
     var ac = window.applicationCache;
-    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+    // OFFLINE FAST PATH: when the profile is already cached, dispatch directly.
+    // Do not perform XHR preflight checks on PS4 offline; WebKit can report cached
+    // resources with status 0/timeout and those checks can leave the UI waiting.
+    if (!navigator.onLine && ac && ac.status === ac.IDLE) {
+        setCache("offline cache ready", true);
+        setTimeout(safeGo, 80);
+    } else if (!ac || !document.documentElement.hasAttribute("manifest")) {
         safeGo();
-    } else if (!navigator.onLine) {
-        setCache("offline -- from cache", true);
-        go();
     } else if (ac.status === ac.IDLE) {
+        setCache(navigator.onLine ? "cached -- offline ready" : "offline -- from cache", true);
+        safeGo();
+    } else if (!navigator.onLine && ac.status === ac.UNCACHED) {
+        // No cache exists yet: do not pretend Offline is ready.
+        failPreflight("offline cache not initialized -- open this profile once online");
+    } else if (!navigator.onLine) {
+        setCache("offline cache -- using stored copy", true);
+        // Give WebKit a moment to expose the cached resources, then dispatch.
+        setTimeout(safeGo, 250);
+    } else if (ac.status === ac.UPDATEREADY) {
         setCache("cached", true);
         safeGo();
     } else if (ac.status === ac.UPDATEREADY) {
         try { ac.swapCache(); } catch (e) {}
         setCache("update downloaded", true);
-        waitForTap("UPDATE READY -- Tekan tombol Enter  X/O",
-                   function () { location.reload(); });
+        setTimeout(function () { location.reload(); }, 80);
     } else {
         setCache("checking cache...");
         ac.addEventListener("downloading",
@@ -177,12 +213,12 @@
             safeGo();
         }, false);
         ac.addEventListener("error", function () {
-            setCache("cache unavailable");
-            waitForTap("CACHE FAILED -- Tekan tombol Enter  X/O", safeGo);
+            setCache("cache unavailable — trying local chain", false);
+            setTimeout(safeGo, 80);
         }, false);
         ac.addEventListener("obsolete", function () {
-            setCache("cache obsolete");
-            waitForTap("CACHE OBSOLETE -- Tekan tombol Enter  X/O", safeGo);
+            setCache("cache obsolete — trying local chain", false);
+            setTimeout(safeGo, 80);
         }, false);
     }
 })();
