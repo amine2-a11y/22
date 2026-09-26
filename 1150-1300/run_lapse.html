@@ -24,7 +24,40 @@
 <link rel="stylesheet" href="../unified-theme.css">
 
 <style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
-</head>
+<style>
+/* Professional activation progress */
+#activation-progress{display:none;position:fixed;left:50%;bottom:8.5vh;transform:translateX(-50%);width:min(420px,72vw);z-index:99998;padding:10px 12px;border:1px solid rgba(115,170,255,.28);border-radius:12px;background:rgba(2,8,17,.88);box-shadow:0 10px 35px rgba(0,0,0,.45),0 0 25px rgba(22,140,255,.10);backdrop-filter:blur(8px);font:11px/1.3 Segoe UI,Arial,sans-serif;color:#dcecff}
+#activation-progress .ap-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:7px;gap:12px}
+#activation-progress .ap-label{letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#activation-progress .ap-pct{font-weight:800;color:#8fc8ff;min-width:34px;text-align:right}
+#activation-progress .ap-track{height:7px;border-radius:99px;overflow:hidden;background:rgba(255,255,255,.10);box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+#activation-progress .ap-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#168cff,#8fc8ff,#b59cff);box-shadow:0 0 14px rgba(22,140,255,.55);transition:width .22s ease}
+#activation-progress.running .ap-fill{background-size:220% 100%;animation:apflow 1.15s linear infinite}
+#activation-progress.done .ap-fill{background:#57d6a0;box-shadow:0 0 14px rgba(87,214,160,.45)}
+#activation-progress.error .ap-fill{background:#ff7f7f;box-shadow:0 0 14px rgba(255,127,127,.35)}
+@keyframes apflow{to{background-position:-220% 0}}
+</style>
+<style id="lion-activation-style">
+#lion-activation{display:none;position:fixed;left:50%;bottom:8vh;transform:translateX(-50%);z-index:2147483000;width:min(650px,92vw);padding:10px;border:1px solid rgba(190,225,190,.25);border-radius:22px;background:linear-gradient(145deg,rgba(5,13,9,.96),rgba(10,22,14,.90));box-shadow:0 24px 80px rgba(0,0,0,.62),0 0 45px rgba(93,190,105,.12);color:#f2fff2;font-family:Segoe UI,Arial,sans-serif;backdrop-filter:blur(14px);overflow:hidden}
+#lion-activation .forest{position:relative;height:185px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#12291d 0%,#244c31 38%,#315b35 62%,#101b12 100%);box-shadow:inset 0 0 50px rgba(0,0,0,.28)}
+#lion-activation .forest:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 58% 12%,rgba(214,239,188,.30),transparent 20%),radial-gradient(circle at 25% 22%,rgba(155,211,152,.13),transparent 22%),linear-gradient(110deg,rgba(2,9,5,.72),transparent 34%,rgba(3,10,6,.45) 72%,rgba(0,0,0,.72));animation:forestLight 7s ease-in-out infinite alternate}
+#lion-activation .forest:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-8px;height:68px;background:linear-gradient(180deg,rgba(79,104,48,.3),#0a130b 72%);clip-path:polygon(0 55%,5% 40%,10% 58%,16% 35%,22% 57%,28% 42%,35% 60%,42% 32%,49% 56%,57% 38%,64% 59%,71% 34%,78% 55%,86% 39%,93% 57%,100% 35%,100% 100%,0 100%)}
+#lion-activation .tree{position:absolute;bottom:35px;width:24px;height:108px;background:#24180f;border-radius:9px;box-shadow:0 0 0 19px #142f1d,0 -26px 0 9px #1b4224,0 -49px 0 14px #23522b;opacity:.82;filter:blur(.15px)}
+#lion-activation .tree.t1{left:6%;transform:scale(.75)}#lion-activation .tree.t2{left:19%;transform:scale(1.05)}#lion-activation .tree.t3{right:19%;transform:scale(.9)}#lion-activation .tree.t4{right:5%;transform:scale(1.2)}
+#lion-activation .mist{position:absolute;left:-20%;right:-20%;bottom:54px;height:36px;background:rgba(204,235,205,.07);filter:blur(9px);border-radius:50%;animation:mistMove 5s ease-in-out infinite alternate}
+#lion-activation .path{position:absolute;left:-8%;right:-8%;bottom:7px;height:62px;background:linear-gradient(180deg,rgba(150,122,73,.12),rgba(109,83,45,.62));border-radius:50%;transform:perspective(100px) rotateX(28deg)}
+#lion-activation .firefly{position:absolute;width:3px;height:3px;border-radius:50%;background:#d8f59d;box-shadow:0 0 8px 2px rgba(215,245,157,.7);animation:firefly 2.8s ease-in-out infinite}
+#lion-activation .f1{left:31%;top:34%;animation-delay:-.5s}.f2{left:68%;top:25%;animation-delay:-1.4s}.f3{left:78%;top:48%;animation-delay:-2s}.f4{left:45%;top:20%;animation-delay:-.9s}
+#lion-activation .runner{position:absolute;left:0;bottom:31px;width:100%;height:88px;animation:lionCross 3.1s cubic-bezier(.35,0,.2,1) infinite}
+#lion-activation .lion{position:absolute;left:-100px;bottom:0;width:92px;height:72px;filter:drop-shadow(0 9px 6px rgba(0,0,0,.48));transform-origin:50% 90%}
+#lion-activation .lion svg{width:100%;height:100%;overflow:visible}
+#lion-activation.running .lion{animation:lionRun .22s steps(2,end) infinite alternate, lionBob .44s ease-in-out infinite}
+#lion-activation.success .lion{animation:lionHappy .75s ease-out both;left:calc(50% - 46px)}
+#lion-activation.fail .lion{animation:lionAngry .65s ease-out both;left:calc(50% - 46px)}
+#lion-activation .hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 3px 7px}.lion-status{font-size:12px;font-weight:800;letter-spacing:.02em}.lion-percent{font-size:12px;font-weight:900;color:#d8f59d}.lion-track{height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}.lion-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#6bbd69,#d7ef9b,#82d67a);box-shadow:0 0 16px rgba(120,220,110,.5);transition:width .22s ease}.success .lion-fill{background:#63d9a3}.fail .lion-fill{background:#ff7777}
+@keyframes lionCross{from{transform:translateX(-7%)}to{transform:translateX(115%)}}@keyframes lionRun{from{transform:translateY(2px) rotate(-4deg)}to{transform:translateY(-6px) rotate(4deg)}}@keyframes lionBob{50%{margin-top:-5px}}@keyframes lionHappy{0%{transform:scale(.55) rotate(-10deg);opacity:0}55%{transform:scale(1.16) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0)}}@keyframes lionAngry{0%{transform:scale(.7)}25%{transform:scale(1.12) rotate(-8deg)}50%{transform:scale(1.08) rotate(8deg)}75%{transform:scale(1.06) rotate(-6deg)}100%{transform:scale(1) rotate(0)}}@keyframes forestLight{from{transform:translateX(-2%) scale(1)}to{transform:translateX(3%) scale(1.04)}}@keyframes mistMove{from{transform:translateX(-3%);opacity:.25}to{transform:translateX(8%);opacity:.5}}@keyframes firefly{0%,100%{opacity:.1;transform:translate(0,0)}50%{opacity:1;transform:translate(8px,-10px)}}
+@media (prefers-reduced-motion:reduce){#lion-activation *{animation-duration:0.01ms!important;animation-iteration-count:1!important}}
+</style></head>
 <body>
 <div id="wrap">
   <div id="state">loading lapse chain...</div>
@@ -67,5 +100,40 @@
 <script>
 (function(){var ratings={"9.00":95,"9.03":92,"9.04":92,"9.50":90,"9.60":90,"10.00":90,"10.01":90,"10.50":87,"10.70":86,"10.71":86,"11.00":88,"11.02":87,"11.50":82,"11.51":82,"11.52":82,"11.60":81,"11.70":80,"11.80":79,"12.00":78,"12.50":73,"12.70":72,"12.71":72,"12.72":71,"13.00":68},box=document.getElementById('device-stability'),val=document.getElementById('device-stability-value'),shown=false;function fw(){var t=(document.body&&document.body.innerText)||'';var m=t.match(/(?:PS4|PlayStation 4)[^0-9]*(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)/);return m?m[1]:null}function show(){if(shown)return;var k=fw();if(!k){var u=navigator.userAgent.match(/PlayStation 4[\/ ]([0-9]+)\.([0-9]+)/i);if(u){var n=u[1]+'.'+u[2];k=ratings[n]?n:null}}if(!k)return;val.textContent=ratings[k]+'%';box.style.display='block';shown=true}function successText(){var t=((document.body&&document.body.innerText)||'').toLowerCase();return /jailbreak complete|jailbreak completed|achieved jailbreak|already jailbroken|jailbreak success|payload.*(loaded|running|success)|goldhen.*(loaded|success)|kpatched/.test(t)}function check(){if(successText())show()}var oldSuccess=window.jailbreakSuccess;window.jailbreakSuccess=function(){if(typeof oldSuccess==='function')try{oldSuccess.apply(this,arguments)}catch(e){}show()};setInterval(check,350);new MutationObserver(check).observe(document.body,{subtree:true,childList:true,characterData:true})})();
 </script>
-</body>
+<div id="activation-progress" aria-live="polite"><div class="ap-row"><span class="ap-label">Preparing activation…</span><span class="ap-pct">0%</span></div><div class="ap-track"><div class="ap-fill"></div></div></div>
+
+<script id="professional-activation-progress">
+(function(){
+ "use strict";
+ var box=document.getElementById("activation-progress"); if(!box)return;
+ var fill=box.querySelector(".ap-fill"), label=box.querySelector(".ap-label"), pct=box.querySelector(".ap-pct");
+ var timer=null, value=0, active=false;
+ function paint(v,t){value=Math.max(0,Math.min(100,v));fill.style.width=value+"%";pct.textContent=Math.round(value)+"%";if(t)label.textContent=t;}
+ function start(){if(active)return;active=true;box.className="running";box.style.display="block";paint(8,"Preparing activation…");clearInterval(timer);timer=setInterval(function(){if(value<88)paint(value+(value<35?4:value<65?2.2:.7), value<25?"Checking local files…":value<55?"Activating…":"Waiting for payload…");},260);}
+ function finish(ok){if(!active)return;clearInterval(timer);active=false;box.className=ok?"done":"error";box.style.display="block";paint(100,ok?"Activation complete":"Activation stopped — retry");if(!ok)paint(Math.max(value,12),"Activation stopped — retry");setTimeout(function(){box.style.display="none";},ok?1800:2200);}
+ function scan(){
+  var sels=["#startJailbreak","#start-jailbreak","#start","#jeilbrek","[data-action='jailbreak']","button[id*='jailbreak' i]","a[id*='jailbreak' i]"];
+  for(var i=0;i<sels.length;i++){var es=document.querySelectorAll(sels[i]);for(var j=0;j<es.length;j++){var e=es[j];if(e&&!e.__ap){e.__ap=true;e.addEventListener("click",start,true);}}}
+ }
+ scan(); setInterval(scan,500);
+ try{new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true});}catch(e){}
+ setInterval(function(){if(!active)return;var t=((document.body&&document.body.innerText)||"").toLowerCase();
+  if(/jailbreak (complete|completed|success)|goldhen.*(loaded|success)|payload.*(loaded|running|success)|kpatched|hen.*loaded/.test(t))finish(true);
+  else if(/jailbreak failed|activation failed|kernel panic|fatal error|cache failed/.test(t))finish(false);
+ },350);
+ window.ActivationProgress={start:start,finish:finish};
+})();
+</script>
+<script id="offline-lion-activation">(function(){
+"use strict";
+if(window.__offlineLionActivation)return;window.__offlineLionActivation=1;
+var root=document.createElement("div");root.id="lion-activation";root.innerHTML='<div class="forest"><div class="tree t1"></div><div class="tree t2"></div><div class="tree t3"></div><div class="tree t4"></div><div class="mist"></div><div class="path"></div><i class="firefly f1"></i><i class="firefly f2"></i><i class="firefly f3"></i><i class="firefly f4"></i><div class="runner"><div class="lion" aria-hidden="true"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#dca85b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path fill="#c9893f" stroke="#7b4b25" d="M36 36c-5-18 5-29 19-30 18-2 29 11 27 26l-5 12H45z"/><path fill="#d99b4d" stroke="#7b4b25" d="M55 46c17-9 36-6 43 5 4 7 3 15-4 20-10 9-31 5-40-3z"/><path fill="#c9893f" stroke="#7b4b25" d="M48 55c-10-4-21 0-29 9-6 7-12 8-16 3 8-2 9-9 14-16 9-13 25-17 39-10z"/><path d="M87 55c10-3 18-1 25 5M92 58l12 11M83 62l-1 17M68 61l-5 16M101 64l8 12M54 62l-9 12"/><path stroke="#f2c06c" d="M76 21l6 3M62 20l-5 4"/></g><circle cx="58" cy="38" r="2.6" fill="#fff4c2"/><circle cx="74" cy="39" r="2.6" fill="#fff4c2"/><path d="M62 47q6 5 12 0" fill="none" stroke="#542b1a" stroke-width="2.5" stroke-linecap="round"/></svg></div></div></div><div class="hud"><div class="lion-status">جاري التفعيل… السبع يجري</div><div class="lion-percent">0%</div></div><div class="lion-track"><div class="lion-fill"></div></div>';document.body.appendChild(root);var lion=root.querySelector(".lion"),status=root.querySelector(".lion-status"),percent=root.querySelector(".lion-percent"),fill=root.querySelector(".lion-fill"),timer=null,val=0,active=false;
+function paint(v,t){val=Math.max(0,Math.min(100,v));fill.style.width=val+"%";percent.textContent=Math.round(val)+"%";if(t)status.textContent=t}
+function start(){if(active)return;active=true;root.className="running";root.style.display="block";paint(5,"السبع يجري… جاري التفعيل");clearInterval(timer);timer=setInterval(function(){if(val<90)paint(val+(val<30?4:val<65?2.2:.65),val<25?"السبع يجري… فحص الملفات":"السبع يجري… تفعيل النظام");},250)}
+function finish(ok){if(!active)return;clearInterval(timer);active=false;root.className=ok?"success":"fail";paint(100,ok?"😄 تم التفعيل بنجاح — GoldHEN جاهز":"😠 فشل التفعيل — أعد المحاولة");setTimeout(function(){root.style.display="none";root.className=""},ok?2400:2800)}
+function scan(){var sels=["#startJailbreak","#start-jailbreak","#start","#jailbreak","#jb","[data-action='jailbreak']","button[id*='jailbreak' i]","a[id*='jailbreak' i]","button[onclick*='jailbreak' i]"];for(var i=0;i<sels.length;i++){try{document.querySelectorAll(sels[i]).forEach(function(e){if(!e.__lion){e.__lion=1;e.addEventListener("click",start,true)}})}catch(e){}}}
+scan();setInterval(scan,500);try{new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true})}catch(e){}
+setInterval(function(){if(!active)return;var t=((document.body&&document.body.innerText)||"").toLowerCase();if(/goldhen.*(ready|loaded|success)|jailbreak.*(success|complete|completed)|payload.*(loaded|running|success)|kpatched/.test(t))finish(true);else if(/activation failed|jailbreak failed|fatal error|kernel panic|cache failed|failed to exploit/.test(t))finish(false)},350);
+window.OfflineLion={start:start,success:function(){finish(true)},fail:function(){finish(false)}};
+})();</script></body>
 </html>
