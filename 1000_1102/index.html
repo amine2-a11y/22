@@ -202,5 +202,33 @@ setInterval(function(){hook();if(successText())markSuccess()},250);
 try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
 })();
 </script>
+
+<script id="jb-all-firmware-status">
+(function(){
+  var done=false, failed=false;
+  function success(){
+    if(done||failed)return;
+    done=true;
+    try{if(typeof window.showJailbreakSuccess==="function")window.showJailbreakSuccess();}catch(e){}
+  }
+  function failure(){
+    if(done||failed)return;
+    failed=true;
+    try{if(typeof window.showJailbreakFailure==="function")window.showJailbreakFailure();}catch(e){}
+  }
+  function scan(){
+    var t=((document.body&&document.body.innerText)||"").toLowerCase();
+    if(/jailbreak activé|jailbreak activated|jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(loaded|success)|payload.*(loaded|running|success)|kpatched|berhasil/.test(t)) success();
+  }
+  scan();
+  setInterval(scan,300);
+  try{new MutationObserver(scan).observe(document.body,{subtree:true,childList:true,characterData:true});}catch(e){}
+  window.addEventListener("unhandledrejection",function(e){
+    if(!/multiple blurs|blurs before pop/i.test(String(e&&e.reason||""))) failure();
+  });
+  window.addEventListener("error",function(){failure();});
+})();
+</script>
+
 </body>
 </html>
