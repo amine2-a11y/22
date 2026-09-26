@@ -132,9 +132,10 @@ setInterval(function(){hook();if(successText())markSuccess()},250);
 try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
 })();
 </script>
+
 <style id="goldhen-status-style">
-#goldhen-status{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;display:none;min-width:260px;max-width:88vw;padding:12px 18px;border-radius:12px;background:rgba(2,8,17,.94);border:1px solid rgba(143,200,255,.35);box-shadow:0 8px 28px rgba(0,0,0,.45);color:#eaf4ff;font:700 16px/1.3 Arial,sans-serif;text-align:center;direction:rtl;pointer-events:none}
-#goldhen-status.ok{display:block;border-color:rgba(80,210,140,.55)}#goldhen-status.bad{display:block;border-color:rgba(255,100,100,.55)}
+#goldhen-status{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;display:none;min-width:280px;max-width:88vw;padding:16px 22px;border-radius:14px;background:rgba(2,8,17,.95);border:1px solid rgba(143,200,255,.35);box-shadow:0 8px 28px rgba(0,0,0,.45);color:#eaf4ff;font:700 20px/1.3 Arial,sans-serif;text-align:center;direction:rtl;pointer-events:none}
+#goldhen-status.ok{display:block;border-color:rgba(80,210,140,.6)}#goldhen-status.bad{display:block;border-color:rgba(255,100,100,.6)}
 </style>
 <div id="goldhen-status" aria-live="polite"></div>
 <script>
@@ -142,25 +143,23 @@ try{new MutationObserver(function(){hook();if(successText())markSuccess()}).obse
   'use strict';
   var box=document.getElementById('goldhen-status');
   if(!box)return;
-  function text(){return ((document.body&&document.body.innerText)||'').toLowerCase();}
-  function show(t,c){box.textContent=t;box.className=c;}
-  function check(){
-    var t=text(), body=document.body;
-    if(body && body.classList && body.classList.contains('done')){show('تم التفعيل بنجاح','ok');return true;}
-    if(/payload[- ]running|payload[- ]alive|created bin thread|goldhen loaded|berhasil!|sudah terjailbreak|verdict[\s\S]*payload=1/.test(t)){
-      show('تم التفعيل بنجاح','ok');return true;
-    }
-    if(body && body.classList && body.classList.contains('fail')){show('فشل التفعيل','bad');return true;}
-    if(/gagal load hen|state[\s\S]*failed|failed -- see log|proof-summary-final[\s\S]*fail=[1-9]|\[-\] /.test(t)){
-      show('فشل التفعيل','bad');return true;
-    }
-    return false;
+  function show(ok){box.textContent=ok?'تم التفعيل بنجاح':'فشل التفعيل';box.className=ok?'ok':'bad';}
+  function watch(node, successRe, failRe){
+    if(!node)return;
+    function check(){var t=(node.textContent||'');if(failRe&&failRe.test(t))show(false);else if(successRe.test(t))show(true);}
+    check();
+    try{new MutationObserver(check).observe(node,{childList:true,subtree:true,characterData:true});}catch(e){}
   }
-  var obs=new MutationObserver(check);
-  obs.observe(document.body,{subtree:true,childList:true,characterData:true,attributes:true,attributeFilter:['class']});
-  check();
-  window.addEventListener('error',function(){show('فشل التفعيل','bad');},true);
-  window.addEventListener('unhandledrejection',function(){show('فشل التفعيل','bad');},true);
+  var path=location.pathname;
+  if(/\/900\//.test(path)) watch(document.getElementById('console'),/GoldHEN\s+Loaded|GoldHEN.*!/i,/Unhandled (?:error|rejection)|failed/i);
+  else if(/\/505_960\//.test(path)) watch(document.getElementById('console'),/Tekan tombol PS untuk keluar|Sudah terjailbreak|BERHASIL!/i,/Gagal load HEN|Error di Kernel Exploit|restart PS4/i);
+  else if(/\/1000_1102\//.test(path)) watch(document.getElementById('console'),/Tekan tombol PS untuk keluar|Achieved jailbreak/i,/Error|Unsupported console/i);
+  else if(/\/1150-1300\//.test(path)) watch(document.getElementById('state'),/^BERHASIL\b/i,/^FAILED|^REBOOT THE CONSOLE|^see log/i);
+  else if(/\/1302-1352\//.test(path)){
+    function check(){var c=document.body.className||'';if(/\bdone\b/.test(c))show(true);else if(/\bfail\b/.test(c))show(false);}
+    check();
+    try{new MutationObserver(check).observe(document.body,{attributes:true,attributeFilter:['class']});}catch(e){}
+  }
 })();
 </script>
 </body>
