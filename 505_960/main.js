@@ -72,6 +72,7 @@ async function doJailBreak() {
     if (result === 0 || result === 91) {
       window.log("\nBERHASIL!", "green");
       getPayload672("payload.bin");
+      if (window.showGoldHENStatus) window.showGoldHENStatus(true);
       window.log("\nTekan tombol PS untuk keluar");
       exitBrowserAfterJailbreak();
     } else if (result === 179) {
@@ -98,7 +99,9 @@ async function doJailBreak() {
     // Inject HEN payload
     jb_step_status = await PayloadLoader("payload.bin"); // Read payload from .bin file
     await sleep(3000); // Wait 500ms
+    if (jb_step_status === 1 && window.showGoldHENStatus) window.showGoldHENStatus(true);
     if (jb_step_status !== 1) {
+      if (window.showGoldHENStatus) window.showGoldHENStatus(false);
       window.log("Gagal load HEN!", "red");
 	  window.log("\nTekan tombol PS, restart PS4 dan coba lagi...");
       return;
