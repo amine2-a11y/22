@@ -71,11 +71,13 @@ async function doJailBreak() {
     var result = KernelExploit672();
     if (result === 0 || result === 91) {
       window.log("\nBERHASIL!", "green");
+      if (window.__goldhenStatusSuccess) window.__goldhenStatusSuccess();
       getPayload672("payload.bin");
       window.log("\nTekan tombol PS untuk keluar");
       exitBrowserAfterJailbreak();
     } else if (result === 179) {
       window.log("\nSudah terjailbreak!", "green");
+      if (window.__goldhenStatusSuccess) window.__goldhenStatusSuccess();
       window.log("\nTekan tombol PS pour sortir");
       exitBrowserAfterJailbreak();
     } else {
@@ -99,12 +101,11 @@ async function doJailBreak() {
     jb_step_status = await PayloadLoader("payload.bin"); // Read payload from .bin file
     await sleep(3000); // Wait 500ms
     if (jb_step_status !== 1) {
-      if (window.GoldHENStatus) window.GoldHENStatus.fail();
       window.log("Gagal load HEN!", "red");
+    if (window.__goldhenStatusFailure) window.__goldhenStatusFailure();
 	  window.log("\nTekan tombol PS, restart PS4 dan coba lagi...");
       return;
     }
-    if (window.GoldHENStatus) window.GoldHENStatus.success();
     window.log("\nTekan tombol PS untuk keluar");
     exitBrowserAfterJailbreak();
     // window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
