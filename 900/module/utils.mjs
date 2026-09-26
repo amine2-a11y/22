@@ -29,12 +29,20 @@ export function die(msg='') {
 }
 
 const console = document.getElementById('console');
+const MAX_LOG_LINES = 120;
 export function log(msg='') {
     console.append(msg + '\n');
+    // Keep the UI log from retaining an unbounded DOM text node during long
+    // exploit loops. This is UI-only and does not touch exploit state.
+    const text = console.textContent || '';
+    const lines = text.split('\n');
+    if (lines.length > MAX_LOG_LINES + 1) {
+        console.textContent = lines.slice(-MAX_LOG_LINES - 1).join('');
+    }
 }
 
 export function clear_log() {
-    console.innerHTML = null;
+    console.textContent = '';
 }
 
 // alignment must be 32 bits and is a power of 2
