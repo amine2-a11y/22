@@ -87,24 +87,24 @@ async function doJailBreak() {
     await loadScript('psfree.js');
     Init_Globals();
     jb_step_status = await doPSFreeExploit();
-    if (jb_step_status !== 1) { if(window.GoldHENStatus) window.GoldHENStatus.fail(); return; }
+    if (jb_step_status !== 1) return;
     window.log("Starting Lapse Kernel Exploit...");
     await sleep(200); // Wait 200ms
     await loadScript('kpatches.js');
     await loadScript('lapse.js');
     jb_step_status = await doLapseExploit();
-    if (jb_step_status !== 1) { if(window.GoldHENStatus) window.GoldHENStatus.fail(); return; }
+    if (jb_step_status !== 1) return;
     await sleep(500); // Wait 500ms
     // Inject HEN payload
     jb_step_status = await PayloadLoader("payload.bin"); // Read payload from .bin file
     await sleep(3000); // Wait 500ms
     if (jb_step_status !== 1) {
-      if(window.GoldHENStatus) window.GoldHENStatus.fail();
+      if (window.GoldHENStatus) window.GoldHENStatus.fail();
       window.log("Gagal load HEN!", "red");
 	  window.log("\nTekan tombol PS, restart PS4 dan coba lagi...");
       return;
     }
-    if(window.GoldHENStatus) window.GoldHENStatus.success();
+    if (window.GoldHENStatus) window.GoldHENStatus.success();
     window.log("\nTekan tombol PS untuk keluar");
     exitBrowserAfterJailbreak();
     // window.log("\nPSFree & Lapse exploit with AIO fixes by ABC");
