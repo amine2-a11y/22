@@ -42,27 +42,16 @@ body.done .spinner{display:none}
 @keyframes apAngry{0%{transform:scale(.55) rotate(0);opacity:0}35%{transform:scale(1.12) rotate(-8deg);opacity:1}55%{transform:scale(1.05) rotate(8deg)}75%{transform:scale(1.05) rotate(-6deg)}100%{transform:scale(1) rotate(0)}}
 @keyframes apflow{to{background-position:-220% 0}}
 </style>
-<style id="lion-activation-style">
-#lion-activation{display:none;position:fixed;left:50%;bottom:8vh;transform:translateX(-50%);z-index:2147483000;width:min(650px,92vw);padding:10px;border:1px solid rgba(190,225,190,.25);border-radius:22px;background:linear-gradient(145deg,rgba(5,13,9,.96),rgba(10,22,14,.90));box-shadow:0 24px 80px rgba(0,0,0,.62),0 0 45px rgba(93,190,105,.12);color:#f2fff2;font-family:Segoe UI,Arial,sans-serif;backdrop-filter:blur(14px);overflow:hidden}
-#lion-activation .forest{position:relative;height:185px;overflow:hidden;border-radius:16px;background:linear-gradient(180deg,#12291d 0%,#244c31 38%,#315b35 62%,#101b12 100%);box-shadow:inset 0 0 50px rgba(0,0,0,.28)}
-#lion-activation .forest:before{content:"";position:absolute;inset:-20%;background:radial-gradient(circle at 58% 12%,rgba(214,239,188,.30),transparent 20%),radial-gradient(circle at 25% 22%,rgba(155,211,152,.13),transparent 22%),linear-gradient(110deg,rgba(2,9,5,.72),transparent 34%,rgba(3,10,6,.45) 72%,rgba(0,0,0,.72));animation:forestLight 7s ease-in-out infinite alternate}
-#lion-activation .forest:after{content:"";position:absolute;left:-8%;right:-8%;bottom:-8px;height:68px;background:linear-gradient(180deg,rgba(79,104,48,.3),#0a130b 72%);clip-path:polygon(0 55%,5% 40%,10% 58%,16% 35%,22% 57%,28% 42%,35% 60%,42% 32%,49% 56%,57% 38%,64% 59%,71% 34%,78% 55%,86% 39%,93% 57%,100% 35%,100% 100%,0 100%)}
-#lion-activation .tree{position:absolute;bottom:35px;width:24px;height:108px;background:#24180f;border-radius:9px;box-shadow:0 0 0 19px #142f1d,0 -26px 0 9px #1b4224,0 -49px 0 14px #23522b;opacity:.82;filter:blur(.15px)}
-#lion-activation .tree.t1{left:6%;transform:scale(.75)}#lion-activation .tree.t2{left:19%;transform:scale(1.05)}#lion-activation .tree.t3{right:19%;transform:scale(.9)}#lion-activation .tree.t4{right:5%;transform:scale(1.2)}
-#lion-activation .mist{position:absolute;left:-20%;right:-20%;bottom:54px;height:36px;background:rgba(204,235,205,.07);filter:blur(9px);border-radius:50%;animation:mistMove 5s ease-in-out infinite alternate}
-#lion-activation .path{position:absolute;left:-8%;right:-8%;bottom:7px;height:62px;background:linear-gradient(180deg,rgba(150,122,73,.12),rgba(109,83,45,.62));border-radius:50%;transform:perspective(100px) rotateX(28deg)}
-#lion-activation .firefly{position:absolute;width:3px;height:3px;border-radius:50%;background:#d8f59d;box-shadow:0 0 8px 2px rgba(215,245,157,.7);animation:firefly 2.8s ease-in-out infinite}
-#lion-activation .f1{left:31%;top:34%;animation-delay:-.5s}.f2{left:68%;top:25%;animation-delay:-1.4s}.f3{left:78%;top:48%;animation-delay:-2s}.f4{left:45%;top:20%;animation-delay:-.9s}
-#lion-activation .runner{position:absolute;left:0;bottom:31px;width:100%;height:88px;animation:lionCross 3.1s cubic-bezier(.35,0,.2,1) infinite}
-#lion-activation .lion{position:absolute;left:-100px;bottom:0;width:92px;height:72px;filter:drop-shadow(0 9px 6px rgba(0,0,0,.48));transform-origin:50% 90%}
-#lion-activation .lion svg{width:100%;height:100%;overflow:visible}
-#lion-activation.running .lion{animation:lionRun .22s steps(2,end) infinite alternate, lionBob .44s ease-in-out infinite}
-#lion-activation.success .lion{animation:lionHappy .75s ease-out both;left:calc(50% - 46px)}
-#lion-activation.fail .lion{animation:lionAngry .65s ease-out both;left:calc(50% - 46px)}
-#lion-activation .hud{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:10px 3px 7px}.lion-status{font-size:12px;font-weight:800;letter-spacing:.02em}.lion-percent{font-size:12px;font-weight:900;color:#d8f59d}.lion-track{height:8px;border-radius:99px;background:rgba(255,255,255,.09);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}.lion-fill{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#6bbd69,#d7ef9b,#82d67a);box-shadow:0 0 16px rgba(120,220,110,.5);transition:width .22s ease}.success .lion-fill{background:#63d9a3}.fail .lion-fill{background:#ff7777}
-@keyframes lionCross{from{transform:translateX(-7%)}to{transform:translateX(115%)}}@keyframes lionRun{from{transform:translateY(2px) rotate(-4deg)}to{transform:translateY(-6px) rotate(4deg)}}@keyframes lionBob{50%{margin-top:-5px}}@keyframes lionHappy{0%{transform:scale(.55) rotate(-10deg);opacity:0}55%{transform:scale(1.16) rotate(6deg);opacity:1}100%{transform:scale(1) rotate(0)}}@keyframes lionAngry{0%{transform:scale(.7)}25%{transform:scale(1.12) rotate(-8deg)}50%{transform:scale(1.08) rotate(8deg)}75%{transform:scale(1.06) rotate(-6deg)}100%{transform:scale(1) rotate(0)}}@keyframes forestLight{from{transform:translateX(-2%) scale(1)}to{transform:translateX(3%) scale(1.04)}}@keyframes mistMove{from{transform:translateX(-3%);opacity:.25}to{transform:translateX(8%);opacity:.5}}@keyframes firefly{0%,100%{opacity:.1;transform:translate(0,0)}50%{opacity:1;transform:translate(8px,-10px)}}
-@media (prefers-reduced-motion:reduce){#lion-activation *{animation-duration:0.01ms!important;animation-iteration-count:1!important}}
-</style></head>
+
+
+<style id="lion-activation-clean">
+.activation-lion{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;outline:0!important;cursor:pointer!important;}
+.activation-lion-img,.amine-activation-lion-img{display:block!important;width:176px!important;height:auto!important;max-width:none!important;background:transparent!important;border:0!important;box-shadow:none!important;animation:amineLionRun 1.05s ease-in-out infinite;}
+@keyframes amineLionRun{0%,100%{transform:translateX(-7px) translateY(1px)}50%{transform:translateX(7px) translateY(-2px)}}
+</style>
+<style id="lion-pro-hide-clean">#amine-lion-pro{display:none!important}</style>
+<style id="lion-video-asset-style">.activation-lion{background:transparent!important}.activation-lion-img{width:176px!important;height:auto!important;object-fit:contain!important;background:transparent!important;display:block!important;border:0!important;box-shadow:none!important}</style>
+</head>
 <body>
 <div class="page">
   <div class="brand">OFFLINE PS4 PROJECT</div>
@@ -77,44 +66,9 @@ body.done .spinner{display:none}
 <script type="module">
 import "./jb.js";
 </script>
-<div id="activation-progress" aria-live="polite"><div class="ap-face" aria-hidden="true">😄</div><div class="ap-row"><span class="ap-label">Preparing activation…</span><span class="ap-pct">0%</span></div><div class="ap-track"><div class="ap-fill"></div></div></div>
+<div class="ap-row"><span class="ap-label">Preparing activation…</span><span class="ap-pct">0%</span></div><div class="ap-track"><div class="ap-fill"></div></div></div>
 
-<script id="professional-activation-progress">
-(function(){
- "use strict";
- var box=document.getElementById("activation-progress"); if(!box)return;
- var fill=box.querySelector(".ap-fill"), label=box.querySelector(".ap-label"), pct=box.querySelector(".ap-pct"), face=box.querySelector(".ap-face");
- var timer=null, value=0, active=false;
- function paint(v,t){value=Math.max(0,Math.min(100,v));fill.style.width=value+"%";pct.textContent=Math.round(value)+"%";if(t)label.textContent=t;}
- function start(){if(active)return;active=true;box.className="running";box.style.display="block";paint(8,"Preparing activation…");clearInterval(timer);timer=setInterval(function(){if(value<88)paint(value+(value<35?4:value<65?2.2:.7), value<25?"Checking local files…":value<55?"Activating…":"Waiting for payload…");},260);}
- function finish(ok){if(!active)return;clearInterval(timer);active=false;box.className=ok?"done":"error";box.style.display="block";if(face)face.textContent=ok?"😄":"😠";paint(100,ok?"Activation successful — GoldHEN ready":"Activation failed — retry");if(!ok)paint(Math.max(value,12),"Activation failed — retry");setTimeout(function(){box.style.display="none";box.className="";},ok?2200:2600);}
- function scan(){
-  var sels=["#startJailbreak","#start-jailbreak","#start","#jeilbrek","[data-action='jailbreak']","button[id*='jailbreak' i]","a[id*='jailbreak' i]"];
-  for(var i=0;i<sels.length;i++){var es=document.querySelectorAll(sels[i]);for(var j=0;j<es.length;j++){var e=es[j];if(e&&!e.__ap){e.__ap=true;e.addEventListener("click",start,true);}}}
- }
- scan(); setInterval(scan,500);
- try{new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true});}catch(e){}
- setInterval(function(){if(!active)return;var t=((document.body&&document.body.innerText)||"").toLowerCase();
-  if(/jailbreak (complete|completed|success)|goldhen.*(loaded|success)|payload.*(loaded|running|success)|kpatched|hen.*loaded/.test(t))finish(true);
-  else if(/jailbreak failed|activation failed|kernel panic|fatal error|cache failed/.test(t))finish(false);
- },350);
- window.ActivationProgress={start:start,finish:finish};
-})();
-</script>
-<script id="offline-lion-activation">(function(){
-"use strict";
-if(window.__offlineLionActivation)return;window.__offlineLionActivation=1;
-var root=document.createElement("div");root.id="lion-activation";root.innerHTML='<div class="forest"><div class="tree t1"></div><div class="tree t2"></div><div class="tree t3"></div><div class="tree t4"></div><div class="mist"></div><div class="path"></div><i class="firefly f1"></i><i class="firefly f2"></i><i class="firefly f3"></i><i class="firefly f4"></i><div class="runner"><div class="lion" aria-hidden="true"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#dca85b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path fill="#c9893f" stroke="#7b4b25" d="M36 36c-5-18 5-29 19-30 18-2 29 11 27 26l-5 12H45z"/><path fill="#d99b4d" stroke="#7b4b25" d="M55 46c17-9 36-6 43 5 4 7 3 15-4 20-10 9-31 5-40-3z"/><path fill="#c9893f" stroke="#7b4b25" d="M48 55c-10-4-21 0-29 9-6 7-12 8-16 3 8-2 9-9 14-16 9-13 25-17 39-10z"/><path d="M87 55c10-3 18-1 25 5M92 58l12 11M83 62l-1 17M68 61l-5 16M101 64l8 12M54 62l-9 12"/><path stroke="#f2c06c" d="M76 21l6 3M62 20l-5 4"/></g><circle cx="58" cy="38" r="2.6" fill="#fff4c2"/><circle cx="74" cy="39" r="2.6" fill="#fff4c2"/><path d="M62 47q6 5 12 0" fill="none" stroke="#542b1a" stroke-width="2.5" stroke-linecap="round"/></svg></div></div></div><div class="hud"><div class="lion-status">جاري التفعيل… السبع يجري</div><div class="lion-percent">0%</div></div><div class="lion-track"><div class="lion-fill"></div></div>';document.body.appendChild(root);var lion=root.querySelector(".lion"),status=root.querySelector(".lion-status"),percent=root.querySelector(".lion-percent"),fill=root.querySelector(".lion-fill"),timer=null,val=0,active=false;
-function paint(v,t){val=Math.max(0,Math.min(100,v));fill.style.width=val+"%";percent.textContent=Math.round(val)+"%";if(t)status.textContent=t}
-function start(){if(active)return;active=true;root.className="running";root.style.display="block";paint(5,"السبع يجري… جاري التفعيل");clearInterval(timer);timer=setInterval(function(){if(val<90)paint(val+(val<30?4:val<65?2.2:.65),val<25?"السبع يجري… فحص الملفات":"السبع يجري… تفعيل النظام");},250)}
-function finish(ok){if(!active)return;clearInterval(timer);active=false;root.className=ok?"success":"fail";paint(100,ok?"😄 تم التفعيل بنجاح — GoldHEN جاهز":"😠 فشل التفعيل — أعد المحاولة");setTimeout(function(){root.style.display="none";root.className=""},ok?2400:2800)}
-function scan(){var sels=["#startJailbreak","#start-jailbreak","#start","#jailbreak","#jb","[data-action='jailbreak']","button[id*='jailbreak' i]","a[id*='jailbreak' i]","button[onclick*='jailbreak' i]"];for(var i=0;i<sels.length;i++){try{document.querySelectorAll(sels[i]).forEach(function(e){if(!e.__lion){e.__lion=1;e.addEventListener("click",start,true)}})}catch(e){}}}
-scan();setInterval(scan,500);try{new MutationObserver(scan).observe(document.documentElement,{subtree:true,childList:true})}catch(e){}
-setInterval(function(){if(!active)return;var t=((document.body&&document.body.innerText)||"").toLowerCase();if(/goldhen.*(ready|loaded|success)|jailbreak.*(success|complete|completed)|payload.*(loaded|running|success)|kpatched/.test(t))finish(true);else if(/activation failed|jailbreak failed|fatal error|kernel panic|cache failed|failed to exploit/.test(t))finish(false)},350);
-window.OfflineLion={start:start,success:function(){finish(true)},fail:function(){finish(false)}};
-// Keep the lion synchronized with the existing activation progress UI.
-setInterval(function(){try{var ap=document.getElementById("activation-progress");if(ap){if(ap.classList.contains("running"))start();if(ap.classList.contains("done"))finish(true);if(ap.classList.contains("error"))finish(false)}}catch(e){}},120);
-})();</script><!-- LION-RELOAD-BRIDGE-V2 -->
+
 <script>(function(){
 'use strict';
 var KEY='amine_lion_activation_pending_v2';
@@ -137,5 +91,70 @@ function bootLion(){
 }
 if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootLion); else bootLion();
 })();</script>
+<div class="tree t2"></div><div class="tree t3"></div><div class="tree t4"></div><div class="mist"></div><div class="path"></div><div class="runner"><div class="lion"><svg viewBox="0 0 120 90" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><g fill="none" stroke="#dca85b" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"><path fill="#c9893f" stroke="#7b4b25" d="M36 36c-5-18 5-29 19-30 18-2 29 11 27 26l-5 12H45z"/><path fill="#d99b4d" stroke="#7b4b25" d="M55 46c17-9 36-6 43 5 4 7 3 15-4 20-10 9-31 5-40-3z"/><path fill="#c9893f" stroke="#7b4b25" d="M48 55c-10-4-21 0-29 9-6 7-12 8-16 3 8-2 9-9 14-16 9-13 25-17 39-10z"/><path d="M87 55c10-3 18-1 25 5M92 58l12 11M83 62l-1 17M68 61l-5 16M101 64l8 12M54 62l-9 12"/><path stroke="#f2c06c" d="M76 21l6 3M62 20l-5 4"/></g><circle cx="58" cy="38" r="2.6" fill="#fff4c2"/><circle cx="74" cy="39" r="2.6" fill="#fff4c2"/><path d="M62 47q6 5 12 0" fill="none" stroke="#542b1a" stroke-width="2.5" stroke-linecap="round"/></svg></div></div></div><div class="hud"><span>🦁 السبع — جاهز للتفعيل</span><b>0%</b></div><div class="lion-track"><div class="lion-fill"></div></div></div>
+
+<style id="lion-pro-v4">
+#amine-lion-pro{position:fixed;left:50%;bottom:7vh;transform:translateX(-50%);width:min(560px,82vw);padding:9px;z-index:2147483646;display:none;border:1px solid rgba(150,220,170,.35);border-radius:18px;background:rgba(5,12,8,.94);box-shadow:0 18px 55px rgba(0,0,0,.62),0 0 28px rgba(100,210,120,.14);font:12px Arial,sans-serif;color:#effff2;overflow:hidden}
+#amine-lion-pro.on{display:block}
+#amine-lion-pro .scene{position:relative;height:145px;border-radius:12px;overflow:hidden;background:linear-gradient(#10261b 0%,#1f4b2d 52%,#0c160d 100%);}
+#amine-lion-pro .moon{position:absolute;width:42px;height:42px;border-radius:50%;right:12%;top:12px;background:#e7f4c7;box-shadow:0 0 25px rgba(231,244,199,.35)}
+#amine-lion-pro .trees{position:absolute;inset:auto 0 20px;height:105px;background:linear-gradient(135deg,transparent 0 7%,#173d24 7% 11%,transparent 11% 17%,#153720 17% 22%,transparent 22% 71%,#163c24 71% 76%,transparent 76% 84%,#173d24 84% 89%,transparent 89%);opacity:.9}
+#amine-lion-pro .ground{position:absolute;left:-5%;right:-5%;bottom:-25px;height:65px;border-radius:50%;background:linear-gradient(#6d5430,#2c2114);}
+#amine-lion-pro .runner{position:absolute;left:0;bottom:27px;width:100%;height:82px;animation:amineLionAcross 3.6s linear infinite}
+#amine-lion-pro .lion{position:absolute;left:-100px;bottom:0;width:98px;height:70px;animation:amineLionRun .18s steps(2,end) infinite alternate;filter:drop-shadow(0 7px 4px rgba(0,0,0,.55))}
+#amine-lion-pro .mane{position:absolute;left:25px;top:4px;width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,#7b4b25 0 45%,#4b2a18 46% 100%);}
+#amine-lion-pro .head{position:absolute;left:34px;top:10px;width:38px;height:34px;border-radius:48% 52% 45% 45%;background:#c9873f;}
+#amine-lion-pro .ear{position:absolute;top:6px;width:10px;height:10px;border-radius:50%;background:#9d622d}.amine-lion-e1{left:37px}.amine-lion-e2{left:60px}
+#amine-lion-pro .eye{position:absolute;top:23px;width:4px;height:4px;border-radius:50%;background:#17100b}.amine-lion-eye1{left:44px}.amine-lion-eye2{left:59px}
+#amine-lion-pro .body{position:absolute;left:40px;top:31px;width:52px;height:25px;border-radius:55% 45% 42% 50%;background:#c9873f;transform:rotate(-3deg)}
+#amine-lion-pro .leg{position:absolute;top:49px;width:8px;height:24px;border-radius:6px;background:#9e632e;transform-origin:top}.amine-lion-l1{left:48px}.amine-lion-l2{left:61px}.amine-lion-l3{left:77px}.amine-lion-l4{left:88px}
+#amine-lion-pro .tail{position:absolute;left:35px;top:38px;width:35px;height:24px;border-left:5px solid #9e632e;border-radius:50%;transform:rotate(18deg)}
+#amine-lion-pro .tail:after{content:"";position:absolute;left:-9px;top:-3px;width:9px;height:9px;border-radius:50%;background:#6d3f22}
+#amine-lion-pro .status{display:flex;justify-content:space-between;gap:10px;margin:7px 3px 5px;font-weight:700}.amine-lion-pct{color:#d9f59d}
+#amine-lion-pro .track{height:7px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}.amine-lion-fill{height:100%;width:0;background:linear-gradient(90deg,#63bd6c,#d8ef9a);transition:width .2s ease}
+#amine-lion-pro.success .amine-lion-fill{background:#59d39b}#amine-lion-pro.fail .amine-lion-fill{background:#ff7777}
+#amine-lion-pro.success .lion{animation:amineLionHappy .7s ease-out both;left:calc(50% - 49px)}#amine-lion-pro.fail .lion{animation:amineLionAngry .65s ease-out both;left:calc(50% - 49px)}
+#amine-lion-pro.success .status:before{content:"😄 ";}#amine-lion-pro.fail .status:before{content:"😠 ";}
+@keyframes amineLionAcross{from{transform:translateX(-8%)}to{transform:translateX(112%)}}@keyframes amineLionRun{from{transform:translateY(2px) rotate(-3deg)}to{transform:translateY(-5px) rotate(3deg)}}@keyframes amineLionHappy{0%{transform:scale(.7) rotate(-8deg)}55%{transform:scale(1.15) rotate(7deg)}100%{transform:scale(1) rotate(0)}}@keyframes amineLionAngry{0%{transform:scale(.8)}25%{transform:scale(1.12) rotate(-8deg)}50%{transform:scale(1.12) rotate(8deg)}100%{transform:scale(1) rotate(0)}}
+@media(max-width:700px){#amine-lion-pro{width:88vw}}
+</style>
+<div id="amine-lion-pro" aria-live="polite"><div class="scene"><div class="moon"></div><div class="trees"></div><div class="ground"></div><div class="runner"><div class="lion"><div class="mane"></div><i class="ear amine-lion-e1"></i><i class="ear amine-lion-e2"></i><div class="head"></div><i class="eye amine-lion-eye1"></i><i class="eye amine-lion-eye2"></i><div class="body"></div><i class="leg amine-lion-l1"></i><i class="leg amine-lion-l2"></i><i class="leg amine-lion-l3"></i><i class="leg amine-lion-l4"></i><div class="tail"></div></div></div></div><div class="status"><span class="amine-lion-label">السبع يجري — جاري التفعيل</span><span class="amine-lion-pct">0%</span></div><div class="track"><div class="amine-lion-fill"></div></div></div>
+<script id="lion-pro-v4-js">
+(function(){
+ if(window.__AmineLionProV4)return; window.__AmineLionProV4=1;
+ function ready(fn){if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fn);else fn();}
+ ready(function(){
+  var root=document.getElementById('amine-lion-pro'); if(!root)return;
+  var label=root.querySelector('.amine-lion-label'), pct=root.querySelector('.amine-lion-pct'), fill=root.querySelector('.amine-lion-fill'), timer=null, val=0, active=false;
+  function paint(n,t){val=Math.max(0,Math.min(100,n));pct.textContent=Math.round(val)+'%';fill.style.width=val+'%';if(t)label.textContent=t;}
+  function start(){if(active)return;active=true;root.className='on';root.classList.remove('success','fail');paint(4,'السبع يجري — فحص الملفات');clearInterval(timer);timer=setInterval(function(){if(val<90)paint(val+(val<30?4:val<65?2:0.7),val<30?'السبع يجري — فحص الملفات':val<65?'السبع يجري — تفعيل النظام':'السبع يجري — انتظار النتيجة');},250);}
+  function finish(ok){if(!active)return;clearInterval(timer);active=false;root.className='on '+(ok?'success':'fail');paint(100,ok?'السبع فرحان — تم التفعيل بنجاح':'السبع زعفان — فشل التفعيل');setTimeout(function(){root.className='';},2600);}
+  window.OfflineLion={start:start,success:function(){finish(true)},fail:function(){finish(false)}};
+  // Existing progress UI, if present.
+  setInterval(function(){var a=document.getElementById('activation-progress');if(!a)return;if(a.classList.contains('running'))start();if(a.classList.contains('done'))finish(true);if(a.classList.contains('error'))finish(false);},150);
+  // Start from the activation button without changing its existing action.
+  var sels=['#startJailbreak','#start-jailbreak','#start','#jeilbrek','[data-action="jailbreak"]','button[id*="jailbreak" i]','a[id*="jailbreak" i]','button[onclick*="jailbreak" i]'];
+  sels.forEach(function(sel){try{document.querySelectorAll(sel).forEach(function(e){if(e.__lion4)return;e.__lion4=1;e.addEventListener('click',start,true);});}catch(e){}});
+  // If the page reloads as part of the existing activation flow, resume visually.
+  try{if(sessionStorage.getItem('amineLionPending')==='1'){sessionStorage.removeItem('amineLionPending');setTimeout(start,180);}}catch(e){}
+  document.addEventListener('click',function(e){var el=e.target;while(el&&el!==document){if(el.matches&&sels.some(function(s){try{return el.matches(s)}catch(_){return false}})){try{sessionStorage.setItem('amineLionPending','1')}catch(_){};start();break}el=el.parentNode;}},true);
+ });
+})();
+</script>
+
+<script id="lion-activation-replace">
+(function(){
+  if(window.__AmineLionActivationClean)return; window.__AmineLionActivationClean=1;
+  var src='../assets/lion-run-transparent.gif';
+  var selectors=['#startJailbreak','#start-jailbreak','#start','#jeilbrek','[data-action="jailbreak"]','button[id*="jailbreak" i]','a[id*="jailbreak" i]'];
+  function isAct(el){if(!el||!el.matches)return false; for(var i=0;i<selectors.length;i++){try{if(el.matches(selectors[i]))return true;}catch(e){}} return false;}
+  function apply(){
+    for(var i=0;i<selectors.length;i++){var els=[];try{els=document.querySelectorAll(selectors[i]);}catch(e){} for(var j=0;j<els.length;j++){var el=els[j]; if(el.getAttribute('data-lion-replaced')==='1')continue; var img=document.createElement('img'); img.className='activation-lion-img'; img.src=src; img.alt=''; img.setAttribute('aria-hidden','true'); el.innerHTML=''; el.appendChild(img); el.classList.add('activation-lion'); el.setAttribute('data-lion-replaced','1');}}
+  }
+  function go(){apply(); setTimeout(apply,300); setTimeout(apply,900);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+  setInterval(apply,1200);
+})();
+</script>
 </body>
 </html>
