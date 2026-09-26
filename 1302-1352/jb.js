@@ -52,10 +52,6 @@ if (SHOW_LOG && document.body) document.body.className = "log";
 function finishUI(ok) {
   if (SHOW_LOG || !document.body) return;
   document.body.className = ok ? "done" : "fail";
-  try {
-    if (ok && typeof window.showJailbreakSuccess === "function") window.showJailbreakSuccess();
-    if (!ok && typeof window.showJailbreakFailure === "function") window.showJailbreakFailure();
-  } catch (e) {}
 }
 function mark(tag, detail) {
   const raw = detail;

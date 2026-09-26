@@ -26,38 +26,8 @@
 <style>html,body{min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
 
 <style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
-
-<style id="jb-original-logic-status-ui">
-#jb-success-overlay,#jb-failure-overlay{
- position:fixed!important;inset:0!important;width:100vw!important;height:100vh!important;
- display:none;align-items:center!important;justify-content:center!important;
- background:rgba(0,0,0,.58)!important;z-index:2147483647;
- font-family:Arial,sans-serif;backdrop-filter:blur(7px);
-}
-#jb-success-overlay .box,#jb-failure-overlay .box{
- min-width:340px;max-width:560px;padding:28px 34px;border-radius:20px;
- background:rgba(14,19,28,.97);border:1px solid rgba(255,255,255,.15);
- box-shadow:0 20px 65px rgba(0,0,0,.55);text-align:center;color:#fff;
-}
-#jb-success-overlay .ok,#jb-failure-overlay .err{font-size:25px;font-weight:700}
-#jb-success-overlay .sub,#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.76;line-height:1.55}
-</style>
-
 </head>
 <body>
-
-<div id="jb-success-overlay"><div class="box"><div class="ok">✓ تم التفعيل بنجاح</div><div class="sub">جاري الخروج من المتصفح…</div></div></div>
-<div id="jb-failure-overlay"><div class="box"><div class="err">✕ فشل التفعيل</div><div class="sub">يرجى إعادة تشغيل جهاز PS4 والمحاولة من جديد.</div></div></div>
-<script>
-window.showJailbreakSuccess=function(){
- var o=document.getElementById("jb-success-overlay"); if(o)o.style.display="flex";
- setTimeout(function(){try{window.close()}catch(e){}try{window.open("","_self");window.close()}catch(e){}},1200);
-};
-window.showJailbreakFailure=function(){
- var o=document.getElementById("jb-failure-overlay"); if(o)o.style.display="flex";
-};
-</script>
-
 <div id="wrap">
   <div id="state">detecting firmware...</div>
   <div id="det"></div>
@@ -291,33 +261,5 @@ setInterval(function(){hook();if(successText())markSuccess()},250);
 try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
 })();
 </script>
-
-<script id="jb-all-firmware-status">
-(function(){
-  var done=false, failed=false;
-  function success(){
-    if(done||failed)return;
-    done=true;
-    try{if(typeof window.showJailbreakSuccess==="function")window.showJailbreakSuccess();}catch(e){}
-  }
-  function failure(){
-    if(done||failed)return;
-    failed=true;
-    try{if(typeof window.showJailbreakFailure==="function")window.showJailbreakFailure();}catch(e){}
-  }
-  function scan(){
-    var t=((document.body&&document.body.innerText)||"").toLowerCase();
-    if(/jailbreak activé|jailbreak activated|jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(loaded|success)|payload.*(loaded|running|success)|kpatched|berhasil/.test(t)) success();
-  }
-  scan();
-  setInterval(scan,300);
-  try{new MutationObserver(scan).observe(document.body,{subtree:true,childList:true,characterData:true});}catch(e){}
-  window.addEventListener("unhandledrejection",function(e){
-    if(!/multiple blurs|blurs before pop/i.test(String(e&&e.reason||""))) failure();
-  });
-  window.addEventListener("error",function(){failure();});
-})();
-</script>
-
 </body>
 </html>
