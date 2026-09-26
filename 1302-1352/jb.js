@@ -52,6 +52,7 @@ if (SHOW_LOG && document.body) document.body.className = "log";
 function finishUI(ok) {
   if (SHOW_LOG || !document.body) return;
   document.body.className = ok ? "done" : "fail";
+  if (window.GoldHENStatus) ok ? window.GoldHENStatus.success() : window.GoldHENStatus.fail();
 }
 function mark(tag, detail) {
   const raw = detail;
@@ -3365,7 +3366,6 @@ let allDone = false,
     );
     try {
       finishUI(payloadRunning);
-      if (window.GoldHENStatus) (payloadRunning ? window.GoldHENStatus.success : window.GoldHENStatus.fail)();
     } catch (eUI) {}
   }
 })();

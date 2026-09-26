@@ -3804,7 +3804,6 @@ function makeRpc(worker) {
                 : "the corrupted context is repaired and the environment is "
                   + "torn down" + (jailbroken ? ", and the process is root"
                     : "") + ". See the stage 8/9/10 marks for what is left.");
-            if (window.GoldHENStatus) (payloadRunning ? window.GoldHENStatus.success : window.GoldHENStatus.fail)();
             try {
                 stateEl.textContent = payloadRunning
                     ? "BERHASIL -- Tekan tombol PS untuk keluar"
@@ -3812,6 +3811,7 @@ function makeRpc(worker) {
                     : jailbroken ? "ROOT"
                     : "REPAIRED";
                 stateEl.className = "ok";
+                if (window.GoldHENStatus) payloadRunning ? window.GoldHENStatus.success() : window.GoldHENStatus.fail();
             } catch (e) { }
         }
     }
