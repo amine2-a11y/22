@@ -47,6 +47,7 @@ addEventListener('unhandledrejection', event => {
         event.preventDefault();
         return;
     }
+    try { if (typeof showJailbreakFailure === 'function') showJailbreakFailure(); } catch (e) {}
     alert(
         'Unhandled rejection\n'
         + `${reason}\n`
@@ -65,6 +66,7 @@ addEventListener('error', event => {
         return true;
     }
     sessionStorage.removeItem('psfree_retry_count');
+    try { if (typeof showJailbreakFailure === 'function') showJailbreakFailure(); } catch (e) {}
     alert(
         'Unhandled error\n'
         + `${reason}\n`
