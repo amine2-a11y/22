@@ -31,13 +31,6 @@ export function die(msg='') {
 const console = document.getElementById('console');
 export function log(msg='') {
     console.append(msg + '\n');
-    // UI-only status indicator; does not alter exploit execution.
-    if (String(msg).includes('GoldHEN Loaded.!')) {
-        const status = document.getElementById('status-text');
-        const dot = document.querySelector('#exploit-status .dot');
-        if (status) status.textContent = 'تم التفعيل بنجاح';
-        if (dot) dot.style.background = '#22c55e';
-    }
 }
 
 export function clear_log() {

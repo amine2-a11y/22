@@ -28,13 +28,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 let retryCount = Number(sessionStorage.getItem('psfree_retry_count') || '0');
 
-function showFailureStatus() {
-    const status = document.getElementById('status-text');
-    const dot = document.querySelector('#exploit-status .dot');
-    if (status) status.textContent = 'فشل التفعيل';
-    if (dot) dot.style.background = '#ef4444';
-}
-
 function isRaceError(reason) {
     const text = String(reason || '');
     return /multiple blurs|blurs before pop/i.test(text);
@@ -54,7 +47,6 @@ addEventListener('unhandledrejection', event => {
         event.preventDefault();
         return;
     }
-    showFailureStatus();
     alert(
         'Unhandled rejection\n'
         + `${reason}\n`
@@ -73,7 +65,6 @@ addEventListener('error', event => {
         return true;
     }
     sessionStorage.removeItem('psfree_retry_count');
-    showFailureStatus();
     alert(
         'Unhandled error\n'
         + `${reason}\n`
