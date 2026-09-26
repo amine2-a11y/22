@@ -88,6 +88,18 @@ if (window.applicationCache && window.applicationCache.status=='0') {
 #jb-success-overlay .sub,#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.76;line-height:1.55}
 </style>
 
+<script id="foo-startup-fix">
+// Do not let an externally supplied #foo fragment become the initial
+// history entry. PSFree uses #foo internally during its UAF sequence.
+// Clearing only the initial fragment avoids disturbing that internal flow.
+(function(){
+  try {
+    if (location.hash) {
+      history.replaceState(history.state, document.title, location.pathname + location.search);
+    }
+  } catch (e) {}
+})();
+</script>
 </head>
 <body>
 
