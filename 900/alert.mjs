@@ -26,7 +26,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // We log the line and column numbers as well since some exceptions (like
 // SyntaxError) do not show it in the stack trace.
 
-let retryCount = 0;
+let retryCount = Number(sessionStorage.getItem('psfree_retry_count') || '0');
 
 function isRaceError(reason) {
     const text = String(reason || '');
@@ -34,10 +34,11 @@ function isRaceError(reason) {
 }
 
 function retryRace(reason) {
-    // Do not automatically reload after a WebKit race on 9.00.
-    // A second exploit instance can start before the previous heap state is
-    // fully reclaimed and is a common source of memory exhaustion.
-    return false;
+    if (retryCount >= 1 || !isRaceError(reason)) return false;
+    retryCount++;
+    sessionStorage.setItem('psfree_retry_count', String(retryCount));
+    setTimeout(() => location.reload(), 350);
+    return true;
 }
 
 addEventListener('unhandledrejection', event => {
@@ -63,6 +64,7 @@ addEventListener('error', event => {
     if (retryRace(reason)) {
         return true;
     }
+    sessionStorage.removeItem('psfree_retry_count');
     alert(
         'Unhandled error\n'
         + `${reason}\n`

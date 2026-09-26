@@ -1815,7 +1815,7 @@ function array_from_address(addr, size) {
     return og_array;
 }
 
-function PayloadLoader(Pfile, onLoaded)
+function PayloadLoader(Pfile)
 {
     var loader_addr = chain.sysp(
   'mmap',
@@ -1853,10 +1853,7 @@ function PayloadLoader(Pfile, onLoaded)
         0,
         loader_addr,
         payload_buffer,
-    );
-    if (typeof onLoaded === 'function') {
-        try { onLoaded(); } catch (e) {}
-    }	
+    );	
    }
  };
 
@@ -1866,27 +1863,10 @@ function PayloadLoader(Pfile, onLoaded)
 kexploit().then(() => {
 
 //Load ABC fix as a regular Payload
-setTimeout(() => PayloadLoader("aio_patches.bin"),500);
+setTimeout(PayloadLoader("aio_patches.bin"),500);
 log("AIO Fixes Applied.!");
-// Load GoldHEN and only then report success.
-// The browser may block close(), so the overlay is shown first and close() is best-effort.
-setTimeout(() => PayloadLoader("goldhen.bin", () => {
-    log("GoldHEN Loaded.!");
-    try {
-        const o = document.getElementById("jb-success-overlay");
-        if (o) o.style.display = "flex";
-    } catch (e) {}
-    setTimeout(() => {
-        try { window.close(); } catch (e) {}
-        try { window.open("", "_self"); window.close(); } catch (e) {}
-    }, 1200);
-}),500);;
+//Load GoldHEN :)
+setTimeout(PayloadLoader("goldhen.bin"),500);
+log("GoldHEN Loaded.!");
 
 })
-
-/* Failure UI helper: called only by an actual payload error. */
-function ShowActivationFailure(){
-  try {
-    if (typeof showJailbreakFailure === "function") showJailbreakFailure();
-  } catch(e) {}
-}
