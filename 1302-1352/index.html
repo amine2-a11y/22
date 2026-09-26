@@ -43,7 +43,8 @@ import "./jb.js";
 <style>
 #goldhen-status{display:none;position:fixed;inset:0;z-index:2147483647;align-items:center;justify-content:center;pointer-events:none;font-family:Arial,sans-serif}
 #goldhen-status span{padding:18px 34px;border-radius:14px;background:rgba(0,0,0,.86);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:clamp(22px,4vw,42px);font-weight:700;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.45)}
-</style><div id="goldhen-status"><span></span></div>
+</style>
+<div id="goldhen-status"><span></span></div>
 <script>
 window.showGoldHENStatus=function(ok){try{var e=document.getElementById('goldhen-status');if(!e)return;e.firstElementChild.textContent=ok?'تم التفعيل بنجاح':'فشل التفعيل';e.style.display='flex';}catch(_){} };
 </script>

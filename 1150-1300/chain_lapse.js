@@ -3498,10 +3498,12 @@ function makeRpc(worker) {
                                                     + "wrote back a thread handle"
                                                     : "returned " + rc);
                                             payloadRunning = launched;
-                                            if (launched)
+                                            if (launched) {
+                                                if (window.showGoldHENStatus) window.showGoldHENStatus(true);
                                                 mark("PAYLOAD-RUNNING", "bytes="
                                                     + payload.length + " entry="
                                                     + entry);
+                                            }
 
                                                 if (PAYLOAD_SETTLE > 0) {
                                                     mark("PAYLOAD-SETTLE",
