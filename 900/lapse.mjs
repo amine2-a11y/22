@@ -1853,8 +1853,7 @@ function PayloadLoader(Pfile)
         0,
         loader_addr,
         payload_buffer,
-    );
-   if (Pfile === 'goldhen.bin' && window.showGoldHENStatus) window.showGoldHENStatus(true);
+    );	
    }
  };
 
@@ -1867,7 +1866,8 @@ kexploit().then(() => {
 setTimeout(PayloadLoader("aio_patches.bin"),500);
 log("AIO Fixes Applied.!");
 //Load GoldHEN :)
-setTimeout(() => PayloadLoader("goldhen.bin"),500);
+setTimeout(PayloadLoader("goldhen.bin"),500);
 log("GoldHEN Loaded.!");
+if (window.GoldHENStatus) window.GoldHENStatus.success();
 
 })
