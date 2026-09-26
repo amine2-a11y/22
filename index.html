@@ -23,12 +23,73 @@ h1{margin:0 0 8px;font-size:28px}h1 b{color:#8fc8ff}
 
 <style id="jb-success-style">
 #jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-seriftop:0;right:0;bottom:0;left:0;}
 #jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
 background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
 #jb-success-overlay .ok{font-size:26px;font-weight:700}
 #jb-success-overlay .sub{margin-top:8px;font-size:14px;opacity:.78}
 </style>
+<style id="jb-centered-dialog-final">
+#jb-success-overlay,#jb-failure-overlay{
+ position:fixed!important;top:0!important;right:0!important;bottom:0!important;left:0!important;
+ width:100vw!important;height:100vh!important;
+ display:none;align-items:center!important;justify-content:center!important;
+ box-sizing:border-box;
+}
+#jb-success-overlay .box,#jb-failure-overlay .box{
+ margin:auto!important;position:relative!important;
+ transform:none!important;left:auto!important;top:auto!important;
+}
+</style>
+
+<style id="jb-professional-status-ui">
+#jb-success-overlay,#jb-failure-overlay{
+  backdrop-filter:blur(8px)!important;
+  -webkit-backdrop-filter:blur(8px)!important;
+  background:rgba(0,0,0,.58)!important;
+  transition:opacity .22s ease!important;
+}
+#jb-success-overlay .box,#jb-failure-overlay .box{
+  min-width:360px!important;
+  max-width:560px!important;
+  padding:30px 38px 27px!important;
+  border:1px solid rgba(255,255,255,.16)!important;
+  border-radius:22px!important;
+  background:linear-gradient(180deg,rgba(28,34,45,.97),rgba(12,16,24,.97))!important;
+  box-shadow:0 22px 70px rgba(0,0,0,.58),inset 0 1px 0 rgba(255,255,255,.07)!important;
+  text-align:center!important;
+  color:#fff!important;
+  transform:translateY(0)!important;
+  animation:jbStatusIn .28s cubic-bezier(.2,.8,.2,1) both!important;
+}
+#jb-success-overlay .ok,#jb-failure-overlay .err{
+  font-size:25px!important;
+  line-height:1.35!important;
+  font-weight:700!important;
+  letter-spacing:.1px!important;
+}
+#jb-success-overlay .sub,#jb-failure-overlay .sub{
+  margin-top:11px!important;
+  font-size:15px!important;
+  line-height:1.6!important;
+  color:rgba(255,255,255,.72)!important;
+}
+#jb-success-overlay .ok::first-letter,
+#jb-failure-overlay .err::first-letter{
+  font-size:29px;
+}
+@keyframes jbStatusIn{
+  from{opacity:0;transform:translateY(10px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+@media(max-width:600px){
+  #jb-success-overlay .box,#jb-failure-overlay .box{
+    min-width:0!important;width:calc(100vw - 54px)!important;
+    padding:26px 24px 24px!important;
+  }
+}
+</style>
+
 </head>
 <body>
 
@@ -44,7 +105,7 @@ background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:
 </script>
 <style id="jb-failure-style">
 #jb-failure-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-serif}
+background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-seriftop:0;right:0;bottom:0;left:0;}
 #jb-failure-overlay .box{padding:24px 30px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
 background:rgba(10,15,25,.96);box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;color:#fff}
 #jb-failure-overlay .err{font-size:24px;font-weight:700}
