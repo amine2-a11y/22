@@ -1,5 +1,5 @@
 let DRAIN_COUNT = 512;
-const AUTO_RETRY_DELAY_MS = 50;
+const AUTO_RETRY_DELAY_MS = 1200;
 
 const K = 2;
 const DUPLICATE_INDEX = 2;
@@ -358,6 +358,7 @@ function failed() {
   emit("AUTO-RETRY-AFTER-FAILURE", `attempt=${attemptNumber}`);
   stopped = false;
   retryScheduled = false;
+  releaseAttemptAllocations();
   setTimeout(() => {
     try {
       history.replaceState(null, "");

@@ -94,6 +94,17 @@ background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:
 }
 </style>
 
+
+<script id="jb-memory-safe-retry">
+(function(){
+  // Prevent duplicate page-level retry timers from accumulating in WebKit.
+  window.__jbRetryTimer = window.__jbRetryTimer || null;
+  window.__jbClearRetryTimer = function(){
+    if(window.__jbRetryTimer!==null){clearTimeout(window.__jbRetryTimer);window.__jbRetryTimer=null;}
+  };
+  window.addEventListener('pagehide', window.__jbClearRetryTimer, {once:true});
+})();
+</script>
 </head>
 <body>
 
