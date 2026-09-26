@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html manifest="offline.appcache" lang="en" manifest="offline.appcache">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMINE PS4 PS4</title>
+  <link rel="stylesheet" href="includes/style.css">
+  <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+<style>html,body{min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}
+#jb-success-overlay .sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
+</head>
+<body>
+
+<script id="jb-failure-handler">
+(function(){
+  window.showJailbreakFailure=function(){
+    try{
+      var o=document.getElementById("jb-failure-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+  };
+})();
+</script>
+<style id="jb-failure-style">
+#jb-failure-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-serif}
+#jb-failure-overlay .box{padding:24px 30px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.96);box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;color:#fff}
+#jb-failure-overlay .err{font-size:24px;font-weight:700}
+#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.85}
+</style>
+<div id="jb-failure-overlay" aria-live="assertive">
+ <div class="box">
+  <div class="err">✕ فشل التفعيل</div>
+  <div class="sub">يرجى إعادة تشغيل جهاز PS4 والمحاولة من جديد.</div>
+ </div>
+</div>
+
+
+
+<div id="jb-success-overlay" aria-live="polite">
+  <div class="box">
+    <div class="ok">✓ تم التفعيل بنجاح</div>
+    <div class="sub">جاري الخروج من المتصفح…</div>
+  </div>
+</div>
+<script>
+(function(){
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+      document.body.classList.add("jb-success");
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
+</script>
+
+
+  <h1>AMINE PS4 PS4</h1>
+  <h3 id="UA">Running on:</h3>
+
+  <hr>
+
+  <div class="btn-container">
+    <form id="kernel-options">
+      <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+      <label for="netctrl-exploit">NetCtrl</label>
+      <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+      <label for="lapse-exploit">Lapse</label>
+    </form>
+    <button id="jeilbrek">Jailbreak</button>
+    <div class="autoJb">
+      <label for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
+      <input class="mt-2" id="autoJbInput" type="checkbox">
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <pre id="console">Caching offline files... 0%</pre>
+  </div>
+<script>
+    var scriptsLoaded = false;
+
+    function triggerScripts() {
+      if (scriptsLoaded) return;
+      scriptsLoaded = true;
+
+      var consoleLog = document.getElementById('console');
+      if (consoleLog) consoleLog.innerText += "\nLoading main.js & script.js...";
+
+      var s1 = document.createElement('script');
+      s1.src = 'src/main.js';
+      s1.onerror = function() {
+        if (consoleLog) consoleLog.innerText += "\n❌ Error: Gagal memuat src/main.js (Cek path/file)";
+      };
+      
+      s1.onload = function() {
+        var s2 = document.createElement('script');
+        s2.src = 'includes/script.js';
+        s2.onerror = function() {
+          if (consoleLog) consoleLog.innerText += "\n❌ Error: Gagal memuat includes/script.js (Cek path/file)";
+        };
+        document.body.appendChild(s2);
+      };
+
+      document.body.appendChild(s1);
+    }
+
+    if (window.applicationCache) {
+      var appCache = window.applicationCache;
+      var consoleLog = document.getElementById('console');
+
+      appCache.addEventListener('progress', function(e) {
+        if (e.lengthComputable && consoleLog) {
+          var percent = Math.round((e.loaded / e.total) * 100);
+          consoleLog.innerText = "Caching offline files... " + percent + "%";
+        }
+      }, false);
+
+      appCache.addEventListener('cached', function() {
+        if (consoleLog) consoleLog.innerText = "Offline cache complete (100%)!";
+        triggerScripts();
+      }, false);
+
+      appCache.addEventListener('noupdate', function() {
+        if (consoleLog) consoleLog.innerText = "Offline cache ready.";
+        triggerScripts();
+      }, false);
+
+      appCache.addEventListener('error', function() {
+        if (consoleLog) consoleLog.innerText = "Cache error/offline mode.";
+        triggerScripts();
+      }, false);
+
+      setTimeout(function() {
+        if (!scriptsLoaded) {
+          if (consoleLog) consoleLog.innerText += "\n[Timeout] ...";
+          triggerScripts();
+        }
+      }, 3000);
+
+    } else {
+      triggerScripts();
+    }
+  </script>
+<script>
+
+/* Firmware Auto Start dispatcher */
+(function () {
+  "use strict";
+  function fw() {
+    var t = (document.body && document.body.innerText) || "";
+    var m = t.match(/\b(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)\b/);
+    return m ? m[1] : null;
+  }
+  function start() {
+    var selectors = [
+      "#startJailbreak","#start-jailbreak","#start","#jeilbrek",
+      "[data-action='jailbreak']",
+      "button[id*='start' i][id*='jailbreak' i]",
+      "a[id*='start' i][id*='jailbreak' i]"
+    ];
+    for (var i=0;i<selectors.length;i++) {
+      var e=document.querySelector(selectors[i]);
+      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
+    }
+    return false;
+  }
+  window.FirmwareAutoStart = { firmware: fw(), start: start };
+  if(document.readyState==="loading")
+    document.addEventListener("DOMContentLoaded",function(){setTimeout(start,300);});
+  else setTimeout(start,300);
+})();
+
+</script>
+
+<style>
+#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}
+#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
+</style>
+<div id="real-device-stability"><span class="rds-label">نسبة استقرار جهاز هي</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
+<script>
+(function(){
+'use strict';
+var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
+function firmware(){
+ var u=navigator.userAgent||'', m=u.match(/PlayStation\s*4[\s\/]+(\d+)\.(\d+)/i);
+ if(m) return m[1]+'.'+m[2];
+ var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
+ return x?x[1]:null;
+}
+var fw=firmware(); if(!fw) return;
+var key='rds-stats-'+fw, stats;
+try{stats=JSON.parse(localStorage.getItem(key)||'null')}catch(e){stats=null}
+if(!stats||typeof stats.attempts!=='number'||typeof stats.successes!=='number') stats={attempts:0,successes:0};
+function pct(){return stats.attempts>0?Math.round(stats.successes*100/stats.attempts):null}
+function save(){try{localStorage.setItem(key,JSON.stringify(stats))}catch(e){}}
+function show(){var p=pct();if(p===null)return;val.textContent=p+'%';box.style.display='block'}
+function successText(){
+ var t=((document.body&&document.body.innerText)||'').toLowerCase();
+ return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
+}
+var successSeen=false;
+function markSuccess(){if(successSeen)return;successSeen=true;stats.successes++;save();show();if(typeof showJailbreakSuccess==='function')showJailbreakSuccess()}
+function markAttempt(){stats.attempts++;save()}
+var old=window.jailbreakSuccess;
+window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}markSuccess()};
+var lastClick=0;
+function hook(){
+ var selectors=['#start','#jeilbrek','#startJailbreak','#start-jailbreak','button[data-action="jailbreak"]','button[id*="jailbreak" i]'];
+ for(var i=0;i<selectors.length;i++){var e=document.querySelector(selectors[i]);if(e&&!e.__rds){e.__rds=true;e.addEventListener('click',function(){var now=Date.now();if(now-lastClick<1000)return;lastClick=now;successSeen=false;markAttempt()},true)}}
+}
+show();hook();
+setInterval(function(){hook();if(successText())markSuccess()},250);
+try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
+})();
+</script>
+</body>
+</html>
