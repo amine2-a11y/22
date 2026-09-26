@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Amine PS4 PS4</title>
+<link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+<style>
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#050914 url("background.jpg") center/cover no-repeat fixed!important}
+.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:7vh 16px 3vh}
+.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:10px;text-align:center}
+.title{margin:0 0 6px;text-align:center;font-size:clamp(22px,3.2vw,34px);font-weight:800;letter-spacing:.08em}
+.title b{color:#8fc8ff}
+.sub{font-size:11px;color:#8fa6be;text-align:center;margin-bottom:18px}
+.panel{width:min(680px,92vw);padding:20px;border:1px solid rgba(115,170,255,.24);border-radius:14px;background:rgba(2,8,17,.78);box-shadow:0 14px 40px rgba(0,0,0,.42)}
+#state{font-size:20px;font-weight:700;margin-bottom:10px}
+#out{white-space:pre-wrap;font:12px/1.5 Consolas,monospace;color:#e9f2ff;max-height:52vh;overflow:auto}
+.ok{color:#bfe7ff}.bad{color:#ffb4aa}.warn{color:#ffe39a}
+.spinner{width:34px;height:34px;margin:8px auto 14px;border:3px solid rgba(143,200,255,.18);border-top-color:#8fc8ff;border-radius:50%;animation:spin .8s linear infinite}
+body.done .spinner{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}
+#jb-success-overlay .sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
+</head>
+<body>
+
+<script id="jb-failure-handler">
+(function(){
+  window.showJailbreakFailure=function(){
+    try{
+      var o=document.getElementById("jb-failure-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+  };
+})();
+</script>
+<style id="jb-failure-style">
+#jb-failure-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-serif}
+#jb-failure-overlay .box{padding:24px 30px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.96);box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;color:#fff}
+#jb-failure-overlay .err{font-size:24px;font-weight:700}
+#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.85}
+</style>
+<div id="jb-failure-overlay" aria-live="assertive">
+ <div class="box">
+  <div class="err">✕ فشل التفعيل</div>
+  <div class="sub">يرجى إعادة تشغيل جهاز PS4 والمحاولة من جديد.</div>
+ </div>
+</div>
+
+
+
+<div id="jb-success-overlay" aria-live="polite">
+  <div class="box">
+    <div class="ok">✓ تم التفعيل بنجاح</div>
+    <div class="sub">جاري الخروج من المتصفح…</div>
+  </div>
+</div>
+<script>
+(function(){
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+      document.body.classList.add("jb-success");
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
+</script>
+
+<div class="page">
+  <div class="brand">OFFLINE PS4 PROJECT</div>
+  <h1 class="title">AMINE PS4 <b>PS4</b></h1>
+  <div class="sub">13.02 · 13.50 · 13.52 · Exact local cache</div>
+  <div class="spinner"></div>
+  <div class="panel">
+    <div id="state">Starting...</div>
+    <div id="out"></div>
+  </div>
+</div>
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}.sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
+<div id="jb-success-overlay"><div class="box"><div class="ok">✓ تم التفعيل بنجاح</div><div class="sub">جاري الخروج من المتصفح…</div></div></div>
+<script>
+window.__amineSuccessBound=true;
+window.showJailbreakSuccess=function(){
+  var o=document.getElementById("jb-success-overlay");
+  if(o)o.style.display="flex";
+  setTimeout(function(){try{window.close();}catch(e){}try{window.open("","_self");window.close();}catch(e){}},1200);
+};
+</script>
+<script type="module">
+import "./jb.js";
+</script>
+
+<script>
+(function(){
+  var oldState = window.__amineSuccessBound;
+  if(oldState)return;
+  window.__amineSuccessBound=true;
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
+</script>
+</body>
+</html>

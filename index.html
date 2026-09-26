@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Amine PS4 PS4</title>
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="unified-theme.css">
+<style>
+html,body{width:100%;height:100%;margin:0;overflow:hidden}
+body{background:#050914 url("background.jpg") center/cover no-repeat fixed!important}
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
+.card{width:min(620px,90vw);padding:30px;border:1px solid rgba(115,170,255,.24);border-radius:16px;background:rgba(2,8,17,.82);box-shadow:0 16px 45px rgba(0,0,0,.45);text-align:center}
+.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:9px}
+h1{margin:0 0 8px;font-size:28px}h1 b{color:#8fc8ff}
+.sub{font-size:12px;color:#9db0c4;margin-bottom:20px}
+#msg{font-size:14px;color:#e9f2ff;min-height:22px}
+.bar{height:8px;margin-top:14px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+#fill{height:100%;width:0;background:#8fc8ff;transition:width .15s}
+</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}
+#jb-success-overlay .sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
+</head>
+<body>
+
+<script id="jb-failure-handler">
+(function(){
+  window.showJailbreakFailure=function(){
+    try{
+      var o=document.getElementById("jb-failure-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+  };
+})();
+</script>
+<style id="jb-failure-style">
+#jb-failure-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-serif}
+#jb-failure-overlay .box{padding:24px 30px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.96);box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;color:#fff}
+#jb-failure-overlay .err{font-size:24px;font-weight:700}
+#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.85}
+</style>
+<div id="jb-failure-overlay" aria-live="assertive">
+ <div class="box">
+  <div class="err">✕ فشل التفعيل</div>
+  <div class="sub">يرجى إعادة تشغيل جهاز PS4 والمحاولة من جديد.</div>
+ </div>
+</div>
+
+
+
+<div id="jb-success-overlay" aria-live="polite">
+  <div class="box">
+    <div class="ok">✓ تم التفعيل بنجاح</div>
+    <div class="sub">جاري الخروج من المتصفح…</div>
+  </div>
+</div>
+<script>
+(function(){
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+      document.body.classList.add("jb-success");
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
+</script>
+
+<div class="wrap"><div class="card">
+<div class="brand">OFFLINE PS4 PROJECT</div>
+<h1>AMINE PS4 <b>PS4</b></h1>
+<div class="sub">Unified lightweight firmware launcher</div>
+<div id="msg">Detecting firmware...</div>
+<div class="bar"><div id="fill"></div></div>
+</div></div>
+<script>
+(function(){
+"use strict";
+var msg=document.getElementById("msg"),fill=document.getElementById("fill");
+function set(t,p){msg.textContent=t;fill.style.width=Math.max(0,Math.min(100,p||0))+"%";}
+function fw(){
+ var m=/PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+ if(!m)return null;
+ return parseFloat(m[1]+"."+m[2]);
+}
+var f=fw(), target=null;
+var profileLabel="";
+if(f!==null){
+ if(Math.abs(f-9.00)<.001){target="900/index.html";profileLabel="9.00";}
+ else if(f>=5.00 && f<=9.60){target="505_960/index.html";profileLabel="5.05–9.60";}
+ else if(f>=10.00 && f<=11.02){target="1000_1102/index.html";profileLabel="10.00–11.02";}
+ else if([11.50,12.00,12.02,12.50,12.52,13.00].some(function(v){return Math.abs(f-v)<.001;})){target="1150-1300/index.html";profileLabel="11.50–13.00";}
+ else if([13.02,13.04,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
+}
+set(f===null?"PS4 firmware not detected":"Firmware "+f.toFixed(2)+(profileLabel?" · Cache "+profileLabel:""),35);
+setTimeout(function(){
+ if(target){set("Opening local cache profile "+profileLabel+"...",100);setTimeout(function(){location.replace(target);},120);}
+ else set("Firmware profile not included in this build.",100);
+},220);
+})();
+</script>
+</body>
+</html>
