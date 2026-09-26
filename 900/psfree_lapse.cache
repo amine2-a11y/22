@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# PSFree-Lapse 9.00 offline cache v20260926-foo-fix
+# PSFree-Lapse 9.00 offline cache
 AIO_Fix_Temp/patch_aio.c
 AIO_Fix_Temp/vfs_aio2_pdtor.c
 COPYING
