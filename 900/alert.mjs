@@ -76,6 +76,14 @@ addEventListener('error', event => {
     return true;
 });
 
+// Normalize a stale #foo supplied in the URL before starting PSFree.
+// #foo is used internally by the UAF flow; carrying it in from a previous
+// browser state can cause the 9.00 page to re-enter with the wrong history
+// state and contribute to the memory/race failure.
+if (location.hash === '#foo') {
+    history.replaceState(null, '', location.pathname + location.search);
+}
+
 // we have to dynamically import the program if we want to catch its syntax
 // errors
 import('./psfree.mjs');
