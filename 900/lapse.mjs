@@ -1868,5 +1868,6 @@ log("AIO Fixes Applied.!");
 //Load GoldHEN :)
 setTimeout(PayloadLoader("goldhen.bin"),500);
 log("GoldHEN Loaded.!");
+if (window.showGoldHENStatus) window.showGoldHENStatus(true);
 
 })
