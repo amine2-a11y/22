@@ -2296,11 +2296,8 @@ let allDone = false;
                                         + " handle=" + handle);
                                     check("payload-thread-created",
                                         payloadRunning, "");
-                                    if (payloadRunning) {
-                                        if (window.showGoldHENStatus) window.showGoldHENStatus(true);
-                                        mark("PAYLOAD-RUNNING",
-                                            "bytes=" + payload.length + " entry=" + entry);
-                                    }
+                                    if (payloadRunning) mark("PAYLOAD-RUNNING",
+                                        "bytes=" + payload.length + " entry=" + entry);
                                 }
                             }
                         }
@@ -2426,6 +2423,7 @@ let allDone = false;
                         + " kpatched=" + kpatched + " payload=" + payloadRunning
                         + " cleanup=" + (rebootRequired ? "incomplete" : "complete"));
                     allDone = payloadRunning && !rebootRequired;
+                    if (window.GoldHENStatus) (allDone ? window.GoldHENStatus.success : window.GoldHENStatus.fail)();
                 }
             }
         }

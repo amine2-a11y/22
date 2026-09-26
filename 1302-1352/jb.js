@@ -50,7 +50,6 @@ function terse(s) {
 const SHOW_LOG = params.get("log") === "1";
 if (SHOW_LOG && document.body) document.body.className = "log";
 function finishUI(ok) {
-  if (window.showGoldHENStatus) window.showGoldHENStatus(!!ok);
   if (SHOW_LOG || !document.body) return;
   document.body.className = ok ? "done" : "fail";
 }
@@ -3366,6 +3365,7 @@ let allDone = false,
     );
     try {
       finishUI(payloadRunning);
+      if (window.GoldHENStatus) (payloadRunning ? window.GoldHENStatus.success : window.GoldHENStatus.fail)();
     } catch (eUI) {}
   }
 })();

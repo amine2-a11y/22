@@ -3498,12 +3498,10 @@ function makeRpc(worker) {
                                                     + "wrote back a thread handle"
                                                     : "returned " + rc);
                                             payloadRunning = launched;
-                                            if (launched) {
-                                                if (window.showGoldHENStatus) window.showGoldHENStatus(true);
+                                            if (launched)
                                                 mark("PAYLOAD-RUNNING", "bytes="
                                                     + payload.length + " entry="
                                                     + entry);
-                                            }
 
                                                 if (PAYLOAD_SETTLE > 0) {
                                                     mark("PAYLOAD-SETTLE",
@@ -3806,6 +3804,7 @@ function makeRpc(worker) {
                 : "the corrupted context is repaired and the environment is "
                   + "torn down" + (jailbroken ? ", and the process is root"
                     : "") + ". See the stage 8/9/10 marks for what is left.");
+            if (window.GoldHENStatus) (payloadRunning ? window.GoldHENStatus.success : window.GoldHENStatus.fail)();
             try {
                 stateEl.textContent = payloadRunning
                     ? "BERHASIL -- Tekan tombol PS untuk keluar"
