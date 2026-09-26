@@ -10,6 +10,7 @@
 <style>html,body{min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
 
 <style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+<script src="./goldhen-status.js"></script>
 </head>
 <body>
 
@@ -131,47 +132,5 @@
 
 </script>
 
-<style>
-#real-device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:6px 10px;border-radius:8px;background:rgba(0,0,0,.76);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.3 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}
-#real-device-stability .rds-label{opacity:.78}#real-device-stability .rds-value{font-weight:800;margin-left:4px}
-</style>
-<div id="real-device-stability"><span class="rds-label">نسبة استقرار جهاز هي</span><span class="rds-value" id="real-device-stability-value">--%</span></div>
-<script>
-(function(){
-'use strict';
-var box=document.getElementById('real-device-stability'), val=document.getElementById('real-device-stability-value');
-function firmware(){
- var u=navigator.userAgent||'', m=u.match(/PlayStation\s*4[\s\/]+(\d+)\.(\d+)/i);
- if(m) return m[1]+'.'+m[2];
- var t=(document.body&&document.body.innerText)||'', x=t.match(/(?:PS4|PlayStation\s*4)[^0-9]*(\d+\.\d{2})/i);
- return x?x[1]:null;
-}
-var fw=firmware(); if(!fw) return;
-var key='rds-stats-'+fw, stats;
-try{stats=JSON.parse(localStorage.getItem(key)||'null')}catch(e){stats=null}
-if(!stats||typeof stats.attempts!=='number'||typeof stats.successes!=='number') stats={attempts:0,successes:0};
-function pct(){return stats.attempts>0?Math.round(stats.successes*100/stats.attempts):null}
-function save(){try{localStorage.setItem(key,JSON.stringify(stats))}catch(e){}}
-function show(){var p=pct();if(p===null)return;val.textContent=p+'%';box.style.display='block'}
-function successText(){
- var t=((document.body&&document.body.innerText)||'').toLowerCase();
- return /jailbreak complete|jailbreak completed|jailbreak success|achieved jailbreak|already jailbroken|goldhen.*(?:loaded|success)|payload.*(?:loaded|running|success)|kpatched/.test(t);
-}
-var successSeen=false;
-function markSuccess(){if(successSeen)return;successSeen=true;stats.successes++;save();show()}
-function markAttempt(){stats.attempts++;save()}
-var old=window.jailbreakSuccess;
-window.jailbreakSuccess=function(){if(typeof old==='function'){try{old.apply(this,arguments)}catch(e){}}markSuccess()};
-var lastClick=0;
-function hook(){
- var selectors=['#start','#jeilbrek','#startJailbreak','#start-jailbreak','button[data-action="jailbreak"]','button[id*="jailbreak" i]'];
- for(var i=0;i<selectors.length;i++){var e=document.querySelector(selectors[i]);if(e&&!e.__rds){e.__rds=true;e.addEventListener('click',function(){var now=Date.now();if(now-lastClick<1000)return;lastClick=now;successSeen=false;markAttempt()},true)}}
-}
-show();hook();
-setInterval(function(){hook();if(successText())markSuccess()},250);
-try{new MutationObserver(function(){hook();if(successText())markSuccess()}).observe(document.body,{subtree:true,childList:true,characterData:true})}catch(e){}
-})();
-</script>
-<script src="./goldhen-status.js"></script>
 </body>
 </html>

@@ -2423,6 +2423,8 @@ let allDone = false;
                         + " kpatched=" + kpatched + " payload=" + payloadRunning
                         + " cleanup=" + (rebootRequired ? "incomplete" : "complete"));
                     allDone = payloadRunning && !rebootRequired;
+            if (allDone && window.__goldhenStatusSuccess) window.__goldhenStatusSuccess();
+            if (!allDone && window.__goldhenStatusFailure) window.__goldhenStatusFailure();
                 }
             }
         }
@@ -2449,7 +2451,6 @@ let allDone = false;
               : triplets ? "Gagal di leak_kqueue (triple free was OK) -- Tahan tombol PS > Power > Restart PS4"
               : committed ? "Gagal di triple free -- Tahan tombol PS > Power > Restart PS4"
               : "no commit", allDone ? "ok" : kv ? "warn" : "bad");
-        if (window.GoldHENStatus) allDone ? window.GoldHENStatus.success() : window.GoldHENStatus.fail();
     } catch (e) {
         mark("STEP10-FAILED", (e && e.message) ? e.message : String(e));
         state("FAILED -- see log", "bad");

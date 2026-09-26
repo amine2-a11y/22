@@ -3498,6 +3498,7 @@ function makeRpc(worker) {
                                                     + "wrote back a thread handle"
                                                     : "returned " + rc);
                                             payloadRunning = launched;
+            if (payloadRunning && window.__goldhenStatusSuccess) window.__goldhenStatusSuccess();
                                             if (launched)
                                                 mark("PAYLOAD-RUNNING", "bytes="
                                                     + payload.length + " entry="
@@ -3811,7 +3812,6 @@ function makeRpc(worker) {
                     : jailbroken ? "ROOT"
                     : "REPAIRED";
                 stateEl.className = "ok";
-                if (window.GoldHENStatus) payloadRunning ? window.GoldHENStatus.success() : window.GoldHENStatus.fail();
             } catch (e) { }
         }
     }

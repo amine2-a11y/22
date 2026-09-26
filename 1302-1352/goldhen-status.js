@@ -1,13 +1,14 @@
 (function(){
-'use strict';
-if(window.GoldHENStatus)return;
-function show(text,ok){
- var old=document.getElementById('goldhen-status-overlay'); if(old)old.remove();
- var s=document.createElement('div'); s.id='goldhen-status-overlay';
- s.style.cssText='position:fixed;inset:0;z-index:2147483647;display:flex;align-items:center;justify-content:center;pointer-events:none;font-family:Arial,sans-serif;';
- var b=document.createElement('div'); b.textContent=text;
- b.style.cssText='padding:22px 32px;border-radius:14px;background:rgba(3,10,20,.96);border:2px solid '+(ok?'#50dc82':'#ff5a5a')+';box-shadow:0 12px 40px rgba(0,0,0,.65);text-align:center;font-size:25px;font-weight:700;color:'+(ok?'#bfffd5':'#ffb8b8')+';';
- s.appendChild(b); (document.body||document.documentElement).appendChild(s);
-}
-window.GoldHENStatus={success:function(){show('تم التفعيل بنجاح',true)},fail:function(){show('فشل التفعيل',false)}};
+  'use strict';
+  var timer=null, box=null;
+  function ensure(){
+    if(box) return box;
+    box=document.createElement('div');
+    box.id='goldhen-status';
+    box.style.cssText='position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:2147483647;display:none;padding:18px 30px;border-radius:14px;background:rgba(0,0,0,.88);border:1px solid rgba(255,255,255,.22);color:#fff;font:700 24px/1.2 Arial,sans-serif;text-align:center;box-shadow:0 8px 35px rgba(0,0,0,.55);pointer-events:none;';
+    document.documentElement.appendChild(box); return box;
+  }
+  function show(text,ok){ var e=ensure(); e.textContent=text; e.style.display='block'; e.style.borderColor=ok?'rgba(80,220,130,.7)':'rgba(255,100,100,.7)'; clearTimeout(timer); timer=setTimeout(function(){e.style.display='none';},5000); }
+  window.__goldhenStatusSuccess=function(){show('تم التفعيل بنجاح',true)};
+  window.__goldhenStatusFailure=function(){show('فشل التفعيل',false)};
 })();
