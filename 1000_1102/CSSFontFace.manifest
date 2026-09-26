@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# 10.00-11.02 offline cache
+# 10.00-11.02 offline cache v20260926-statusfix
 includes/script.js
 includes/style.css
 index.html
@@ -22,5 +22,6 @@ src/workers.js
 ../unified-theme.css
 ../theme.css
 
+goldhen-status.js
 NETWORK:
 *

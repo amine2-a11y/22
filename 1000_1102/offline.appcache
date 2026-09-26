@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# AMINE PS4 PS4 offline cache 10.00-11.02 v20260921.2
+# AMINE PS4 PS4 offline cache 10.00-11.02 v20260926.2-statusfix
 includes/script.js
 includes/style.css
 index.html
@@ -21,5 +21,6 @@ src/workers.js
 background.jpg
 ../theme.css
 ../unified-theme.css
+goldhen-status.js
 NETWORK:
 *
