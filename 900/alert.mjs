@@ -47,7 +47,6 @@ addEventListener('unhandledrejection', event => {
         event.preventDefault();
         return;
     }
-    if (window.GoldHENStatus) window.GoldHENStatus.fail();
     alert(
         'Unhandled rejection\n'
         + `${reason}\n`
@@ -66,7 +65,6 @@ addEventListener('error', event => {
         return true;
     }
     sessionStorage.removeItem('psfree_retry_count');
-    if (window.GoldHENStatus) window.GoldHENStatus.fail();
     alert(
         'Unhandled error\n'
         + `${reason}\n`
