@@ -130,5 +130,28 @@ setInterval(function(){if(!active)return;var t=((document.body&&document.body.in
 window.OfflineLion={start:start,success:function(){finish(true)},fail:function(){finish(false)}};
 // Keep the lion synchronized with the existing activation progress UI.
 setInterval(function(){try{var ap=document.getElementById("activation-progress");if(ap){if(ap.classList.contains("running"))start();if(ap.classList.contains("done"))finish(true);if(ap.classList.contains("error"))finish(false)}}catch(e){}},120);
-})();</script></body>
+})();</script><!-- LION-RELOAD-BRIDGE-V2 -->
+<script>(function(){
+'use strict';
+var KEY='amine_lion_activation_pending_v2';
+function isActivation(el){
+  if(!el) return false;
+  var s=((el.innerText||el.textContent||'')+' '+(el.getAttribute&&el.getAttribute('onclick')||'')+' '+(el.id||'')+' '+(el.className||'')).toLowerCase();
+  return /jailbreak|activate|exploit|goldhen|start.?jb/.test(s);
+}
+document.addEventListener('click',function(e){
+  var el=e.target&&e.target.closest ? e.target.closest('button,a,[role="button"]') : e.target;
+  if(isActivation(el)){ try{sessionStorage.setItem(KEY,'1')}catch(_){} }
+},true);
+function bootLion(){
+  try{
+    if(sessionStorage.getItem(KEY)==='1'){
+      sessionStorage.removeItem(KEY);
+      setTimeout(function(){ if(window.OfflineLion) window.OfflineLion.start(); },120);
+    }
+  }catch(_){}
+}
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',bootLion); else bootLion();
+})();</script>
+</body>
 </html>
