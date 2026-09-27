@@ -18,77 +18,117 @@ body{background:#050914 url("background.jpg") center/cover no-repeat fixed!impor
 #state{font-size:20px;font-weight:700;margin-bottom:10px}
 #out{white-space:pre-wrap;font:12px/1.5 Consolas,monospace;color:#e9f2ff;max-height:52vh;overflow:auto}
 .ok{color:#bfe7ff}.bad{color:#ffb4aa}.warn{color:#ffe39a}
-.cache-box{margin:0 0 16px;padding:12px;border:1px solid rgba(143,200,255,.22);border-radius:10px;background:rgba(5,15,30,.72)}
-.cache-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:#cfe5ff;font-size:14px}
-#cache-percent{font-weight:800;font-variant-numeric:tabular-nums;color:#8fc8ff}
-.cache-track{height:12px;width:100%;overflow:hidden;border-radius:99px;background:rgba(143,200,255,.15);border:1px solid rgba(143,200,255,.18)}
-#cache-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#3988ff,#8fc8ff);transition:width .18s ease}
-#cache-detail{margin-top:7px;font-size:11px;color:#8fa6be;white-space:pre-wrap}
 .spinner{width:34px;height:34px;margin:8px auto 14px;border:3px solid rgba(143,200,255,.18);border-top-color:#8fc8ff;border-radius:50%;animation:spin .8s linear infinite}
 body.done .spinner{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
 </style>
 
 <style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}
+#jb-success-overlay .sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
 </head>
 <body>
+
+<script id="jb-failure-handler">
+(function(){
+  window.showJailbreakFailure=function(){
+    try{
+      var o=document.getElementById("jb-failure-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+  };
+})();
+</script>
+<style id="jb-failure-style">
+#jb-failure-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+background:rgba(0,0,0,.78);z-index:2147483646;font-family:Arial,sans-serif}
+#jb-failure-overlay .box{padding:24px 30px;border:1px solid rgba(255,255,255,.22);border-radius:16px;
+background:rgba(10,15,25,.96);box-shadow:0 10px 40px rgba(0,0,0,.5);text-align:center;color:#fff}
+#jb-failure-overlay .err{font-size:24px;font-weight:700}
+#jb-failure-overlay .sub{margin-top:10px;font-size:15px;opacity:.85}
+</style>
+<div id="jb-failure-overlay" aria-live="assertive">
+ <div class="box">
+  <div class="err">✕ فشل التفعيل</div>
+  <div class="sub">يرجى إعادة تشغيل جهاز PS4 والمحاولة من جديد.</div>
+ </div>
+</div>
+
+
+
+<div id="jb-success-overlay" aria-live="polite">
+  <div class="box">
+    <div class="ok">✓ تم التفعيل بنجاح</div>
+    <div class="sub">جاري الخروج من المتصفح…</div>
+  </div>
+</div>
+<script>
+(function(){
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+      document.body.classList.add("jb-success");
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
+</script>
+
 <div class="page">
   <div class="brand">OFFLINE PS4 PROJECT</div>
   <h1 class="title">AMINE PS4 <b>PS4</b></h1>
   <div class="sub">13.02 · 13.50 · 13.52 · Exact local cache</div>
   <div class="spinner"></div>
   <div class="panel">
-    <div class="cache-box" aria-live="polite">
-      <div class="cache-row"><span id="cache-label">Cache: waiting for browser</span><span id="cache-percent">0%</span></div>
-      <div class="cache-track"><div id="cache-fill"></div></div>
-      <div id="cache-detail">Waiting for offline cache events…</div>
-    </div>
     <div id="state">Starting...</div>
     <div id="out"></div>
   </div>
 </div>
+<style id="jb-success-style">
+#jb-success-overlay{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);z-index:2147483647;font-family:Arial,sans-serif}
+#jb-success-overlay .box{padding:24px 34px;border:1px solid rgba(255,255,255,.22);border-radius:16px;background:rgba(10,15,25,.94);box-shadow:0 10px 40px rgba(0,0,0,.45);text-align:center;color:#fff}
+#jb-success-overlay .ok{font-size:26px;font-weight:700}.sub{margin-top:8px;font-size:14px;opacity:.78}
+</style>
+<div id="jb-success-overlay"><div class="box"><div class="ok">✓ تم التفعيل بنجاح</div><div class="sub">جاري الخروج من المتصفح…</div></div></div>
 <script>
-(function(){
-  var label=document.getElementById('cache-label');
-  var percent=document.getElementById('cache-percent');
-  var fill=document.getElementById('cache-fill');
-  var detail=document.getElementById('cache-detail');
-  var app=window.applicationCache;
-  function setProgress(n,text,detailText){
-    n=Math.max(0,Math.min(100,Math.round(n)));
-    percent.textContent=n+'%'; fill.style.width=n+'%';
-    if(text) label.textContent=text;
-    if(detailText) detail.textContent=detailText;
-  }
-  if(!app){setProgress(0,'Cache API unavailable','This browser does not expose the Application Cache API.');return;}
-  app.addEventListener('checking',function(){setProgress(0,'Checking cache','Checking whether a cached copy is available…');});
-  app.addEventListener('downloading',function(){setProgress(0,'Downloading cache','Downloading files for offline use…');});
-  app.addEventListener('progress',function(e){
-    var total=Number(e.total)||0, loaded=Number(e.loaded)||0;
-    if(total>0){setProgress(loaded/total*100,'Downloading cache',loaded+' of '+total+' files');}
-    else {setProgress(0,'Downloading cache','Downloaded '+loaded+' files…');}
-  });
-  app.addEventListener('cached',function(){setProgress(100,'Offline cache ready','All manifest resources were cached.');});
-  app.addEventListener('noupdate',function(){setProgress(100,'Offline cache ready','The browser already has the current cache.');});
-  app.addEventListener('updateready',function(){setProgress(100,'Offline cache updated','A new cache is ready. Reload the page to use it.');});
-  app.addEventListener('obsolete',function(){setProgress(0,'Cache obsolete','The browser marked this cache as obsolete.');});
-  app.addEventListener('error',function(){setProgress(0,'Cache error','The browser could not complete offline caching. Check the manifest and resource paths.');});
-  if(app.status===app.UPDATEREADY){setProgress(100,'Offline cache updated','A new cache is ready. Reload the page to use it.');}
-  else if(app.status===app.IDLE){setProgress(100,'Offline cache available','The browser reports an existing cache.');}
-})();
+window.__amineSuccessBound=true;
+window.showJailbreakSuccess=function(){
+  var o=document.getElementById("jb-success-overlay");
+  if(o)o.style.display="flex";
+  setTimeout(function(){try{window.close();}catch(e){}try{window.open("","_self");window.close();}catch(e){}},1200);
+};
 </script>
-
 <script type="module">
 import "./jb.js";
 </script>
 
-<style>
-#goldhen-status{display:none;position:fixed;inset:0;z-index:2147483647;align-items:center;justify-content:center;pointer-events:none;font-family:Arial,sans-serif}
-#goldhen-status span{padding:18px 34px;border-radius:14px;background:rgba(0,0,0,.86);border:1px solid rgba(255,255,255,.22);color:#fff;font-size:clamp(22px,4vw,42px);font-weight:700;text-align:center;box-shadow:0 8px 30px rgba(0,0,0,.45)}
-</style>
-<div id="goldhen-status"><span></span></div>
 <script>
-window.showGoldHENStatus=function(ok){try{var e=document.getElementById('goldhen-status');if(!e)return;e.firstElementChild.textContent=ok?'تم التفعيل بنجاح':'فشل التفعيل';e.style.display='flex';}catch(_){} };
+(function(){
+  var oldState = window.__amineSuccessBound;
+  if(oldState)return;
+  window.__amineSuccessBound=true;
+  window.showJailbreakSuccess=function(){
+    try{
+      var o=document.getElementById("jb-success-overlay");
+      if(o)o.style.display="flex";
+    }catch(e){}
+    setTimeout(function(){
+      try{window.close();}catch(e){}
+      try{window.open("","_self");window.close();}catch(e){}
+    },1200);
+  };
+})();
 </script>
 </body>
 </html>
