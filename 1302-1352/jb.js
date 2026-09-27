@@ -50,6 +50,7 @@ function terse(s) {
 const SHOW_LOG = params.get("log") === "1";
 if (SHOW_LOG && document.body) document.body.className = "log";
 function finishUI(ok) {
+  if (ok) { if (window.__goldhenStatusSuccess) window.__goldhenStatusSuccess(); } else { if (window.__goldhenStatusFailure) window.__goldhenStatusFailure(); }
   if (SHOW_LOG || !document.body) return;
   document.body.className = ok ? "done" : "fail";
 }
