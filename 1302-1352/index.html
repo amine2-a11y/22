@@ -1,111 +1,169 @@
-<!doctype html>
-<html lang="en" manifest="cache.appcache">
+<!-- ☠ 2026 AMINE PS4  — PS4 Exploit -->
+<html manifest="cache.appcache">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 PS4</title>
-<link rel="stylesheet" href="../theme.css">
-<link rel="stylesheet" href="../unified-theme.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AMINE PS4</title>
+    
 <style>
-html,body{width:100%;height:100%;margin:0;overflow:hidden}
-body{background:#050914 url("background.jpg") center/cover no-repeat!important}
-.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:7vh 16px 3vh}
-.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:10px;text-align:center}
-.title{margin:0 0 6px;text-align:center;font-size:clamp(22px,3.2vw,34px);font-weight:800;letter-spacing:.08em}
-.title b{color:#8fc8ff}
-.sub{font-size:11px;color:#8fa6be;text-align:center;margin-bottom:18px}
-.panel{width:min(680px,92vw);padding:20px;border:1px solid rgba(115,170,255,.24);border-radius:14px;background:rgba(2,8,17,.78);box-shadow:0 4px 12px rgba(0,0,0,.28)}
-#state{font-size:20px;font-weight:700;margin-bottom:10px}
-#out{white-space:pre-wrap;font:12px/1.5 Consolas,monospace;color:#e9f2ff;max-height:52vh;overflow:auto}
-.ok{color:#bfe7ff}.bad{color:#ffb4aa}.warn{color:#ffe39a}
-.spinner{width:34px;height:34px;margin:8px auto 14px;border:3px solid rgba(143,200,255,.18);border-top-color:#8fc8ff;border-radius:50%;animation:spin .8s linear infinite}
-.cachebar{height:8px;background:rgba(143,200,255,.16);border-radius:99px;overflow:hidden;margin:10px 0}.cachebar span{display:block;height:100%;width:0;background:#8fc8ff;transition:width .08s}.cachemeta{font-size:12px;color:#9db8d8;margin-bottom:12px}
-body.done .spinner{display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+ margin:0; min-height:100vh; overflow:hidden;
+ background: linear-gradient(rgba(0,8,18,.08),rgba(0,8,18,.20)), url("amine_ps4_background.jpg") center/cover no-repeat;
+ color:#f0ffe9;
+ font:16px/1.5 monospace;
+ position:relative;
+}
+body:before{
+ content:""; position:fixed; inset:-20%;
+ background:
+   radial-gradient(ellipse at 30% 60%,rgba(220,255,210,.16),transparent 35%),
+   radial-gradient(ellipse at 70% 35%,rgba(255,255,210,.13),transparent 30%);
+ filter:blur(10px); animation:fog 14s ease-in-out infinite alternate;
+ pointer-events:none;
+}
+body:after{
+ content:"☠    ☠"; position:fixed; left:0; right:0; bottom:8px;
+ text-align:center; color:rgba(235,255,220,.30); font-size:12px;
+ letter-spacing:7px; pointer-events:none;
+}
+#console{
+ position:relative; z-index:1; margin:0; padding:25vh 8vw;
+ white-space:pre-wrap; text-shadow:0 2px 8px #102515;
+}
+.ok{color:#d8ff9a}.bad{color:#ffb0a0}.warn{color:#fff09a}
+@keyframes fog{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.08)}}
 </style>
-
-
-<script src="./goldhen-status.js"></script>
+    <script>
+    if (window.applicationCache && window.applicationCache.status == 0) {
+        window.location.replace("cache.html");
+    }
+    </script>
 </head>
 <body>
-<div class="page">
-  <div class="brand">OFFLINE PS4 PROJECT</div>
-  <h1 class="title">AMINE PS4 <b>PS4</b></h1>
-  <div class="sub">13.02 · 13.50 · 13.52 · Exact local cache</div>
-  <div class="spinner"></div>
-  <div class="panel">
-    <div id="state">Checking offline cache…</div>
-    <div class="cachebar" aria-label="Offline cache progress"><span id="cachefill"></span></div>
-    <div id="cachemeta" class="cachemeta">Waiting for cache status…</div>
-    <div id="out"></div>
-  </div>
-</div>
+    ☠ AMINE PS4 ·  ☠<br>
+    ☠ 2026 AMINE PS4 <br>
+    <br>
+    <pre id="console"></pre>
+</body>
 <script>
 (function () {
-  var state = document.getElementById("state");
-  var meta = document.getElementById("cachemeta");
-  var fill = document.getElementById("cachefill");
-  var app = window.applicationCache;
-  var started = false;
-  function startPayload() {
-    if (started) return;
-    started = true;
-    say("Offline cache ready", "All manifest resources are cached. Starting the page script…", 100);
-    import("./jb.js").catch(function (err) {
-      started = false;
-      say("Page script failed to load", String(err && err.message || err), 100);
-    });
-  }
-  function say(title, detail, pct) {
-    if (state) state.textContent = title;
-    if (meta) meta.textContent = detail || "";
-    if (fill && typeof pct === "number") fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
-    if (document.body) {
-      var terminal = /ready|up to date|updated|failed|unavailable|error/i.test(String(title));
-      document.body.classList.toggle("done", terminal);
+    var con = document.getElementById("console");
+
+    function print(msg, cls) {
+        var span = document.createElement("span");
+        if (cls) span.className = cls;
+        span.textContent = msg + "\n";
+        con.appendChild(span);
     }
-  }
-  if (!app) {
-    say("Offline cache status unavailable", "This browser does not expose Application Cache. Keep the host page available and check its local cache settings.", 0);
-    return;
-  }
-  app.addEventListener("checking", function () { say("Checking offline cache…", "Checking the manifest.", 0); });
-  app.addEventListener("downloading", function () { say("Downloading offline cache…", "Keep this page open until caching finishes.", 0); });
-  app.addEventListener("progress", function (e) {
-    var total = Number(e.total) || 0, done = Number(e.loaded) || 0;
-    var pct = total ? Math.round(done * 100 / total) : 0;
-    say("Downloading offline cache…", total ? (done + " / " + total + " files · " + pct + "%") : (done + " files cached"), pct);
-  });
-  app.addEventListener("cached", function () {
-    say("Offline cache ready", "All manifest resources were cached successfully.", 100);
-    startPayload();
-  });
-  app.addEventListener("noupdate", function () {
-    say("Offline cache is up to date", "The existing offline cache is available.", 100);
-    startPayload();
-  });
-  app.addEventListener("updateready", function () {
-    say("Offline cache updated", "Applying the new cache, then reloading…", 100);
-    try { app.swapCache(); } catch (e) {}
-    window.location.reload();
-  });
-  app.addEventListener("error", function () {
-    say("Offline cache failed", "The archive's listed files exist. Check the host: cache.appcache must be reachable and served as text/cache-manifest; check host logs for 404/403 responses and retry online.", 0);
-  });
-  app.addEventListener("obsolete", function () {
-    say("Offline cache manifest unavailable", "The host may not serve cache.appcache with MIME type text/cache-manifest, or the manifest URL is unreachable.", 0);
-  });
-  if (app.status === app.IDLE) {
-    say("Offline cache ready", "A complete cached copy is available.", 100);
-    startPayload();
-  } else if (app.status === app.UPDATEREADY) {
-    say("Offline cache updated", "Applying the new cache, then reloading…", 100);
-    try { app.swapCache(); } catch (e) {}
-    window.location.reload();
-  } else if (app.status === app.UNCACHED) {
-    say("Waiting for offline cache", "The page script will not start until the browser finishes caching the manifest resources.", 0);
-  }
+
+    var params = new URLSearchParams(location.search);
+
+    // Firmwares with measured kernel table — KEEP IN SYNC with ps4_offsets.js
+    var SUPPORTED = { 1302: 1, 1304: 1, 1350: 1, 1352: 1 };
+
+    var key = null, fwnum = null;
+    var m = /PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+    if (m) {
+        var ms = parseInt(m[2], 16).toString(16);
+        if (ms.length < 2) ms = "0" + ms;
+        key = m[1] + "." + ms;
+        fwnum = parseInt(m[1], 10) * 100 + parseInt(ms, 10);
+    }
+
+    var forced    = params.get("force") === "1";
+    var supported = forced || (fwnum !== null && SUPPORTED[fwnum] === 1);
+
+    print("firmware: " + (key || "unknown"));
+    print("supported: " + (supported ? "yes" : "no"), supported ? "ok" : "bad");
+
+    var target = "jb.html" + location.search;
+
+    function go() {
+        print("loading exploit...", "warn");
+        location.replace(target);
+    }
+
+    function waitForTap(msg, action) {
+        print(msg, "warn");
+        function fire() {
+            window.removeEventListener("click",   fire);
+            window.removeEventListener("keydown", fire);
+            action();
+        }
+        window.addEventListener("click",   fire);
+        window.addEventListener("keydown", fire);
+    }
+
+    if (!supported) {
+        print("UNSUPPORTED FIRMWARE — tap / press X to run anyway", "bad");
+        waitForTap("", go);
+        return;
+    }
+
+    var ac = window.applicationCache;
+    if (!ac || !document.documentElement.hasAttribute("manifest")) {
+        go();
+    } else if (!navigator.onLine) {
+        print("offline — running from cache", "ok");
+        go();
+    } else if (ac.status === ac.IDLE) {
+        print("cached", "ok");
+        go();
+    } else if (ac.status === ac.UPDATEREADY) {
+        try { ac.swapCache(); } catch (e) {}
+        print("update downloaded", "ok");
+        waitForTap("UPDATE READY — tap / press X to reload", function () { location.reload(); });
+    } else {
+        print("checking cache...");
+        ac.addEventListener("downloading",
+            function () { print("caching for offline (first run)..."); }, false);
+        ac.addEventListener("progress", function (e) {
+            if (e && e.total)
+                print("caching " + Math.round((e.loaded / e.total) * 100) + "%");
+        }, false);
+        ac.addEventListener("cached", function () {
+            print("cached for offline use", "ok");
+            waitForTap("CACHED — tap / press X to run", go);
+        }, false);
+        ac.addEventListener("updateready", function () {
+            try { ac.swapCache(); } catch (e) {}
+            print("update downloaded", "ok");
+            waitForTap("UPDATE READY — tap / press X to reload",
+                       function () { location.reload(); });
+        }, false);
+        ac.addEventListener("noupdate", function () {
+            print("cached — offline ready", "ok");
+            go();
+        }, false);
+        ac.addEventListener("error", function () {
+            print("cache unavailable");
+            waitForTap("CACHE FAILED — tap / press X to run anyway", go);
+        }, false);
+        ac.addEventListener("obsolete", function () {
+            print("cache obsolete");
+            waitForTap("CACHE OBSOLETE — tap / press X to run", go);
+        }, false);
+    }
 })();
 </script>
+<script>
+    // Safe lifecycle cleanup for the host page.
+    // Does not modify exploit/payload code.
+    (function () {
+        function cleanup() {
+            try {
+                var media = document.querySelectorAll("audio,video");
+                for (var i = 0; i < media.length; i++) {
+                    try { media[i].pause(); } catch (e) {}
+                    try { media[i].removeAttribute("src"); media[i].load(); } catch (e) {}
+                }
+            } catch (e) {}
+        }
+        window.addEventListener("pagehide", cleanup, false);
+        window.addEventListener("beforeunload", cleanup, false);
+    })();
+    </script>
 </body>
 </html>
