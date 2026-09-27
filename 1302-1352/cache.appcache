@@ -1,8 +1,7 @@
 CACHE MANIFEST
-# Amine PS4 offline cache 13.02-13.52 v20260927.4-cache-progress
+# Amine PS4 offline cache 13.02-13.52 v20260927.5-stop-spinner-diagnostic
 
 CACHE:
-cache.appcache
 index.html
 jb.js
 core.js

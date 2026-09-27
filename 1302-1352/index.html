@@ -50,6 +50,10 @@ body.done .spinner{display:none}
     if (state) state.textContent = title;
     if (meta) meta.textContent = detail || "";
     if (fill && typeof pct === "number") fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
+    if (document.body) {
+      var terminal = /ready|up to date|updated|failed|unavailable|error/i.test(String(title));
+      document.body.classList.toggle("done", terminal);
+    }
   }
   if (!app) {
     say("Offline cache status unavailable", "This browser does not expose Application Cache. Keep the host page available and check its local cache settings.", 0);
@@ -65,8 +69,12 @@ body.done .spinner{display:none}
   app.addEventListener("cached", function () { say("Offline cache ready", "The browser reports that the listed resources were cached.", 100); });
   app.addEventListener("noupdate", function () { say("Offline cache is up to date", "No new manifest resources were required.", 100); });
   app.addEventListener("updateready", function () { say("Offline cache updated", "Reload this page once to use the updated cached files.", 100); });
-  app.addEventListener("error", function () { say("Offline cache failed", "A manifest resource may be missing or the host may not serve it correctly. Check the host logs and every CACHE entry.", 0); });
-  app.addEventListener("obsolete", function () { say("Offline cache manifest unavailable", "Check that cache.appcache is served with the correct MIME type and is reachable.", 0); });
+  app.addEventListener("error", function () {
+    say("Offline cache failed", "The archive's listed files exist. Check the host: cache.appcache must be reachable and served as text/cache-manifest; check host logs for 404/403 responses and retry online.", 0);
+  });
+  app.addEventListener("obsolete", function () {
+    say("Offline cache manifest unavailable", "The host may not serve cache.appcache with MIME type text/cache-manifest, or the manifest URL is unreachable.", 0);
+  });
   if (app.status === app.IDLE) say("Offline cache available", "No download is currently running. The browser may already have a cached copy.", 100);
 })();
 </script>
