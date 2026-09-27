@@ -18,6 +18,12 @@ body{background:#050914 url("background.jpg") center/cover no-repeat fixed!impor
 #state{font-size:20px;font-weight:700;margin-bottom:10px}
 #out{white-space:pre-wrap;font:12px/1.5 Consolas,monospace;color:#e9f2ff;max-height:52vh;overflow:auto}
 .ok{color:#bfe7ff}.bad{color:#ffb4aa}.warn{color:#ffe39a}
+.cache-box{margin:0 0 16px;padding:12px;border:1px solid rgba(143,200,255,.22);border-radius:10px;background:rgba(5,15,30,.72)}
+.cache-row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px;color:#cfe5ff;font-size:14px}
+#cache-percent{font-weight:800;font-variant-numeric:tabular-nums;color:#8fc8ff}
+.cache-track{height:12px;width:100%;overflow:hidden;border-radius:99px;background:rgba(143,200,255,.15);border:1px solid rgba(143,200,255,.18)}
+#cache-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#3988ff,#8fc8ff);transition:width .18s ease}
+#cache-detail{margin-top:7px;font-size:11px;color:#8fa6be;white-space:pre-wrap}
 .spinner{width:34px;height:34px;margin:8px auto 14px;border:3px solid rgba(143,200,255,.18);border-top-color:#8fc8ff;border-radius:50%;animation:spin .8s linear infinite}
 body.done .spinner{display:none}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -32,10 +38,46 @@ body.done .spinner{display:none}
   <div class="sub">13.02 · 13.50 · 13.52 · Exact local cache</div>
   <div class="spinner"></div>
   <div class="panel">
+    <div class="cache-box" aria-live="polite">
+      <div class="cache-row"><span id="cache-label">Cache: waiting for browser</span><span id="cache-percent">0%</span></div>
+      <div class="cache-track"><div id="cache-fill"></div></div>
+      <div id="cache-detail">Waiting for offline cache events…</div>
+    </div>
     <div id="state">Starting...</div>
     <div id="out"></div>
   </div>
 </div>
+<script>
+(function(){
+  var label=document.getElementById('cache-label');
+  var percent=document.getElementById('cache-percent');
+  var fill=document.getElementById('cache-fill');
+  var detail=document.getElementById('cache-detail');
+  var app=window.applicationCache;
+  function setProgress(n,text,detailText){
+    n=Math.max(0,Math.min(100,Math.round(n)));
+    percent.textContent=n+'%'; fill.style.width=n+'%';
+    if(text) label.textContent=text;
+    if(detailText) detail.textContent=detailText;
+  }
+  if(!app){setProgress(0,'Cache API unavailable','This browser does not expose the Application Cache API.');return;}
+  app.addEventListener('checking',function(){setProgress(0,'Checking cache','Checking whether a cached copy is available…');});
+  app.addEventListener('downloading',function(){setProgress(0,'Downloading cache','Downloading files for offline use…');});
+  app.addEventListener('progress',function(e){
+    var total=Number(e.total)||0, loaded=Number(e.loaded)||0;
+    if(total>0){setProgress(loaded/total*100,'Downloading cache',loaded+' of '+total+' files');}
+    else {setProgress(0,'Downloading cache','Downloaded '+loaded+' files…');}
+  });
+  app.addEventListener('cached',function(){setProgress(100,'Offline cache ready','All manifest resources were cached.');});
+  app.addEventListener('noupdate',function(){setProgress(100,'Offline cache ready','The browser already has the current cache.');});
+  app.addEventListener('updateready',function(){setProgress(100,'Offline cache updated','A new cache is ready. Reload the page to use it.');});
+  app.addEventListener('obsolete',function(){setProgress(0,'Cache obsolete','The browser marked this cache as obsolete.');});
+  app.addEventListener('error',function(){setProgress(0,'Cache error','The browser could not complete offline caching. Check the manifest and resource paths.');});
+  if(app.status===app.UPDATEREADY){setProgress(100,'Offline cache updated','A new cache is ready. Reload the page to use it.');}
+  else if(app.status===app.IDLE){setProgress(100,'Offline cache available','The browser reports an existing cache.');}
+})();
+</script>
+
 <script type="module">
 import "./jb.js";
 </script>
