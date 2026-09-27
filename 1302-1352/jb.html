@@ -12,7 +12,7 @@ body{
  background: linear-gradient(rgba(0,8,18,.08),rgba(0,8,18,.22)), url("amine_ps4_background.jpg") center/cover no-repeat fixed;
  color:#efffe9;font:15px/1.45 "Segoe UI",system-ui,sans-serif;position:relative
 }
-body:before{content:"";position:fixed;inset:-15%;background:radial-gradient(ellipse,rgba(235,255,220,.13),transparent 45%);filter:blur(20px);animation:fog 8s ease-in-out infinite alternate;pointer-events:none}
+body:before{content:"";position:fixed;inset:0;background:rgba(235,255,220,.04);pointer-events:none}
 body:after{content:"";position:fixed;bottom:9px;left:0;right:0;text-align:center;letter-spacing:8px;font:700 12px monospace;color:rgba(245,255,225,.34);pointer-events:none}
 #brand{position:relative;z-index:2;text-align:center;padding:18px 10px;background:rgba(30,65,31,.58);border-bottom:2px solid rgba(220,255,140,.35);text-shadow:0 2px 8px #182718}
 #brand b{font-size:20px;font-weight:900;letter-spacing:.18em;color:#f2ffd9}
@@ -27,7 +27,7 @@ body.log #wrap{padding:18px}
 body.log #state{display:block;font-size:24px;font-weight:800;margin:0 0 10px;color:#efffc4}
 body.log #out{display:block;white-space:pre-wrap;font:12px/1.45 Consolas,monospace;background:rgba(20,45,24,.70);border:1px solid rgba(220,255,150,.35);border-radius:10px;padding:12px;height:calc(100vh - 145px);overflow-y:auto;box-shadow:0 8px 35px rgba(0,0,0,.25)}
 .ok,.safe{color:#d9ff92}.bad,.danger{color:#ffaaa0}.warn{color:#fff09a}code{color:#d7efb4}
-@keyframes spin{to{transform:rotate(360deg)}}@keyframes fog{from{transform:translateX(-2%) scale(1)}to{transform:translateX(2%) translateY(2%) scale(1.08)}}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
   </head>
   <body>
