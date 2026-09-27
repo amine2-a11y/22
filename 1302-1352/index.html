@@ -4,82 +4,57 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
 <title>Amine PS4 PS4</title>
-<link rel="stylesheet" href="../theme.css">
-<link rel="stylesheet" href="../unified-theme.css">
+<link rel="stylesheet" href="theme.css">
+<link rel="stylesheet" href="unified-theme.css">
 <style>
 html,body{width:100%;height:100%;margin:0;overflow:hidden}
-body{background:#050914 url("background.jpg") center/cover no-repeat!important}
-.page{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;padding:7vh 16px 3vh}
-.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:10px;text-align:center}
-.title{margin:0 0 6px;text-align:center;font-size:clamp(22px,3.2vw,34px);font-weight:800;letter-spacing:.08em}
-.title b{color:#8fc8ff}
-.sub{font-size:11px;color:#8fa6be;text-align:center;margin-bottom:18px}
-.panel{width:min(680px,92vw);padding:20px;border:1px solid rgba(115,170,255,.24);border-radius:14px;background:rgba(2,8,17,.78);box-shadow:0 4px 12px rgba(0,0,0,.28)}
-#state{font-size:20px;font-weight:700;margin-bottom:10px}
-#out{white-space:pre-wrap;font:12px/1.5 Consolas,monospace;color:#e9f2ff;max-height:52vh;overflow:auto}
-.ok{color:#bfe7ff}.bad{color:#ffb4aa}.warn{color:#ffe39a}
-.spinner{width:34px;height:34px;margin:8px auto 14px;border:3px solid rgba(143,200,255,.18);border-top-color:#8fc8ff;border-radius:50%;animation:spin .8s linear infinite}
-.cachebar{height:8px;background:rgba(143,200,255,.16);border-radius:99px;overflow:hidden;margin:10px 0}.cachebar span{display:block;height:100%;width:0;background:#8fc8ff;transition:width .08s}.cachemeta{font-size:12px;color:#9db8d8;margin-bottom:12px}
-body.done .spinner{display:none}
-@keyframes spin{to{transform:rotate(360deg)}}
+body{background:#050914 url("background.jpg") center/cover no-repeat fixed!important}
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
+.card{width:min(620px,90vw);padding:30px;border:1px solid rgba(115,170,255,.24);border-radius:16px;background:rgba(2,8,17,.82);box-shadow:0 16px 45px rgba(0,0,0,.45);text-align:center}
+.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:9px}
+h1{margin:0 0 8px;font-size:28px}h1 b{color:#8fc8ff}
+.sub{font-size:12px;color:#9db0c4;margin-bottom:20px}
+#msg{font-size:14px;color:#e9f2ff;min-height:22px}
+.bar{height:8px;margin-top:14px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
+#fill{height:100%;width:0;background:#8fc8ff;transition:width .15s}
 </style>
 
-
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
 <script src="./goldhen-status.js"></script>
 </head>
 <body>
-<div class="page">
-  <div class="brand">OFFLINE PS4 PROJECT</div>
-  <h1 class="title">AMINE PS4 <b>PS4</b></h1>
-  <div class="sub">13.02 · 13.50 · 13.52 · Exact local cache</div>
-  <div class="spinner"></div>
-  <div class="panel">
-    <div id="state">Checking offline cache…</div>
-    <div class="cachebar" aria-label="Offline cache progress"><span id="cachefill"></span></div>
-    <div id="cachemeta" class="cachemeta">Waiting for cache status…</div>
-    <div id="out"></div>
-  </div>
-</div>
+<div class="wrap"><div class="card">
+<div class="brand">OFFLINE PS4 PROJECT</div>
+<h1>AMINE PS4 <b>PS4</b></h1>
+<div class="sub">Unified lightweight firmware launcher</div>
+<div id="msg">Detecting firmware...</div>
+<div class="bar"><div id="fill"></div></div>
+</div></div>
 <script>
-(function () {
-  var state = document.getElementById("state");
-  var meta = document.getElementById("cachemeta");
-  var fill = document.getElementById("cachefill");
-  var app = window.applicationCache;
-  function say(title, detail, pct) {
-    if (state) state.textContent = title;
-    if (meta) meta.textContent = detail || "";
-    if (fill && typeof pct === "number") fill.style.width = Math.max(0, Math.min(100, pct)) + "%";
-    if (document.body) {
-      var terminal = /ready|up to date|updated|failed|unavailable|error/i.test(String(title));
-      document.body.classList.toggle("done", terminal);
-    }
-  }
-  if (!app) {
-    say("Offline cache status unavailable", "This browser does not expose Application Cache. Keep the host page available and check its local cache settings.", 0);
-    return;
-  }
-  app.addEventListener("checking", function () { say("Checking offline cache…", "Checking the manifest.", 0); });
-  app.addEventListener("downloading", function () { say("Downloading offline cache…", "Keep this page open until caching finishes.", 0); });
-  app.addEventListener("progress", function (e) {
-    var total = Number(e.total) || 0, done = Number(e.loaded) || 0;
-    var pct = total ? Math.round(done * 100 / total) : 0;
-    say("Downloading offline cache…", total ? (done + " / " + total + " files · " + pct + "%") : (done + " files cached"), pct);
-  });
-  app.addEventListener("cached", function () { say("Offline cache ready", "The browser reports that the listed resources were cached.", 100); });
-  app.addEventListener("noupdate", function () { say("Offline cache is up to date", "No new manifest resources were required.", 100); });
-  app.addEventListener("updateready", function () { say("Offline cache updated", "Reload this page once to use the updated cached files.", 100); });
-  app.addEventListener("error", function () {
-    say("Offline cache failed", "The archive's listed files exist. Check the host: cache.appcache must be reachable and served as text/cache-manifest; check host logs for 404/403 responses and retry online.", 0);
-  });
-  app.addEventListener("obsolete", function () {
-    say("Offline cache manifest unavailable", "The host may not serve cache.appcache with MIME type text/cache-manifest, or the manifest URL is unreachable.", 0);
-  });
-  if (app.status === app.IDLE) say("Offline cache available", "No download is currently running. The browser may already have a cached copy.", 100);
+(function(){
+"use strict";
+var msg=document.getElementById("msg"),fill=document.getElementById("fill");
+function set(t,p){msg.textContent=t;fill.style.width=Math.max(0,Math.min(100,p||0))+"%";}
+function fw(){
+ var m=/PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
+ if(!m)return null;
+ return parseFloat(m[1]+"."+m[2]);
+}
+var f=fw(), target=null;
+var profileLabel="";
+if(f!==null){
+ if(Math.abs(f-9.00)<.001){target="900/index.html";profileLabel="9.00";}
+ else if(f>=5.00 && f<=9.60){target="505_960/index.html";profileLabel="5.05–9.60";}
+ else if(f>=10.00 && f<=11.02){target="1000_1102/index.html";profileLabel="10.00–11.02";}
+ else if([11.50,12.00,12.02,12.50,12.52,13.00].some(function(v){return Math.abs(f-v)<.001;})){target="1150-1300/index.html";profileLabel="11.50–13.00";}
+ else if([13.02,13.04,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
+}
+set(f===null?"PS4 firmware not detected":"Firmware "+f.toFixed(2)+(profileLabel?" · Cache "+profileLabel:""),35);
+setTimeout(function(){
+ if(target){set("Opening local cache profile "+profileLabel+"...",100);setTimeout(function(){location.replace(target);},120);}
+ else set("Firmware profile not included in this build.",100);
+},220);
 })();
-</script>
-<script type="module">
-import "./jb.js";
 </script>
 </body>
 </html>
