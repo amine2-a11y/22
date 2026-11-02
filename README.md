@@ -1,98 +1,26 @@
-# afterglow (web)
+# Amine PS4 FIX
 
-Kernel exploit for the PlayStation 4 on firmware **14.00**, run from the
-console's own browser. It leaves the kernel readable and writable, `uid 0`,
-`mmap` handing out RWX and `syscall 11` as a kexec gate — so the usual payloads
-work as they do after any other kernel exploit.
+Merged from the supplied 11-main project and the supplied 13.02/13.50/13.52 project.
 
-This is the browser version. The same exploit also runs as a Lua payload from
-inside a game process.
+## Design
+- Uses the 11-main blue PS4-style `theme.css` / `unified-theme.css`.
+- Uses the existing `background.jpg` across firmware pages.
+- Lightweight shell: removed the 5.4 MB background MP3 and unused duplicate 6.72 files.
+- Firmware engines and patch binaries are kept separate; UI changes do not alter exploit code.
 
-## You need
+## Included profiles
+- 5.05–9.60
+- 9.00
+- 10.00–11.02
+- 11.50–13.00
+- 13.02 / 13.50 / 13.52
 
-* PS4 on firmware 14.00, on your network
-* A machine on the same network with `python3`
+The 13.02–13.52 engine is packaged under `1302-1352/`.
 
-Nothing is installed on the console. The pages are static files.
 
-## Running it
-
-```sh
-./serve.sh                      # port 8000, or AFTERGLOW_PORT=8080 ./serve.sh
-```
-
-Open `http://<host>:8000/` in the console's browser, pick **ps4-hen** or
-**GoldHEN**, press start. Tick *autostart* and it goes by itself after five
-seconds.
-
-Each run has to begin on that page. The run page arms the chain only when it
-was reached from there, so a browser restoring its last session cannot set it
-off again with nobody watching.
-
-## What is shipped
-
-| File | What it is |
-|---|---|
-| `hen.bin` | ps4-hen `pre-release-main-182`, **already patched** (see below) |
-| `goldhen.bin` | GoldHEN, included with the author's permission |
-| `patchset.bin` | 641 bytes of kernel patches GoldHEN expects to find |
-| `ps4.js`, `patchset.bin` | this work |
-| `jb.js`, `core.js`, `mem.js`, `int64.js`, `ps4_offsets.js` | from the raw13g host, trimmed |
-
-### ps4-hen is patched here
-
-Upstream `hen.bin` has a wrong address for `sceSblPfsSetKeys` on 14.00.
-Unpatched, **every app launch freezes the console** and the kernel stays broken
-until you reboot. The copy in this folder already carries the fix:
-
-```sh
-md5sum hen.bin                  # 6417a84a72f9c7988f0e33b3ae190542  (patched)
-                                # 9aff7544eddef2f8202f72fc633d2be3  = upstream, do not use
-```
-
-If you bring your own build, change `kpayload/source/offsets/1400.c`,
-`sceSblPfsSetKeys_addr` from `0x006272B0` to `0x00627270`. Why, and how it was
-established: `TECHNICAL.md`.
-
-## If it stops
-
-The page tells you which of these happened.
-
-| What it says | What it cost | What to do |
-|---|---|---|
-| `exploit failed - please retry (reopen browser)` | nothing — no apm unit spent, no kernel byte written | reopen the browser and go again |
-| nothing at all, for 45 s | same | the watchdog says the same thing; if even that does not appear, the WebProcess is gone — cold start |
-| `the handles are NOT defused` | the chain got far and could not clean up | **do not close the browser** — cold start |
-
-That last one matters. With the handles left armed, the next process exit runs
-`fo_close` into `apmclose` and never completes — and closing the browser *is*
-that exit, so no browser restart will help afterwards.
-
-There is also a failure that cannot be caught. The reclaimed object supplies
-the stack pointer, and the kernel reads it before a single instruction of ours
-runs. When some other kernel allocation wins the hole instead, ring 0 carries
-on with a stack pointer out of a stranger's object and the console dies right
-there — no message, no clean shutdown. Don't run this with anything unsaved on
-the console.
-
-## Reviews wanted
-
-Issues and pull requests welcome, and so is a report that it simply worked. Say
-which model and firmware you tried.
-
-## Credits
-
-* **raw13g** — the host this page grew out of
-* **jordyidk** — [slopkit](https://github.com/jordyidk/slopkit)
-* **al-azif** — <https://github.com/al-azif/>
-* **SiSTRo** — GoldHEN
-* **TheFlow, ChendoChap, abc, AlAzif, LightningMods, @egycnq** — the PS4 kernel
-  patch and sandbox escape lineage these payloads build on
-* everyone who publishes their findings instead of sitting on them
-
-## Legal
-
-Security research on hardware we own. No Sony code is redistributed.
-
-Licensed under the GNU Affero General Public License v3.0 or later. The raw13g
-substrate keeps its own license.
+## Added 14.00 host
+- Added the supplied Afterglow web host under `14.00/`.
+- The main firmware dispatcher routes exact firmware 14.00 to this separate host.
+- Added a local application-cache manifest listing the host's local files and added those files to the top-level cache manifest.
+- The Afterglow exploit source and payload files were copied as supplied; they were not rewritten or independently validated.
+- Offline use requires one successful first load while connected to the same-origin host so the browser can populate its cache. Application Cache support varies by browser/firmware.
