@@ -94,7 +94,4 @@ body.log #wrap { display: flex; flex-direction: column; flex: 1; min-height: 0; 
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 
-/* AppCache state indicator — landing page only. */
-.cache-status { margin: 12px 0 0; color: var(--dim); font: 11px/1.4 var(--mono); letter-spacing: .08em; text-align: center; }
-.cache-status.ready { color: var(--ok); }
-.cache-status.error { color: var(--bad); }
+.cache-status{margin:12px 0 0;text-align:center;color:#ffd27a;font:700 11px/1.4 Consolas,monospace;letter-spacing:.08em}.cache-status.ready{color:#55e0b0}.cache-status.error{color:#ff7d89}

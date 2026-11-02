@@ -1,22 +1,22 @@
 CACHE MANIFEST
-# AMINE PS4 14.00 OFFLINE CACHE v2
-# Keep this file's version comment updated whenever cached files change.
+# AMINE PS4 14.00 offline cache v2
 
 CACHE:
 index.html
+jb.html
 style.css
 launch.js
-meme.png
-jb.html
+cache-status.js
 jb.js
 core.js
 mem.js
 int64.js
-ps4_offsets.js
 ps4.js
+ps4_offsets.js
+meme.png
 hen.bin
 goldhen.bin
 patchset.bin
 
-# Deliberately no NETWORK:* section: uncached requests must not fall
-# through to the internet. All runtime dependencies above are local.
+NETWORK:
+*
