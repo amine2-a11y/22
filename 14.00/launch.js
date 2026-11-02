@@ -112,3 +112,33 @@ if (DONE) {
 } else if (autoBox.checked) {
   startClock();
 }
+
+
+/* Report whether the PS4 browser has stored this host for offline use. */
+(function () {
+  var el = document.getElementById("cacheStatus");
+  if (!el) return;
+  function show(text, state) {
+    el.textContent = text;
+    el.className = "cache-status" + (state ? " " + state : "");
+  }
+  try {
+    var appCache = window.applicationCache;
+    if (!appCache) { show("OFFLINE CACHE: NOT SUPPORTED BY THIS BROWSER", "error"); return; }
+    function update() {
+      if (appCache.status === 1) show("OFFLINE CACHE: READY", "ready");
+      else if (appCache.status === 2 || appCache.status === 3) show("OFFLINE CACHE: DOWNLOADING FILES…", "");
+      else if (appCache.status === 4) show("OFFLINE CACHE: UPDATE READY — REOPEN PAGE", "ready");
+      else if (appCache.status === 5) show("OFFLINE CACHE: OBSOLETE — RELOAD ONLINE", "error");
+      else show("OFFLINE CACHE: FIRST ONLINE LOAD REQUIRED", "");
+    }
+    ["checking", "downloading", "progress", "cached", "noupdate", "updateready", "obsolete", "error"].forEach(function (name) {
+      appCache.addEventListener(name, function () {
+        if (name === "cached" || name === "noupdate") show("OFFLINE CACHE: READY", "ready");
+        else if (name === "error") show("OFFLINE CACHE: DOWNLOAD FAILED", "error");
+        else update();
+      }, false);
+    });
+    update();
+  } catch (e) { show("OFFLINE CACHE: STATUS UNAVAILABLE", "error"); }
+})();

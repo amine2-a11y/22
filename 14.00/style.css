@@ -93,3 +93,8 @@ body.log #wrap { display: flex; flex-direction: column; flex: 1; min-height: 0; 
   .btn { padding: 16px; }
 }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+
+/* AppCache state indicator — landing page only. */
+.cache-status { margin: 12px 0 0; color: var(--dim); font: 11px/1.4 var(--mono); letter-spacing: .08em; text-align: center; }
+.cache-status.ready { color: var(--ok); }
+.cache-status.error { color: var(--bad); }

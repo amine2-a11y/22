@@ -37,12 +37,17 @@ class Handler(SimpleHTTPRequestHandler):
         ".js": "text/javascript",
         ".css": "text/css",
         ".bin": "application/octet-stream",
+        ".appcache": "text/cache-manifest",
     }
 
     CACHEABLE = (".png", ".jpg", ".jpeg", ".gif", ".webp", ".ico")
 
     def end_headers(self):
-        if self.path.split("?")[0].lower().endswith(self.CACHEABLE):
+        request_path = self.path.split("?")[0].lower()
+        if request_path.endswith(".appcache"):
+            self.send_header("Cache-Control", "no-cache, must-revalidate")
+            self.send_header("Content-Type", "text/cache-manifest; charset=utf-8")
+        elif request_path.endswith(self.CACHEABLE):
             self.send_header("Cache-Control", "public, max-age=604800")
         else:
             self.send_header("Cache-Control", "no-store, must-revalidate")
