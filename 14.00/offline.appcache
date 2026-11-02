@@ -1,0 +1,24 @@
+CACHE MANIFEST
+# AMINE PS4 14.00 Afterglow offline bundle v1
+CACHE:
+LICENSE
+README.md
+TECHNICAL.md
+ps4.js
+core.js
+goldhen.bin
+hen.bin
+index.html
+int64.js
+jb.html
+jb.js
+launch.js
+mem.js
+meme.png
+patchset.bin
+ps4_offsets.js
+serve.sh
+style.css
+
+NETWORK:
+*
