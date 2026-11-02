@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 PS4</title>
+<title>Amine PS4</title>
 <link rel="stylesheet" href="theme.css">
 <link rel="stylesheet" href="unified-theme.css">
 <style>
@@ -25,7 +25,7 @@ h1{margin:0 0 8px;font-size:28px}h1 b{color:#8fc8ff}
 <body>
 <div class="wrap"><div class="card">
 <div class="brand">OFFLINE PS4 PROJECT</div>
-<h1>AMINE PS4 <b>PS4</b></h1>
+<h1>AMINE <b>PS4</b></h1>
 <div class="sub">Unified lightweight firmware launcher</div>
 <div id="msg">Detecting firmware...</div>
 <div class="bar"><div id="fill"></div></div>
@@ -48,6 +48,7 @@ if(f!==null){
  else if(f>=10.00 && f<=11.02){target="1000_1102/index.html";profileLabel="10.00–11.02";}
  else if([11.50,12.00,12.02,12.50,12.52,13.00].some(function(v){return Math.abs(f-v)<.001;})){target="1150-1300/index.html";profileLabel="11.50–13.00";}
  else if([13.02,13.04,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
+ else if(Math.abs(f-14.00)<.001){target="14.00/index.html";profileLabel="14.00 · Afterglow";}
 }
 set(f===null?"PS4 firmware not detected":"Firmware "+f.toFixed(2)+(profileLabel?" · Cache "+profileLabel:""),35);
 setTimeout(function(){
