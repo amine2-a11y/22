@@ -1,61 +1,47 @@
 <!doctype html>
-<html lang="en" manifest="cache.appcache">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4</title>
-<link rel="stylesheet" href="theme.css">
-<link rel="stylesheet" href="unified-theme.css">
-<style>
-html,body{width:100%;height:100%;margin:0;overflow:hidden}
-body{background:#050914 url("background.jpg") center/cover no-repeat fixed!important}
-.wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:18px}
-.card{width:min(620px,90vw);padding:30px;border:1px solid rgba(115,170,255,.24);border-radius:16px;background:rgba(2,8,17,.82);box-shadow:0 16px 45px rgba(0,0,0,.45);text-align:center}
-.brand{font-size:11px;letter-spacing:.28em;color:#9db8d8;margin-bottom:9px}
-h1{margin:0 0 8px;font-size:28px}h1 b{color:#8fc8ff}
-.sub{font-size:12px;color:#9db0c4;margin-bottom:20px}
-#msg{font-size:14px;color:#e9f2ff;min-height:22px}
-.bar{height:8px;margin-top:14px;border-radius:99px;background:rgba(255,255,255,.12);overflow:hidden}
-#fill{height:100%;width:0;background:#8fc8ff;transition:width .15s}
-</style>
+<html class="landing" lang="en" manifest="offline.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>AMINE PS4</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Every run starts from here. The referrer guard in jb.js arms the chain
+         only when it was reached from this page, so that a browser restoring
+         its last session cannot re-run it unattended. -->
+    <div id="brand"><b>AMINE <span>PS4</span></b></div>
 
-<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
-<script src="./goldhen-status.js"></script>
-</head>
-<body>
-<div class="wrap"><div class="card">
-<div class="brand">OFFLINE PS4 PROJECT</div>
-<h1>AMINE <b>PS4</b></h1>
-<div class="sub">Unified lightweight firmware launcher</div>
-<div id="msg">Detecting firmware...</div>
-<div class="bar"><div id="fill"></div></div>
-</div></div>
-<script>
-(function(){
-"use strict";
-var msg=document.getElementById("msg"),fill=document.getElementById("fill");
-function set(t,p){msg.textContent=t;fill.style.width=Math.max(0,Math.min(100,p||0))+"%";}
-function fw(){
- var m=/PlayStation\s+4[\/ ](\d+)\.(\d+)/.exec(navigator.userAgent);
- if(!m)return null;
- return parseFloat(m[1]+"."+m[2]);
-}
-var f=fw(), target=null;
-var profileLabel="";
-if(f!==null){
- if(Math.abs(f-9.00)<.001){target="900/index.html";profileLabel="9.00";}
- else if(f>=5.00 && f<=9.60){target="505_960/index.html";profileLabel="5.05–9.60";}
- else if(f>=10.00 && f<=11.02){target="1000_1102/index.html";profileLabel="10.00–11.02";}
- else if([11.50,12.00,12.02,12.50,12.52,13.00].some(function(v){return Math.abs(f-v)<.001;})){target="1150-1300/index.html";profileLabel="11.50–13.00";}
- else if([13.02,13.04,13.50,13.52].some(function(v){return Math.abs(f-v)<.001;})){target="1302-1352/index.html";profileLabel="13.02–13.52";}
- else if(Math.abs(f-14.00)<.001){target="14.00/index.html";profileLabel="14.00 · Afterglow";}
-}
-set(f===null?"PS4 firmware not detected":"Firmware "+f.toFixed(2)+(profileLabel?" · Cache "+profileLabel:""),35);
-setTimeout(function(){
- if(target){set("Opening local cache profile "+profileLabel+"...",100);setTimeout(function(){location.replace(target);},120);}
- else set("Firmware profile not included in this build.",100);
-},220);
-})();
-</script>
-</body>
+    <div class="shell">
+      <img class="meme" src="meme.png" alt="" />
+
+      <main class="panel">
+        <p class="lede">PLAYSTATION 4 &middot; FIRMWARE 14.00</p>
+
+        <form class="pick" id="pick">
+          <label class="opt">
+            <input type="radio" name="payload" value="hen" />
+            <span>ps4-hen</span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="payload" value="goldhen" checked />
+            <span>GoldHEN</span>
+          </label>
+
+          <label class="opt opt-auto">
+            <input type="checkbox" id="auto" checked />
+            <span>autostart</span>
+          </label>
+
+          <button class="btn" type="submit">start</button>
+          <p class="count" id="count"></p>
+          <p id="cacheStatus" class="cache-status">OFFLINE CACHE: CHECKING…</p>
+        </form>
+      </main>
+    </div>
+
+    <p class="byline">by well0nez/m0zz</p>
+    <script src="cache-status.js"></script>
+    <script src="launch.js"></script>
+  </body>
 </html>
