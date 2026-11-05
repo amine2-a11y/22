@@ -1839,7 +1839,7 @@ function PayloadLoader(Pfile)
    var PLD = req.response;
    var payload_buffer = chain.sysp('mmap', 0, 0x300000, 7, 0x41000, -1, 0);
    var pl = array_from_address(payload_buffer, PLD.byteLength*4);
-   var padding = new Uint8Array(4 - (req.response.byteLength % 4) % 4);
+   var padding = new Uint8Array((4 - (req.response.byteLength % 4)) % 4);
    var tmp = new Uint8Array(req.response.byteLength + padding.byteLength);
    tmp.set(new Uint8Array(req.response), 0);
    tmp.set(padding, req.response.byteLength);
@@ -1861,13 +1861,30 @@ function PayloadLoader(Pfile)
 }
 
 kexploit().then(() => {
+    // Schedule callbacks instead of executing both payload loaders immediately.
+    // Keep a gap between the compatibility patch and GoldHEN to avoid racing requests.
+    log("Kernel exploit completed. Scheduling AIO compatibility patch...");
+    setTimeout(() => {
+        try {
+            PayloadLoader("aio_patches.bin");
+            log("AIO compatibility payload requested.");
+        } catch (error) {
+            log("AIO payload start failed: " + error);
+            if (typeof window.__goldhenStatusFailure === "function") window.__goldhenStatusFailure();
+        }
+    }, 500);
 
-//Load ABC fix as a regular Payload
-setTimeout(PayloadLoader("aio_patches.bin"),500);
-log("AIO Fixes Applied.!");
-//Load GoldHEN :)
-setTimeout(PayloadLoader("goldhen.bin"),500);
-log("GoldHEN Loaded.!");
-if (typeof window.__goldhenStatusSuccess === "function") window.__goldhenStatusSuccess();
-
-}).catch(() => { if (typeof window.__goldhenStatusFailure === "function") window.__goldhenStatusFailure(); });
+    setTimeout(() => {
+        try {
+            PayloadLoader("goldhen.bin");
+            log("GoldHEN payload requested. Check the console for its status.");
+            if (typeof window.__goldhenStatusSuccess === "function") window.__goldhenStatusSuccess();
+        } catch (error) {
+            log("GoldHEN payload start failed: " + error);
+            if (typeof window.__goldhenStatusFailure === "function") window.__goldhenStatusFailure();
+        }
+    }, 1500);
+}).catch((error) => {
+    log("Kernel exploit failed: " + error);
+    if (typeof window.__goldhenStatusFailure === "function") window.__goldhenStatusFailure();
+});
