@@ -13,8 +13,14 @@ body{
   background:#020711 url("../background.jpg") center center/cover no-repeat fixed !important;
 }
 body:before{
-  content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:linear-gradient(180deg,rgba(0,3,10,.22),rgba(0,3,10,.72));
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 50% 38%,rgba(0,116,255,.18),transparent 34%),
+    linear-gradient(180deg,rgba(0,3,10,.16),rgba(0,3,10,.78));
+}
+body:after{
+  content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(115deg,transparent 38%,rgba(0,126,255,.07) 50%,transparent 62%);
 }
 .page{position:relative;z-index:1;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;padding:5vh 18px 3vh}
 .title{text-align:center;margin:0 0 7px;font-size:clamp(21px,3vw,32px);font-weight:700;letter-spacing:.08em;text-shadow:0 0 24px rgba(0,130,255,.35)}
@@ -31,7 +37,7 @@ body:before{
  width:260px;height:152px;margin:20px 0 12px;padding:14px;
  border:1px solid rgba(20,137,255,.72);border-radius:14px;
  background:linear-gradient(160deg,rgba(4,17,34,.96),rgba(1,8,18,.92));
- 
+ box-shadow:0 0 28px rgba(0,104,255,.18),inset 0 0 25px rgba(0,110,255,.07);
  display:flex;flex-direction:column;align-items:center;justify-content:center;
 }
 .bolt{font-size:25px;color:#168cff;text-shadow:0 0 16px #168cff;margin-bottom:6px}
@@ -64,7 +70,7 @@ if (window.applicationCache && window.applicationCache.status=='0') {
   window.location.replace('cache.html');
 }
 </script>
-
+<link rel="stylesheet" href="../unified-theme.css">
 <script src="./goldhen-status.js"></script>
 </head>
 <body>
