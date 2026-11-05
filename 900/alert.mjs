@@ -26,27 +26,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // We log the line and column numbers as well since some exceptions (like
 // SyntaxError) do not show it in the stack trace.
 
-let retryCount = Number(sessionStorage.getItem('psfree_retry_count') || '0');
-
-function isRaceError(reason) {
-    const text = String(reason || '');
-    return /multiple blurs|blurs before pop/i.test(text);
-}
-
-function retryRace(reason) {
-    if (retryCount >= 1 || !isRaceError(reason)) return false;
-    retryCount++;
-    sessionStorage.setItem('psfree_retry_count', String(retryCount));
-    setTimeout(() => location.reload(), 350);
-    return true;
+function describe(reason) {
+    try { return String(reason ?? 'Unknown error'); } catch (_) { return 'Unknown error'; }
 }
 
 addEventListener('unhandledrejection', event => {
     const reason = event.reason;
-    if (retryRace(reason)) {
-        event.preventDefault();
-        return;
-    }
     alert(
         'Unhandled rejection\n'
         + `${reason}\n`
@@ -58,18 +43,11 @@ addEventListener('unhandledrejection', event => {
 
 addEventListener('error', event => {
     const reason = event.error;
-    const text = String(reason || '');
-    // The PSFree 9.00 UAF race can occasionally hit the same blur twice.
-    // Retry once automatically; after that, keep the diagnostic visible.
-    if (retryRace(reason)) {
-        return true;
-    }
-    sessionStorage.removeItem('psfree_retry_count');
     alert(
         'Unhandled error\n'
         + `${reason}\n`
         + `${reason?.sourceURL || ''}:${reason?.line || ''}:${reason?.column || ''}\n`
-        + `${reason.stack}`
+        + `${reason?.stack || ''}`
     );
     return true;
 });
