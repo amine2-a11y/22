@@ -68,7 +68,7 @@ addEventListener('error', event => {
     alert(
         'Unhandled error\n'
         + `${reason}\n`
-        + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
+        + `${reason?.sourceURL || ''}:${reason?.line || ''}:${reason?.column || ''}\n`
         + `${reason.stack}`
     );
     return true;
