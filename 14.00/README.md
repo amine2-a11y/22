@@ -19,7 +19,7 @@ Nothing is installed on the console. The pages are static files.
 ## Running it
 
 ```sh
-./serve.sh                      # port 8000, or AFTERGLOW_PORT=8080 ./serve.sh
+./serve.sh                      # port 8000, or AMINE_PORT=8080 ./serve.sh
 ```
 
 Open `http://<host>:8000/` in the console's browser, pick **ps4-hen** or
@@ -37,7 +37,7 @@ off again with nobody watching.
 | `hen.bin` | ps4-hen `pre-release-main-182`, **already patched** (see below) |
 | `goldhen.bin` | GoldHEN, included with the author's permission |
 | `patchset-1200.bin` … `patchset-1400.bin` | the kernel patches GoldHEN expects to find, one set per firmware |
-| `afterglow.js` | this work |
+| `amine.js` | this work |
 | `jb.js`, `ps4_offsets.js` | the raw13g host, trimmed |
 | `core.js`, `mem.js`, `int64.js` | the in-process primitive, by way of that host |
 | `index.html`, `jb.html`, `launch.js`, `style.css`, `meme.png` | the landing page and the run page |
@@ -119,7 +119,7 @@ which model and firmware you tried.
 
 Security research on hardware we own. No Sony code is redistributed.
 
-`afterglow.js` and the patch sets are licensed under the GNU Affero General
+`amine.js` and the patch sets are licensed under the GNU Affero General
 Public License v3.0 or later; see `LICENSE`. The bundled code keeps its own
 terms: `jb.js`, `ps4_offsets.js` and the page scaffolding are raw13g's under
 the MIT license, reproduced in `LICENSE-raw13g`. `core.js`, `mem.js` and

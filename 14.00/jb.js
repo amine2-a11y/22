@@ -908,7 +908,7 @@ let mainMf = null,
          page may run that. */
       let agOk = false, agRan = false;
       try {
-        const ag = await import("./afterglow.js");
+        const ag = await import("./amine.js");
         // Exactly what afterglow reaches for, counted rather than guessed.
         const agCtx = {
           p: p, callAddr: callAddr, bufAddr: bufAddr, errno: errno,

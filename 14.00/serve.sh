@@ -2,7 +2,7 @@
 # Serve this folder to the console.
 #
 #   ./serve.sh                     # port 8000
-#   AFTERGLOW_PORT=8080 ./serve.sh
+#   AMINE_PORT=8080 ./serve.sh
 #
 # Two things this has to get right, and a plain `python3 -m http.server`
 # gets one of them wrong:
@@ -24,7 +24,7 @@
 set -eu
 
 cd "$(dirname "$0")"
-PORT="${AFTERGLOW_PORT:-8000}"
+PORT="${AMINE_PORT:-8000}"
 
 exec python3 - "$PORT" <<'PY'
 import sys

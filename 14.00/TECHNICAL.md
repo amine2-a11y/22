@@ -19,7 +19,7 @@ The browser host does not reach the kernel by itself. It runs in two stages:
    | `p.read1/4/8`, `p.write1/4/8`, `p.readInto` | memory in this process |
    | `keepAlive` | an array, so buffers survive the collector |
 
-2. **`afterglow.js`** — the kernel exploit, which uses nothing else. There is
+2. **`amine.js`** — the kernel exploit, which uses nothing else. There is
    no requirement for a way to call native code: the only `native.fcall` in the
    exploit enters a stub that is itself `SYS_syscall(11, body)`, which a host
    with a syscall primitive issues directly.
@@ -39,7 +39,7 @@ There are two forms of enabler image, and from the outside they look alike:
 | raw payload | begins with `e9` (jmp rel32) | map it, start a thread |
 | composite image | exactly 964,440 bytes | patch chain, trampoline, padding RW |
 
-`loadEnabler` in `afterglow.js` decides on the content, **not** on the file
+`loadEnabler` in `amine.js` decides on the content, **not** on the file
 name. Deciding by name sends a raw payload down the composite path, where the
 length check rejects it.
 
@@ -54,7 +54,7 @@ its `PATCHES` table and ten more written by its bootstrap stub. The remaining
 That set is position independent and ends in `ret`, and it runs before
 **every** GoldHEN payload, in both image forms. It writes fixed kernel
 addresses, so there is one per firmware — `patchset-1400.bin` (641 bytes) and
-`patchset-1352.bin` (632 bytes) — and `afterglow.js` fetches the one that
+`patchset-1352.bin` (632 bytes) — and `amine.js` fetches the one that
 matches the firmware it was given.
 
 ## Two guards
@@ -94,7 +94,7 @@ its entry, on every PFS mount — that is, on every application launch.
 
 Three layers, and they are not the same provenance.
 
-`afterglow.js` and the patch sets are this work. `jb.js`, `ps4_offsets.js` and
+`amine.js` and the patch sets are this work. `jb.js`, `ps4_offsets.js` and
 the page scaffolding are raw13g's, under MIT.
 
 `core.js`, `mem.js` and `int64.js` are a fork of the primitive from
