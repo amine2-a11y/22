@@ -5,19 +5,19 @@
    page-kind class on <body> would not survive the first state change. */
 
 :root {
-  --bg: #1b2c3e;
-  --panel: #172739;
-  --sunk: #1d3046;
-  --line: rgba(112,166,214,.38);
+  --bg: #0b0d10;
+  --panel: #0e1116;
+  --sunk: #11151b;
+  --line: #1e2732;
 
-  --fg: #edf5fc;
-  --bright: #f4f8fc;
-  --dim: #b4c7d8;
-  --faint: #91a9bd;
+  --fg: #c8ced8;
+  --bright: #e6ebf2;
+  --dim: #7c8798;
+  --faint: #4d5765;
 
-  --ok: #83d6b0;
-  --bad: #e29b9b;
-  --warn: #e5c77f;
+  --ok: #7fd0a0;
+  --bad: #d08a7f;
+  --warn: #d8c07f;
 
   --sans: "Segoe UI", system-ui, sans-serif;
   --mono: Consolas, "DejaVu Sans Mono", monospace;
@@ -32,7 +32,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100%;
-  background: linear-gradient(145deg,#263b50,#172638 58%,#101c2a);
+  background: var(--bg);
   color: var(--fg);
   font: 15px/1.45 var(--sans);
 }
@@ -103,8 +103,8 @@ body {
   margin-bottom: 8px;
   padding: 11px 13px;
   border: 1px solid var(--line);
-  border-radius: 9px;
-  background: rgba(23,39,57,.9);
+  border-radius: 5px;
+  background: var(--panel);
   cursor: pointer;
 }
 
@@ -136,10 +136,10 @@ body {
   width: 100%;
   margin-top: 16px;
   padding: 0.8em 1.4em;
-  border: 1px solid rgba(160,207,237,.52);
+  border: 1px solid #2f4a3c;
   border-radius: 5px;
-  background: linear-gradient(180deg,#477da7,#315d83);
-  color: #fff;
+  background: #16231d;
+  color: var(--ok);
   font: 700 15px/1 var(--sans);
   letter-spacing: 0.1em;
   cursor: pointer;
@@ -147,14 +147,14 @@ body {
 
 .btn:hover,
 .btn:focus {
-  border-color: #fff;
+  border-color: var(--ok);
   outline: none;
 }
 
 .count {
   margin: 12px 0 0;
   min-height: 1.2em;
-  color: #fff;
+  color: var(--ok);
   font: 12px/1.2 var(--mono);
   letter-spacing: 0.05em;
 }
@@ -171,7 +171,7 @@ body {
   height: 46px;
   margin: -23px 0 0 -23px;
   border: 4px solid var(--line);
-  border-top-color: #fff;
+  border-top-color: var(--ok);
   border-radius: 50%;
   animation: spin 0.9s linear infinite;
 }
@@ -214,7 +214,7 @@ body.fail #msg {
 
 body.done #msg {
   display: block;
-  color: #fff;
+  color: var(--ok);
   font-weight: 700;
   letter-spacing: 2px;
 }
@@ -269,7 +269,7 @@ body.log #out {
   padding: 5px 10px;
   border-bottom: 1px solid var(--line);
   background: var(--sunk);
-  color: #fff;
+  color: var(--ok);
   font: 11px/1.4 var(--mono);
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -286,7 +286,7 @@ body.log #out {
 }
 
 .ok {
-  color: #fff;
+  color: var(--ok);
 }
 
 .bad {
