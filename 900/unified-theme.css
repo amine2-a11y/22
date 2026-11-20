@@ -16,3 +16,53 @@ a{color:var(--amine-blue-bright)}.ok,.success,.done{color:#9ce2c0!important}.bad
 #spin{border-color:rgba(145,190,228,.25)!important;border-top-color:var(--amine-blue-bright)!important;border-right-color:var(--amine-silver)!important;box-shadow:0 0 22px rgba(85,170,255,.25)!important}
 #msg{color:var(--amine-silver)!important;text-shadow:0 2px 12px rgba(0,0,0,.8)!important}#console{border:1px solid var(--amine-line)!important;border-radius:14px!important}hr{border-color:var(--amine-line)!important}
 @media(max-width:800px){button,.button,input[type=button],input[type=submit]{max-width:100%}}
+
+/* FINAL OVERRIDES
+
+/* FINAL OVERRIDES — remove legacy artwork/backgrounds and unify page components */
+html,body{
+  background:#091426!important;
+  background-image:
+    radial-gradient(ellipse at 50% 12%,rgba(78,151,218,.22),transparent 44%),
+    linear-gradient(145deg,#1b3552 0%,#10243c 56%,#091426 100%)!important;
+  background-position:center!important;
+  background-size:cover!important;
+  background-repeat:no-repeat!important;
+  background-attachment:fixed!important;
+  color:#f2f7fc!important;
+}
+body:before{
+  content:""!important;
+  background:linear-gradient(180deg,rgba(8,20,36,.08),rgba(5,14,27,.28))!important;
+}
+body:after{display:none!important;content:none!important}
+.page{
+  background:transparent!important;
+  color:#f2f7fc!important;
+}
+.title,.main-title,h1,h2,h3{color:#d9e6f3!important}
+.title span,.fw b,.percent{color:#8bcaff!important}
+.exploit,.small,.sub,.fw,.footer,.status{color:#a9bfd4!important}
+.url,.action,.logbox,.card,.panel,.box,.container,.console,#console{
+  background:linear-gradient(145deg,rgba(19,42,68,.96),rgba(9,25,44,.96))!important;
+  border:1px solid rgba(130,177,224,.55)!important;
+  border-radius:13px!important;
+  color:#f2f7fc!important;
+  box-shadow:0 14px 38px rgba(0,0,0,.30),0 0 22px rgba(69,145,207,.10)!important;
+}
+.loghead{
+  background:rgba(24,48,76,.96)!important;
+  color:#b9d4ec!important;
+  border-bottom:1px solid rgba(130,177,224,.35)!important;
+}
+button,.button,input[type=button],input[type=submit]{
+  background:linear-gradient(180deg,#3978ad,#1b456f)!important;
+  border:1px solid rgba(150,199,237,.68)!important;
+  border-radius:10px!important;
+  color:#fff!important;
+  box-shadow:0 7px 22px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12)!important;
+}
+.dot{background:#8bcaff!important;box-shadow:0 0 12px rgba(139,202,255,.8)!important}
+#console{color:#d3e2ef!important}
+
+/* END FINAL OVERRIDES */
