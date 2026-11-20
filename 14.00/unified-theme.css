@@ -1,0 +1,18 @@
+/* Jailbreak Amine PS4 — shared blue/silver theme. Presentation only. */
+:root{color-scheme:dark;--amine-bg:#102039;--amine-bg-deep:#091426;--amine-panel:rgba(13,29,50,.88);--amine-line:rgba(130,177,224,.42);--amine-blue:#55aaff;--amine-blue-bright:#8bcaff;--amine-silver:#d9e6f3;--amine-text:#f2f7fc;--amine-muted:#a9bfd4}
+*{box-sizing:border-box}html,body{min-height:100%;color:var(--amine-text);font-family:"Segoe UI",Arial,Helvetica,sans-serif}
+body{background-color:var(--amine-bg-deep)!important;color:var(--amine-text)!important;accent-color:var(--amine-blue)}
+body:before{background:radial-gradient(ellipse at 50% 18%,rgba(79,157,226,.20),transparent 42%),linear-gradient(180deg,rgba(5,14,27,.12),rgba(5,14,27,.52))!important;pointer-events:none}
+body:after{content:none!important;display:none!important}
+h1,h2,h3,h4,.title,.main-title,#brand b{color:var(--amine-silver);text-shadow:0 2px 18px rgba(70,153,225,.22)}
+#brand,.brand,.header-section{background:linear-gradient(180deg,rgba(24,48,76,.88),rgba(10,25,44,.78))!important;color:var(--amine-silver)!important;border-color:var(--amine-line)!important}
+#brand b,.brand b{color:var(--amine-silver)!important}
+button,.button,input[type=button],input[type=submit],.action button{border:1px solid rgba(132,190,239,.62)!important;border-radius:10px!important;background:linear-gradient(180deg,#326a9e,#1a416b)!important;color:#fff!important;box-shadow:0 7px 22px rgba(0,0,0,.28),inset 0 1px rgba(255,255,255,.12)!important;font-family:"Segoe UI",Arial,sans-serif!important}
+button:hover,.button:hover,input[type=button]:hover,input[type=submit]:hover{filter:brightness(1.13);box-shadow:0 0 22px rgba(86,166,232,.28)!important}
+input,select,textarea{color:var(--amine-text)!important;background:rgba(8,20,36,.90)!important;border:1px solid var(--amine-line)!important;border-radius:8px!important}
+.card,.panel,.container,.box,.console,.log,.menu,.shell,#console,#wrap,#ramBox,.url,.action,.status{background-color:var(--amine-panel)!important;border-color:var(--amine-line)!important;color:var(--amine-text)!important;box-shadow:0 12px 34px rgba(0,0,0,.28),0 0 20px rgba(69,145,207,.08)!important}
+a{color:var(--amine-blue-bright)}.ok,.success,.done{color:#9ce2c0!important}.bad,.error,.fail{color:#ffaaa5!important}.warn,.warning{color:#f1d99a!important}
+#state,#out,#msg,#det,#cache,.small,.sub,.lede,.fw,.exploit{color:var(--amine-muted)}
+#spin{border-color:rgba(145,190,228,.25)!important;border-top-color:var(--amine-blue-bright)!important;border-right-color:var(--amine-silver)!important;box-shadow:0 0 22px rgba(85,170,255,.25)!important}
+#msg{color:var(--amine-silver)!important;text-shadow:0 2px 12px rgba(0,0,0,.8)!important}#console{border:1px solid var(--amine-line)!important;border-radius:14px!important}hr{border-color:var(--amine-line)!important}
+@media(max-width:800px){button,.button,input[type=button],input[type=submit]{max-width:100%}}
