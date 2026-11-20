@@ -12,17 +12,17 @@
          shared stylesheet; this one may not. -->
     <style>
       :root {
-        --bg: #0b0d10;
-        --panel: #0e1116;
-        --sunk: #11151b;
-        --line: #1e2732;
-        --fg: #c8ced8;
-        --bright: #e6ebf2;
-        --dim: #7c8798;
-        --faint: #4d5765;
-        --ok: #7fd0a0;
-        --bad: #d08a7f;
-        --warn: #d8c07f;
+        --bg: #1b2c3e;
+        --panel: #172739;
+        --sunk: #1d3046;
+        --line: rgba(112,166,214,.38);
+        --fg: #edf5fc;
+        --bright: #f4f8fc;
+        --dim: #b4c7d8;
+        --faint: #91a9bd;
+        --ok: #83d6b0;
+        --bad: #e29b9b;
+        --warn: #e5c77f;
         --sans: "Segoe UI", system-ui, sans-serif;
         --mono: Consolas, "DejaVu Sans Mono", monospace;
       }
@@ -178,7 +178,18 @@
       }
     </style>
   
-<link rel="stylesheet" href="../pro-theme.css">
+<style id="amine-unified-visual-theme">
+:root{--bg:#182536;--panel:rgba(22,36,54,.9);--line:rgba(112,166,214,.38);--fg:#edf5fc;--bright:#f4f8fc;--dim:#b4c7d8;--ok:#83d6b0;--bad:#e29b9b;--warn:#e5c77f}
+html,body{background-color:#1b2c3e!important;color:#edf5fc!important;font-family:"Segoe UI",Arial,sans-serif!important}
+body{background-image:radial-gradient(ellipse at 50% 15%,rgba(93,155,202,.24),transparent 48%),linear-gradient(145deg,#263b50,#172638 58%,#101c2a)!important}
+button,.button{background:linear-gradient(180deg,#477da7,#315d83)!important;border:1px solid rgba(160,207,237,.52)!important;color:#fff!important;border-radius:9px!important;box-shadow:0 7px 20px rgba(5,17,29,.25)!important}
+.card,.panel,#console,.logbox{background:rgba(23,39,57,.9)!important;border:1px solid rgba(112,166,214,.38)!important;border-radius:14px!important;box-shadow:0 14px 38px rgba(4,13,23,.28)!important}
+#brand{background:rgba(24,41,60,.92)!important;border-bottom:1px solid rgba(112,166,214,.38)!important}
+#brand b,h1,.title{color:#edf5fc!important;text-shadow:0 3px 16px rgba(0,0,0,.38)!important}
+#console,pre,#state,#msg{color:#eaf4fb!important}
+@media(max-width:800px){.card{max-width:94vw}}
+</style>
+<link rel="stylesheet" href="unified-theme.css">
 </head>
   <body>
     <!-- jb.js owns the body class: .log while the step log is shown, .done or

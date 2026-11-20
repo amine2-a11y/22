@@ -27,7 +27,7 @@ patchset-1402.bin #df2145f21ecb8322fd2b062f7f0b8cac
 hen.bin #420f5cfd72ec401f02beaaf3ddbe63b2
 goldhen.bin #c5480587d99efc2e3cc132352d9b7cf0
 
-../pro-theme.css
+unified-theme.css
 FALLBACK:
 jb.html jb.html
 
