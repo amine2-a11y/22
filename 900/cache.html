@@ -1,12 +1,34 @@
 <!doctype html>
-<html lang="en" manifest="psfree_lapse.cache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>PS4 9.00 · OFFLINE CACHE</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">AMINE PS4 · CACHE MANAGER</div><h1 class="aurora-title">PS4 9.00 · OFFLINE CACHE</h1><div class="aurora-card"><div class="bar" style="height:9px;background:#fff2;border-radius:20px;overflow:hidden"><div id="fill" style="height:100%;width:0;background:var(--accent)"></div></div><div id="percent" class="aurora-title">0%</div><div id="state" class="aurora-status">Preparing cache…</div><div id="bytes" class="aurora-meta">0 / 0 bytes</div></div></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
+<html manifest="psfree_lapse.cache">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PSFree-Lapse — Installing Cache</title>
+<style>
+*{box-sizing:border-box}html,body{width:100%;height:100%;margin:0}
+body{overflow:hidden;background:#020711 url("../background.jpg") center/cover no-repeat;color:#eaf4ff;font-family:Arial,"Segoe UI",sans-serif}
+.wrap{height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+.card{width:min(560px,90vw);padding:30px 34px;border:1px solid rgba(22,140,255,.45);border-radius:16px;background:rgba(2,9,19,.94);box-shadow:0 0 40px rgba(0,100,255,.16);text-align:center}
+.brand{font-size:11px;letter-spacing:.35em;color:#7fa9d0;margin-bottom:10px}
+h1{margin:0 0 8px;font-size:22px}h1 b{color:#168cff}
+.sub{font-size:11px;color:#8ca4bb;margin-bottom:24px}
+.bar{height:14px;border-radius:20px;background:#071321;border:1px solid rgba(70,150,235,.3);overflow:hidden}
+.fill{height:100%;width:0%;background:linear-gradient(90deg,#075dc4,#168cff);box-shadow:0 0 14px rgba(22,140,255,.7);transition:width .15s}
+.percent{font-size:30px;font-weight:700;margin:18px 0 5px;color:#168cff}
+.state{font-size:11px;color:#a8bbcc;min-height:16px}
+.bytes{font:10px "Courier New",monospace;color:#637f99;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="wrap"><div class="card">
+<div class="brand">PSFREE-LAPSE EXPLOIT</div>
+<h1>OFFLINE CACHE <b>9.00</b></h1>
+<div class="sub">Installing all required files — please wait</div>
+<div class="bar"><div id="fill" class="fill"></div></div>
+<div id="percent" class="percent">0%</div>
+<div id="state" class="state">Preparing cache...</div>
+<div id="bytes" class="bytes">0 / 0 bytes</div>
+</div></div>
 <script>
 (function(){
 'use strict';
@@ -60,4 +82,5 @@ window.addEventListener('load',function(){
 },false);
 })();
 </script>
-</body></html>
+</body>
+</html>

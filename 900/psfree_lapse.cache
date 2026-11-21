@@ -1,7 +1,6 @@
 CACHE MANIFEST
-CACHE:
 
-# PSFree-Lapse 9.00 offline cache v20261031-memory-offline1 | aurora-css-fix-20261121
+# PSFree-Lapse 9.00 offline cache v20261031-memory-offline1
 AIO_Fix_Temp/patch_aio.c
 AIO_Fix_Temp/vfs_aio2_pdtor.c
 COPYING
@@ -38,8 +37,10 @@ module/view.mjs
 psfree.mjs
 rop/900.mjs
 send.mjs
+../unified-theme.css
+../background.jpg
 
+../theme.css
 goldhen-status.js
-../amine-aurora.css
 NETWORK:
 *
