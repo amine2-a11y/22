@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" manifest="psfree_lapse.cache">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>PS4 9.00 · OFFLINE CACHE</title><link rel="stylesheet" href="../amine-aurora.css">
+</head><body><main class="aurora-shell">
+<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
+<section class="aurora-hero"><div class="aurora-kicker">AMINE PS4 · CACHE MANAGER</div><h1 class="aurora-title">PS4 9.00 · OFFLINE CACHE</h1><div class="aurora-card"><div class="bar" style="height:9px;background:#fff2;border-radius:20px;overflow:hidden"><div id="fill" style="height:100%;width:0;background:var(--accent)"></div></div><div id="percent" class="aurora-title">0%</div><div id="state" class="aurora-status">Preparing cache…</div><div id="bytes" class="aurora-meta">0 / 0 bytes</div></div></section>
+<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
+</main>
+<script>
+(function(){
+'use strict';
+var app=window.applicationCache, fill=document.getElementById('fill'),
+    percent=document.getElementById('percent'), state=document.getElementById('state'),
+    bytes=document.getElementById('bytes'), done=false, last=0;
+
+function setProgress(p,loaded,total){
+  p=Math.max(0,Math.min(100,Number(p)||0));
+  last=p; fill.style.width=p+'%'; percent.textContent=Math.round(p)+'%';
+  if(total>0) bytes.textContent=fmt(loaded)+' / '+fmt(total);
+}
+function fmt(n){
+  n=Number(n)||0;
+  if(n<1024) return Math.round(n)+' B';
+  if(n<1048576) return (n/1024).toFixed(1)+' KB';
+  return (n/1048576).toFixed(2)+' MB';
+}
+function finish(){
+  if(done)return; done=true; setProgress(100,1,1);
+  state.textContent='Cache installed successfully — opening exploit...';
+  setTimeout(function(){location.replace('index.html');},900);
+}
+function onChecking(){state.textContent='Checking offline cache...';}
+function onDownloading(){state.textContent='Downloading cache files...';setProgress(0,0,0);}
+function onProgress(e){
+  var total=Number(e.total)||0, loaded=Number(e.loaded)||0;
+  if(total>0){setProgress(loaded/total*100,loaded,total);}
+  else {state.textContent='Installing cache files...'; if(last<95)setProgress(Math.min(95,last+1),0,0);}
+}
+function onCached(){finish();}
+function onUpdateReady(){try{app.swapCache();}catch(e){} finish();}
+function onNoUpdate(){state.textContent='Cache already installed.';finish();}
+function onError(){state.textContent='Cache error — retrying...';setTimeout(function(){location.reload();},1200);}
+
+app.addEventListener('checking',onChecking,false);
+app.addEventListener('downloading',onDownloading,false);
+app.addEventListener('progress',onProgress,false);
+app.addEventListener('cached',onCached,false);
+app.addEventListener('updateready',onUpdateReady,false);
+app.addEventListener('noupdate',onNoUpdate,false);
+app.addEventListener('error',onError,false);
+app.addEventListener('obsolete',onError,false);
+
+window.addEventListener('load',function(){
+  state.textContent='Starting cache installation...';
+  setTimeout(function(){
+    if(app.status===app.UPDATEREADY || app.status===app.UNCACHED){try{app.update();}catch(e){}}
+    else if(app.status===app.IDLE){state.textContent='Cache ready.';setProgress(100,1,1);setTimeout(function(){location.replace('index.html')},700);}
+  },80);
+},false);
+})();
+</script>
+</body></html>
