@@ -1,14 +1,41 @@
-<!doctype html>
-<html lang="en" manifest="offline.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 Aurora · 10.00–11.02</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">FIRMWARE EXPLOIT PROFILE</div><h1 class="aurora-title">PS4 <span style="color:var(--accent)">10.00 — 11.02</span></h1><p id="UA" class="aurora-sub">Detecting console environment…</p></section>
-<section class="aurora-grid"><div class="aurora-card"><h2>KERNEL METHOD</h2><form id="kernel-options"><label class="aurora-option"><input type="radio" name="kernel" id="netctrl-exploit" value="netctrl" checked> NetCtrl</label><label class="aurora-option"><input type="radio" name="kernel" id="lapse-exploit" value="lapse"> Lapse</label></form><button id="jeilbrek" type="button">START JAILBREAK</button></div><div class="aurora-card"><h2>AUTOMATION</h2><label class="aurora-option" for="autoJbInput"><input id="autoJbInput" type="checkbox"><span id="autoJbLabel">Auto Jailbreak</span></label><p class="aurora-meta">Choose the method before starting the engine.</p></div></section><section class="aurora-card"><h2>ENGINE CONSOLE</h2><pre id="console" class="aurora-log">Preparing offline files…</pre></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
+<!DOCTYPE html>
+<html manifest="offline.appcache" lang="en" manifest="offline.appcache">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AMINE PS4 PS4</title>
+  <link rel="stylesheet" href="includes/style.css">
+  <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+<style>html,body{min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
 <script src="./goldhen-status.js"></script>
+</head>
+<body>
+
+  <h1>AMINE PS4 PS4</h1>
+  <h3 id="UA">Running on:</h3>
+
+  <hr>
+
+  <div class="btn-container">
+    <form id="kernel-options">
+      <input type="radio" name="kernel" id="netctrl-exploit" value="netctrl">
+      <label for="netctrl-exploit">NetCtrl</label>
+      <input type="radio" name="kernel" id="lapse-exploit" value="lapse">
+      <label for="lapse-exploit">Lapse</label>
+    </form>
+    <button id="jeilbrek">Jailbreak</button>
+    <div class="autoJb">
+      <label for="autoJbInput" id="autoJbLabel">Auto Jailbreak</label>
+      <input class="mt-2" id="autoJbInput" type="checkbox">
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <pre id="console">Caching offline files... 0%</pre>
+  </div>
 <script>
     var scriptsLoaded = false;
 
@@ -104,4 +131,6 @@
 })();
 
 </script>
-</body></html>
+
+</body>
+</html>
