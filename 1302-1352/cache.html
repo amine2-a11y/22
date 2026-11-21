@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en" manifest="cache.appcache">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>PS4 · OFFLINE CACHE</title><link rel="stylesheet" href="../amine-aurora.css">
+</head><body><main class="aurora-shell">
+<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
+<section class="aurora-hero"><h1 class="aurora-title">PS4 · OFFLINE CACHE</h1><div id="msgs" class="aurora-log">Preparing cache…</div></section>
+<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
+</main>
+<script>
+history.replaceState(null, null, 'index.html');
+var histlength = history.length;
+history.go(-histlength);
+
+function DLProgress(e) {
+    var pct = Math.round(e.loaded / e.total * 100);
+    msgs.innerHTML = "AMINE PS4 &middot; Installing ... " + pct + "%";
+}
+
+function DisplayCacheProgress() {
+    setTimeout(function () {
+        msgs.innerHTML = "AMINE PS4 &middot; Cache OK";
+    }, 2000);
+    setTimeout(function () {
+        location.reload();
+    }, 3000);
+}
+
+window.applicationCache.addEventListener("progress",    DLProgress,           false);
+window.applicationCache.oncached     = function (e) { DisplayCacheProgress(); };
+window.applicationCache.onupdateready = function (e) { DisplayCacheProgress(); };
+</script>
+</body></html>

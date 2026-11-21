@@ -1,0 +1,7 @@
+AMINE PS4 AURORA — REBUILD NOTES
+The root launcher and firmware landing/cache interfaces have been rebuilt with a new shared design system.
+Old page presentation markup was replaced on the main firmware entry pages. Original exploit script tags and required DOM IDs were retained on those rebuilt pages.
+Exploit-runner pages 14.00/jb.html and 1302-1352/jb.html were intentionally left unchanged because their source comments/code indicate timing-sensitive execution and explicit DOM contracts. They should not be visually altered without a dedicated exploit regression test.
+Firmware auto-routing uses same-tab navigation. It does not guarantee exploit success.
+Offline behavior depends on the target PS4 browser and each original appcache manifest.
+Test each supported firmware on the console before relying on this build.

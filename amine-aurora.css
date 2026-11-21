@@ -1,0 +1,37 @@
+/* AMINE PS4 AURORA — rebuilt interface */
+:root{color-scheme:dark;--bg:#07111b;--panel:rgba(10,23,36,.94);--panel2:rgba(14,34,48,.88);--line:rgba(89,224,207,.25);--accent:#59e0cf;--text:#effafa;--muted:#9bb3bf;--danger:#ff9a9a;--ok:#8ce6b2}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:Arial,"Segoe UI",sans-serif}
+body{min-height:100vh;background-image:radial-gradient(ellipse at 50% 0%,rgba(89,224,207,.10),transparent 48%),linear-gradient(135deg,#07111b 0%,#0a1927 52%,#07111b 100%);background-attachment:fixed}
+button,input,select{font:inherit}
+a{color:var(--accent)}
+.aurora-shell{width:min(900px,94vw);margin:0 auto;padding:clamp(14px,3vw,30px) 0 24px}
+.aurora-brand{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 18px;border:1px solid var(--line);border-radius:17px;background:var(--panel);box-shadow:0 14px 40px #0005}
+.aurora-brand strong{font-size:clamp(18px,3vw,25px);letter-spacing:.11em}.aurora-brand strong span{color:var(--accent)}
+.aurora-chip{border:1px solid var(--line);border-radius:99px;padding:7px 11px;color:var(--accent);font-size:10px;letter-spacing:.12em;white-space:nowrap}
+.aurora-hero{margin:16px 0;padding:clamp(18px,4vw,30px);border:1px solid var(--line);border-radius:20px;background:linear-gradient(145deg,rgba(12,34,48,.94),rgba(7,17,27,.96));box-shadow:0 18px 50px #0006}
+.aurora-kicker{font-size:10px;letter-spacing:.28em;color:var(--accent);font-weight:700}
+.aurora-title{margin:9px 0 7px;font-size:clamp(23px,5vw,36px);line-height:1.12;letter-spacing:.035em}
+.aurora-sub{margin:0;color:var(--muted);font-size:13px;line-height:1.6}
+.aurora-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:15px 0}
+.aurora-card{min-width:0;padding:16px;border:1px solid var(--line);border-radius:15px;background:var(--panel);box-shadow:0 12px 32px #0004}
+.aurora-card h2,.aurora-card h3{margin:0 0 10px;font-size:14px;letter-spacing:.05em}
+.aurora-meta{color:var(--muted);font-size:11px;line-height:1.6}
+.aurora-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:15px}
+button,.aurora-button,[type=submit]{border:1px solid rgba(89,224,207,.5);border-radius:12px;background:linear-gradient(135deg,#176e69,#164653);color:#f5ffff;padding:12px 19px;font-weight:700;cursor:pointer;box-shadow:0 8px 24px #0004}
+button:active,.aurora-button:active{transform:translateY(1px)}
+input[type=radio],input[type=checkbox]{accent-color:var(--accent)}
+label{color:var(--text)}
+.aurora-option{display:flex;gap:10px;align-items:center;padding:12px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);margin:8px 0}
+.aurora-log{min-height:150px;max-height:32vh;overflow:auto;padding:14px;border:1px solid var(--line);border-radius:14px;background:rgba(2,9,15,.82);color:#d7f7f0;font:12px/1.55 Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+#console,#out{color:#d7f7f0}
+.aurora-status{color:var(--accent);font-size:12px;margin:8px 0}
+.aurora-footer{padding:15px 4px;text-align:center;color:#78919d;font-size:10px;letter-spacing:.14em}
+#brand{padding:14px;text-align:center;background:var(--panel);border-bottom:1px solid var(--line)}
+#brand b{color:var(--accent);letter-spacing:.14em}
+#spin{border-color:var(--line);border-top-color:var(--accent)}
+#msg{color:var(--text)}
+#state{color:var(--accent)}
+#det,#cache{color:var(--muted)}
+.ok{color:var(--ok)}.bad{color:var(--danger)}.warn{color:#f2d38a}
+@media(max-width:600px){.aurora-brand{align-items:flex-start;flex-direction:column}.aurora-actions button{width:100%}.aurora-log{max-height:28vh}}
