@@ -1,12 +1,35 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" manifest="cache.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 Aurora · Runner</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">AMINE PS4 · EXPLOIT RUNNER</div><h1 class="aurora-title">RUNNING ENGINE</h1><div id="state" class="aurora-status">Preparing…</div><div id="device-stability" class="aurora-card">Device stability: <span id="device-stability-value">—</span></div></section><section class="aurora-card"><pre id="out" class="aurora-log"></pre></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ps4 poops</title>
+<style>
+  html, body { margin:0; padding:0; background:#0b0d10; color:#c8ced8;
+               font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
+  #wrap { padding:16px 18px; }
+  #state { font-size:22px; font-weight:700; margin:0 0 10px; }
+  #out { white-space:pre-wrap; font:12px/1.45 Consolas, monospace;
+         background:#11151b; border:1px solid #1e2732; border-radius:5px;
+         padding:10px 12px; height:calc(100vh - 141px); overflow-y:auto; }
+  .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
+  #brand { text-align:center; padding:8px 10px; background:#0e1116;
+           border-bottom:1px solid #1e2732; }
+  #brand img { width:28px; height:28px; margin-right:8px; border-radius:50%;
+               vertical-align:middle; }
+  #brand b { font-size:15px; font-weight:700; letter-spacing:.14em;
+             color:#e6ebf2; vertical-align:middle; }
+</style>
+  <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="state">loading poops chain...</div>
+  <div id="out"></div>
+</div>
 <script type="module">import "./chain_poops.js";</script>
 <script>
 
@@ -38,4 +61,8 @@
 })();
 
 </script>
-</body></html>
+
+<style>#device-stability{display:none;position:fixed;right:10px;bottom:10px;z-index:99999;padding:5px 9px;border-radius:8px;background:rgba(0,0,0,.72);border:1px solid rgba(255,255,255,.16);color:#fff;font:11px/1.25 system-ui,sans-serif;box-shadow:0 3px 14px rgba(0,0,0,.3);pointer-events:none;backdrop-filter:blur(4px)}#device-stability .ds-label{opacity:.78}#device-stability .ds-value{font-weight:800;margin-left:4px}</style>
+<div id="device-stability"><span class="ds-label">نسبة استقرار جهاز هي</span><span class="ds-value" id="device-stability-value">--%</span></div>
+</body>
+</html>

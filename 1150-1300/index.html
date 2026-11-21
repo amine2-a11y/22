@@ -1,13 +1,40 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en" manifest="cache.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 Aurora · 11.50–13.00</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">FIRMWARE EXPLOIT PROFILE</div><h1 class="aurora-title">PS4 <span style="color:var(--accent)">11.50 — 13.00</span></h1><p class="aurora-sub">The original firmware detection and exploit routines remain in place.</p></section><section class="aurora-card"><div id="state">Detecting firmware…</div><div id="det"></div><div id="cache" aria-live="polite"></div></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AMINE PS4 PS4</title>
+<style>
+  html, body { margin:0; padding:0; background:#0b0d10; color:#c8ced8;
+               font:15px/1.45 "Segoe UI", system-ui, sans-serif; }
+  #wrap { padding:16px 18px; }
+  #state { font-size:44px; font-weight:700; margin:0 0 6px; }
+  #det { font-size:26px; color:#8b95a3; margin:0 0 4px; }
+  #det b { color:#c8ced8; font-weight:600; }
+  #cache { font-size:24px; color:#5c6672; margin:0 0 10px; min-height:14px; }
+  #cache.cacheok { color:#7fd0a0; }
+  .ok { color:#7fd0a0; } .bad { color:#d08a7f; } .warn { color:#d8c07f; }
+  #brand { text-align:center; padding:8px 10px; background:#0e1116;
+           border-bottom:1px solid #1e2732; }
+  #brand img { width:28px; height:28px; margin-right:8px; border-radius:50%;
+               vertical-align:middle; }
+  #brand b { font-size:30px; font-weight:700; letter-spacing:.14em;
+             color:#e6ebf2; vertical-align:middle; }
+</style>
+  <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+<style>html,body{min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
 <script src="./goldhen-status.js"></script>
+</head>
+<body>
+<div id="wrap">
+  <div id="state">detecting firmware...</div>
+  <div id="det"></div>
+  <div id="cache"></div>
+</div>
+
 <script>
 (function () {
     var stateEl = document.getElementById("state");
@@ -229,4 +256,6 @@
 })();
 
 </script>
-</body></html>
+
+</body>
+</html>
