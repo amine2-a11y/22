@@ -1,11 +1,46 @@
 <!doctype html>
-<html lang="en" manifest="cache.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 Aurora · 12.00–14.02</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">FIRMWARE EXPLOIT PROFILE</div><h1 class="aurora-title">PS4 <span style="color:var(--accent)">12.00 — 14.02</span></h1><p class="aurora-sub">Select payload and start the original launch sequence.</p></section><section class="aurora-card"><form id="pick"><h2>PAYLOAD</h2><label class="aurora-option"><input type="radio" name="payload" value="hen"> PS4 HEN</label><label class="aurora-option"><input type="radio" name="payload" value="goldhen" checked> GoldHEN</label><label class="aurora-option"><input type="checkbox" id="auto" checked> Enable automatic start countdown</label><div class="aurora-actions"><button class="btn" type="submit">START EXPLOIT</button></div><p id="count" class="aurora-status"></p><p id="cache" class="aurora-meta" aria-live="polite"></p></form></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
-<script src="launch.js"></script>
-</body></html>
+<html class="landing" lang="en" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Amine</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Every run starts from here. The referrer guard in jb.js arms the chain
+         only when it was reached from this page, so that a browser restoring
+         its last session cannot re-run it unattended. -->
+    <div id="brand"><b>AMINE</b></div>
+
+    <div class="shell">
+      <img class="meme" src="meme.png" alt="" />
+
+      <main class="panel">
+        <p class="lede">PS4 firmware 12.00 &ndash; 14.02</p>
+
+        <form class="pick" id="pick">
+          <label class="opt">
+            <input type="radio" name="payload" value="hen" />
+            <span>ps4-hen</span>
+          </label>
+          <label class="opt">
+            <input type="radio" name="payload" value="goldhen" checked />
+            <span>GoldHEN</span>
+          </label>
+
+          <label class="opt opt-auto">
+            <input type="checkbox" id="auto" checked />
+            <span>autostart</span>
+          </label>
+
+          <button class="btn" type="submit">start</button>
+          <p class="count" id="count"></p>
+          <p class="count" id="cache" aria-live="polite"></p>
+        </form>
+      </main>
+    </div>
+
+    <p class="byline">AMINE PS4</p>
+    <script src="launch.js"></script>
+  </body>
+</html>
