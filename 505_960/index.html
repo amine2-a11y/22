@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en" manifest="offline.appcache">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Amine PS4 Aurora · 5.05–9.60</title><link rel="stylesheet" href="../amine-aurora.css">
+</head><body><main class="aurora-shell">
+<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
+<section class="aurora-hero"><div class="aurora-kicker">FIRMWARE EXPLOIT PROFILE</div><h1 class="aurora-title">PS4 <span style="color:var(--accent)">5.05 — 9.60</span></h1><p class="aurora-sub">PSFree / Lapse engine profile. The original engine scripts are retained.</p><div class="aurora-actions"><button type="button" onclick="location.reload()">RELOAD ENGINE</button></div></section><section class="aurora-card"><h2>ENGINE OUTPUT</h2><pre id="console" class="aurora-log"></pre></section>
+<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
+</main>
+<script>
+      if (window.applicationCache.status === 0) { // 0: UNCACHED
+        window.location.replace("cache.html");
+      }
+    </script>
+<script src="./goldhen-status.js"></script>
+<script>
+
+/* Firmware Auto Start dispatcher */
+(function () {
+  "use strict";
+  function fw() {
+    var t = (document.body && document.body.innerText) || "";
+    var m = t.match(/\b(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)\b/);
+    return m ? m[1] : null;
+  }
+  function start() {
+    var selectors = [
+      "#startJailbreak","#start-jailbreak","#start","#jeilbrek",
+      "[data-action='jailbreak']",
+      "button[id*='start' i][id*='jailbreak' i]",
+      "a[id*='start' i][id*='jailbreak' i]"
+    ];
+    for (var i=0;i<selectors.length;i++) {
+      var e=document.querySelector(selectors[i]);
+      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
+    }
+    return false;
+  }
+  window.FirmwareAutoStart = { firmware: fw(), start: start };
+  if(document.readyState==="loading")
+    document.addEventListener("DOMContentLoaded",function(){setTimeout(start,300);});
+  else setTimeout(start,300);
+})();
+
+</script>
+<script>
+    // 6.72 JB globals
+    window.entrypoint672_result = 0;
+    window.exploitsetup672_result = 0;
+    // Device FW version holder
+    var config_target = 0x0000;
+    // Logging utility
+    var outputConsole = document.getElementById("console");
+    window.log = function (msg, color) {
+      if (color === undefined) color = "#cccccc";
+      outputConsole.innerHTML += '<span style="color:' + color + '">' + msg + '</span><br>';
+    };
+    // Get Script for ES5 JavaScript
+    window.getScriptES5 = function (source, callback) {
+      var gs = document.createElement('script');
+      gs.src = source;
+      gs.onload = callback;
+      gs.async = false;
+      document.body.appendChild(gs);
+    }
+    // Event definitions
+    window.addEventListener('error', function (event) {
+      var reason = event.error;
+      var msg = 'Unhandled error\n';
+      if (reason) {
+        msg += reason + '\n';
+        if (reason.sourceURL)
+          msg += reason.sourceURL;
+        if (reason.line)
+          msg += ':' + reason.line;
+        if (reason.column)
+          msg += ':' + reason.column;
+        if (reason.stack)
+          msg += '\n' + reason.stack;
+      } else {
+        msg += 'No error object';
+      }
+      alert(msg);
+      return true;
+    });
+    // Dynamic 6.72 entrypoint loader
+    window.addEventListener('load', function () {
+      var ua = navigator.userAgent;
+      var isPS4 = ua.indexOf("PlayStation 4") !== -1;
+      var is67x = ((ua.indexOf(" 6.70") !== -1) || (ua.indexOf(" 6.71") !== -1) || (ua.indexOf(" 6.72") !== -1));
+      if (isPS4 && is67x && (window.applicationCache.status !== 0)) {
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '672entrypoint.js', false);
+        xhr.send('');
+        if (xhr.status === 200)
+          eval.call(top.window, xhr.responseText);
+      }
+    });
+    window.checkPlatformIsSupported = function () {
+      var userAgent = navigator.userAgent;
+      var psRegex = /PlayStation (4|5)[ \/]([0-9]{1,2}\.[0-9]{2})/;
+      var match = userAgent.match(psRegex);
+      if (!match) return false;
+      var device = match[1];    // "4" or "5"
+      var fwVersion = match[2]; // "9.00", "9.03", etc.
+      // Convert "9.00" to 0x900
+      config_target = parseInt(fwVersion.replace('.', ''), 16);
+      window.log("Firmware PS" + device + " ini: " + fwVersion + "\n");
+      // Supported FW lists
+      var supportedFW = {
+        "4": ["5.05", "6.70", "6.71", "6.72",
+              "7.00", "7.01", "7.02", "7.50", "7.51", "7.55",
+              "8.00", "8.01", "8.03", "8.50", "8.52",
+              "9.00", "9.03", "9.04", "9.50", "9.51", "9.60"],
+        "5": ["0.00"]
+      };
+      // Check device exists
+      if (!supportedFW[device]) return false;
+      // FW control
+      return supportedFW[device].indexOf(fwVersion) !== -1;
+    }
+
+    window.addEventListener('load', function () {
+      outputConsole.textContent = ""; // Clear console log
+      // window.log("Initializing Exploit Chain...");
+
+      try {
+        if (!window.checkPlatformIsSupported()) {
+          window.log("Mohon maaf, hanya untuk PS4 5.05, 6.70 - 9.60", "red");
+        } else {
+          if (config_target === 0x505) { // 5.05
+            window.log("Starting 5.05 Exploit...");
+            window.getScriptES5('505exploit.js', function () { setTimeout(exploit505, 3000); });
+          } else {
+            window.log("Starting main exploit...");
+            window.getScriptES5('main.js', function () { setTimeout(doJailBreak, 1500); });
+          }
+        }
+      } catch (error) {
+        window.log("An error occured during exploit: " + error, "red");
+      }
+    });
+  </script>
+</body></html>

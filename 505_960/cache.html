@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" manifest="offline.appcache">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>PS4 · OFFLINE CACHE</title><link rel="stylesheet" href="../amine-aurora.css">
+</head><body><main class="aurora-shell">
+<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
+<section class="aurora-hero"><h1 class="aurora-title">PS4 · OFFLINE CACHE</h1><pre id="console" class="aurora-log"></pre></section>
+<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
+</main>
+<script>
+
+/* Firmware Auto Start dispatcher */
+(function () {
+  "use strict";
+  function fw() {
+    var t = (document.body && document.body.innerText) || "";
+    var m = t.match(/(9\.00|9\.03|9\.04|9\.50|9\.60|10\.00|10\.01|10\.50|10\.70|10\.71|11\.00|11\.02|11\.50|11\.51|11\.52|11\.60|11\.70|11\.80|12\.00|12\.50|12\.70|12\.71|12\.72|13\.00)/);
+    return m ? m[1] : null;
+  }
+  function start() {
+    var selectors = [
+      "#startJailbreak","#start-jailbreak",
+      "[data-action='jailbreak']",
+      "button[id*='start' i][id*='jailbreak' i]",
+      "a[id*='start' i][id*='jailbreak' i]"
+    ];
+    for (var i=0;i<selectors.length;i++) {
+      var e=document.querySelector(selectors[i]);
+      if(e && !e.disabled){ try{e.click(); return true;}catch(_){} }
+    }
+    return false;
+  }
+  window.FirmwareAutoStart = { firmware: fw(), start: start };
+  if(document.readyState==="loading")
+    document.addEventListener("DOMContentLoaded",function(){setTimeout(start,300);});
+  else setTimeout(start,300);
+})();
+
+</script>
+<script>
+    // Clear history and prevent back navigation
+    history.replaceState(null, null, 'index.html');
+    var histlength = history.length;
+    history.go(-histlength);
+    // Logging utility
+    var outputConsole = document.getElementById("console");
+    window.log = function (msg) {
+      outputConsole.textContent += msg + "\n";
+    };
+    // Download progress (% display)
+    function DLProgress(e) {
+      if (!e || !e.total) return;
+      var percent = (Math.round((e.loaded / e.total) * 100));
+      window.log("[CACHE] Downloading... " + percent + "% complete.");
+    }
+    // On cache complete
+    function DisplayCacheProgress() {
+      window.log(" ");
+      window.log("[SUCCESS] Cache berhasil diinstall");
+      // setTimeout(function() { window.log("Reloading..."); }, 2000);
+      // setTimeout(function() { location.reload(); }, 3000);
+      window.log("Tahan tombol PS > Power > Restart PS4.");
+    }
+    // On error
+    function DLError(e) {
+      window.log(" ");
+      window.log("[CACHE ERROR] An error occured during Cache...");
+    }
+    // Event listeners
+    window.applicationCache.addEventListener("progress", DLProgress, false);
+    window.applicationCache.addEventListener("error", DLError, false);
+    window.applicationCache.oncached = function(e) { DisplayCacheProgress(); };
+    window.applicationCache.onupdateready = function(e) { DisplayCacheProgress(); };
+  </script>
+</body></html>
