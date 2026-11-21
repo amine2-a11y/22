@@ -1,17 +1,52 @@
-<!doctype html>
-<html lang="en" manifest="cache.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>Amine PS4 Aurora · 13.02–13.52</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><div class="aurora-kicker">FIRMWARE EXPLOIT PROFILE</div><h1 class="aurora-title">PS4 <span style="color:var(--accent)">13.02 — 13.52</span></h1><p class="aurora-sub">Original exploit scripts and payload files retained.</p></section><section class="aurora-card"><h2>ENGINE CONSOLE</h2><pre id="console" class="aurora-log"></pre></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
-<script>
+<!-- ☠ 2026 AMINE PS4  — PS4 Exploit -->
+<html manifest="cache.appcache">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>AMINE PS4</title>
+    
+<style>
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{
+ margin:0; min-height:100vh; overflow:hidden;
+ background: linear-gradient(rgba(0,8,18,.08),rgba(0,8,18,.20)), url("background.jpg") center/cover no-repeat;
+ color:#f0ffe9;
+ font:16px/1.5 monospace;
+ position:relative;
+}
+body:before{
+ content:""; position:fixed; inset:-20%;
+ background:
+   radial-gradient(ellipse at 30% 60%,rgba(220,255,210,.16),transparent 35%),
+   radial-gradient(ellipse at 70% 35%,rgba(255,255,210,.13),transparent 30%);
+ filter:blur(10px); animation:fog 14s ease-in-out infinite alternate;
+ pointer-events:none;
+}
+body:after{
+ content:"☠    ☠"; position:fixed; left:0; right:0; bottom:8px;
+ text-align:center; color:rgba(235,255,220,.30); font-size:12px;
+ letter-spacing:7px; pointer-events:none;
+}
+#console{
+ position:relative; z-index:1; margin:0; padding:25vh 8vw;
+ white-space:pre-wrap; text-shadow:0 2px 8px #102515;
+}
+.ok{color:#d8ff9a}.bad{color:#ffb0a0}.warn{color:#fff09a}
+@keyframes fog{from{transform:translate3d(-2%,0,0) scale(1)}to{transform:translate3d(2%,2%,0) scale(1.08)}}
+</style>
+    <script>
     if (window.applicationCache && window.applicationCache.status == 0) {
         window.location.replace("cache.html");
     }
     </script>
+</head>
+<body>
+    ☠ AMINE PS4 ·  ☠<br>
+    ☠ 2026 AMINE PS4 <br>
+    <br>
+    <pre id="console"></pre>
+</body>
 <script>
 (function () {
     var con = document.getElementById("console");
@@ -130,4 +165,5 @@
         window.addEventListener("beforeunload", cleanup, false);
     })();
     </script>
-</body></html>
+</body>
+</html>

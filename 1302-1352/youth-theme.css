@@ -1,0 +1,7 @@
+/* Local offline theme - no external resources */
+:root{--bg:#090d1c;--panel:#141b34;--text:#f3f6ff;--muted:#aab3cf;--a:#7c5cff;--b:#00d4ff}
+body{background:radial-gradient(circle at 50% 0,#17133b 0,#090d1c 55%,#05070d 100%)!important;color:var(--text)!important}
+#brand{background:rgba(14,17,22,.94)!important;border-bottom:1px solid #27304a!important;padding:12px!important}
+#brand b{color:#fff!important;letter-spacing:.08em!important}
+#wrap{max-width:760px;margin:auto}
+button{border:0;border-radius:12px;padding:12px 18px;background:linear-gradient(135deg,var(--a),var(--b));color:#fff;font-weight:700}
