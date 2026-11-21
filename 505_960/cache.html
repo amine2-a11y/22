@@ -1,13 +1,61 @@
-<!doctype html>
-<html lang="en" manifest="offline.appcache">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>PS4 · OFFLINE CACHE</title><link rel="stylesheet" href="../amine-aurora.css">
-</head><body><main class="aurora-shell">
-<header class="aurora-brand"><strong>AMINE <span>PS4</span></strong><span class="aurora-chip">AURORA · OFFLINE HUB</span></header>
-<section class="aurora-hero"><h1 class="aurora-title">PS4 · OFFLINE CACHE</h1><pre id="console" class="aurora-log"></pre></section>
-<footer class="aurora-footer">AMINE PS4 · AURORA INTERFACE</footer>
-</main>
-<script>
+<html manifest="ps4jb.cache">
+  <head>
+    <meta charset="utf-8">
+    <title>Amine PS4 PS4</title>
+    <style>
+      body {
+        background-color: #000000;
+        color: #ffffff;
+        font-family: "Segoe UI", Tahoma, sans-serif;
+        text-align: center;
+      }
+      .container {
+		position: relative;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+        }
+      .header-section {
+		text-align: center;
+      }
+      .main-title {
+		background: linear-gradient(45deg, #ff00aa, #00ffff, #ff00ff, #00ff9d);
+		background-size: 300% 300%;
+		-webkit-background-clip: text;
+		-webkit-text-fill-color: transparent;
+		animation: gradientFlow 8s ease infinite;
+		text-shadow: 0 0 30px rgba(255, 0, 170, 0.7);
+      }
+      @keyframes gradientFlow {
+		0% {background-position: 0% 50%;}
+		50% {background-position: 100% 50%;}
+		100% {background-position: 0% 50%;}
+      }
+      #console {
+        font-family: monospace;
+        color: #ffffff;
+        padding: 12px;
+        font-size: 18px;
+        text-align: left;
+      }
+    </style>
+    <link rel="stylesheet" href="../theme.css">
+<link rel="stylesheet" href="../unified-theme.css">
+<style>html,body{width:100%;min-height:100%;}body{background:#050914 url("background.jpg") center center/cover no-repeat fixed !important;}</style>
+
+<style id="offline-bg-fix">html,body{min-height:100%;background-color:#050914!important;}body{background-image:url("background.jpg")!important;background-position:center center!important;background-size:cover!important;background-repeat:no-repeat!important;background-attachment:fixed!important;}</style>
+</head>
+  <body>
+    <div class="container">
+        <div class="header-section">
+            <h1 class="main-title">Amine PS4 PS4 • 5.05 - 9.60</h1>
+        </div>
+    </div>
+
+	<pre id="console"></pre>
+  <script>
 
 /* Firmware Auto Start dispatcher */
 (function () {
@@ -37,7 +85,8 @@
 })();
 
 </script>
-<script>
+</body>
+  <script>
     // Clear history and prevent back navigation
     history.replaceState(null, null, 'index.html');
     var histlength = history.length;
@@ -72,4 +121,4 @@
     window.applicationCache.oncached = function(e) { DisplayCacheProgress(); };
     window.applicationCache.onupdateready = function(e) { DisplayCacheProgress(); };
   </script>
-</body></html>
+</html>
