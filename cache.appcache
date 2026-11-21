@@ -1,8 +1,9 @@
 CACHE MANIFEST
-# Amine PS4 unified offline cache v20261113-amine-1402 | aurora-css-fix-20261121
+# Amine PS4 unified offline cache v20261113-amine-1402
 CACHE:
 1000_1102/CSSFontFace.manifest
 1000_1102/includes/script.js
+1000_1102/includes/style.css
 1000_1102/index.html
 1000_1102/src/lapse.js
 1000_1102/src/loader.js
@@ -100,16 +101,25 @@ CACHE:
 900/rop/900.mjs
 900/send.mjs
 README.md
+background.jpg
 index.html
+theme.css
+unified-theme.css
 505_960/offline.appcache
 900/offline.appcache
 1000_1102/offline.appcache
+505_960/background.jpg
+1000_1102/background.jpg
+900/background.jpg
+1302-1352/background.jpg
+1150-1300/background.jpg
 goldhen-status.js
 14.00/cache.appcache
 14.00/index.html
 14.00/jb.html
 14.00/style.css
 14.00/launch.js
+14.00/meme.png
 14.00/jb.js
 14.00/core.js
 14.00/mem.js
@@ -129,6 +139,5 @@ goldhen-status.js
 14.00/patchset-1402.bin
 14.00/hen.bin
 14.00/goldhen.bin
-amine-aurora.css
 NETWORK:
 *
